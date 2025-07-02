@@ -28,7 +28,6 @@ public class EnemyHandler : MonoBehaviour
         a.Health = a.Max_Health;
         a.Shield = a.Max_Shield;
         a.NodeTarget = 0;
-        Debug.Log("Spawns");
         Enemies.Add(a);
     }
 
