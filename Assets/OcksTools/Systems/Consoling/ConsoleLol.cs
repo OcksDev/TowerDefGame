@@ -439,6 +439,7 @@ public class ConsoleLol : MonoBehaviour
                     break;
                 case "debugscene":
                     StartCoroutine(Wank());
+                    CloseConsole();
                     break;
                 case "dialog":
                     switch (command[1])
@@ -578,10 +579,9 @@ public class ConsoleLol : MonoBehaviour
     public IEnumerator Wank()
     {
         yield return new WaitForSeconds(0.1f);
-        GameHandler.Instance.SetMap(GameHandler.Instance.AllMaps[0]);
-        yield return new WaitForSeconds(1f);
+        GameHandler.Instance.SetMap(0);
+        yield return new WaitForSeconds(0.1f);
         EnemyHandler.Instance.SpawnEnemy("Nerd");
-        CloseConsole();
     }
     public void ConsoleLog(string text = "Logged", string hex = "\"white\"")
     {

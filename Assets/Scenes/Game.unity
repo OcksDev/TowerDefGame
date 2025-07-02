@@ -701,7 +701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Map: {fileID: 0}
   AllMaps:
-  - {fileID: 8998904879622804855, guid: 9b44564658dc9474490e0fbba128f65b, type: 3}
+  - {fileID: 8935992847444848031, guid: 9b44564658dc9474490e0fbba128f65b, type: 3}
 --- !u!4 &572984709
 Transform:
   m_ObjectHideFlags: 0
@@ -2334,7 +2334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647815624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.839378, y: -0.45506787, z: 0.14319743}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

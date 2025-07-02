@@ -42,21 +42,23 @@ public class EnemyHandler : MonoBehaviour
             //some wacky ass movement code
             float maxd = Enemies[i].GetMovementSpeed() * Time.deltaTime;
             var oldp = Enemies[i].Object.position;
-            var targetp = map.Nodes[Enemies[i].NodeTarget].position;
-            var diff = (targetp - oldp);
+            var diff = (map.Nodes[Enemies[i].NodeTarget].position - oldp);
 
-            if(diff.magnitude < maxd)
+
+            if (diff.sqrMagnitude < maxd*maxd)
             {
                 Enemies[i].NodeTarget++;
                 if(Enemies[i].NodeTarget >= map.Nodes.Count)
                 {
                     //DIE DIE DIE
+                    Enemies[i].Kill(false);
+                    i--;
+                    continue;
                 }
             }
 
             var weewee = diff.normalized*maxd + oldp;
             Enemies[i].Object.position = weewee;
-            Debug.Log($"{maxd}, {oldp}, {targetp}, {weewee}");
         }
     }
 
@@ -74,7 +76,10 @@ public class Enemy
     public float MovementSpeed = 1;
     public List<EffectProfile> Effects = new List<EffectProfile>();
 
-    public Enemy(string enemyType) {  EnemyType = enemyType; }
+    public Enemy(string enemyType)
+    {
+        EnemyType = enemyType; 
+    }
 
 
     public float GetMovementSpeed()
@@ -94,6 +99,7 @@ public class Enemy
         {
             //the enemy should just stop existing without extra fanfare
         }
+        UnityEngine.Object.Destroy(Object.gameObject);
     }
 
     public void Hit(DamageProfile hit)
