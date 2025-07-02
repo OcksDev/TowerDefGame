@@ -7,10 +7,16 @@ public class GameHandler : MonoBehaviour
     public static GameHandler Instance;
     public Map Map;
     public List<GameObject> AllMaps = new List<GameObject>();
+    public List<Tower> AllTowers = new List<Tower>();
     // Start is called before the first frame update
-    void Start()
+    public Dictionary<string,Tower> AllTowerDict = new Dictionary<string, Tower>();
+    void Awake()
     {
         Instance = this;
+        foreach(var a in AllTowers)
+        {
+            AllTowerDict.Add(a.TowerType, a);
+        }
     }
     public void ClearMap()
     {

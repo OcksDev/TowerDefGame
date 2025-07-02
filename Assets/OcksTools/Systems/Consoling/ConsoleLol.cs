@@ -441,6 +441,10 @@ public class ConsoleLol : MonoBehaviour
                     StartCoroutine(Wank());
                     CloseConsole();
                     break;
+                case "tower":
+                    StartCoroutine(Wank());
+                    CloseConsole();
+                    break;
                 case "dialog":
                     switch (command[1])
                     {
