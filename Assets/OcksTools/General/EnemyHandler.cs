@@ -37,7 +37,7 @@ public class EnemyHandler : MonoBehaviour
     private void Update()
     {
         var map = GameHandler.Instance.Map;
-        for (int i = 0; i < Enemies.Count; i++)
+        for (int i = 0; i < Enemies.Count; i++) // potential optimization to save enemies[i] to a var instead of continual lookup
         {
             //some wacky ass movement code
             float maxd = Enemies[i].GetMovementSpeed() * Time.deltaTime;
@@ -58,6 +58,7 @@ public class EnemyHandler : MonoBehaviour
             }
 
             var weewee = diff.normalized*maxd + oldp;
+            Enemies[i]._TotalMoved += maxd;
             Enemies[i].Object.position = weewee;
         }
     }
@@ -74,6 +75,7 @@ public class Enemy
     public double Max_Health = 100;
     public double Max_Shield = 100;
     public float MovementSpeed = 1;
+    public float _TotalMoved = 0;
     public List<EffectProfile> Effects = new List<EffectProfile>();
 
     public Enemy(string enemyType)
