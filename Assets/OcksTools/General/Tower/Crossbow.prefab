@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2350797976548751444}
   - component: {fileID: 2350797976548751447}
-  - component: {fileID: 2350797976548751446}
+  - component: {fileID: -6222476730483227905}
   m_Layer: 0
   m_Name: Crossbow
   m_TagString: Untagged
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2350797976548751446
+--- !u!114 &-6222476730483227905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2350797976548751441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9fe4cdd84b2b8a4992b68a375f3d8ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e1b45fd5be013f42bb716350de51ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TowerType: Crossbow
@@ -197,8 +197,3 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 27a9d42de955acc4eaacc02e25347cd5, type: 3}
   TargetType: 0
   MaxLevel: 15
-  BaseIMGS:
-  - {fileID: 21300000, guid: 0cdc41c9f25638c4d9c90ffc2d3938d2, type: 3}
-  - {fileID: 21300000, guid: 8c0f86528b83727409143ef20adeac8e, type: 3}
-  - {fileID: 21300000, guid: 346a869be5352034fa65a7d35f7fc360, type: 3}
-  - {fileID: 21300000, guid: 92d5de271b8f1fc489a8dc8f955d9932, type: 3}

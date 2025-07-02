@@ -10,6 +10,7 @@ public class GameHandler : MonoBehaviour
     public List<Tower> AllTowers = new List<Tower>();
     // Start is called before the first frame update
     public Dictionary<string,Tower> AllTowerDict = new Dictionary<string, Tower>();
+    public List<Sprite> BaseIMGS = new List<Sprite>();
     void Awake()
     {
         Instance = this;
