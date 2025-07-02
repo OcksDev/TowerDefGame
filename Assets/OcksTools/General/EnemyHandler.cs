@@ -6,10 +6,33 @@ public class EnemyHandler : MonoBehaviour
 {
     public List<Enemy> Enemies = new List<Enemy>();
     public static EnemyHandler Instance;
+
+    public GameObject EnemyObj;
+
     private void Awake()
     {
         Instance = this;
     }
+
+    public void SpawnEnemy(string type)
+    {
+        var a = new Enemy(type);
+        a.Object = Instantiate(EnemyObj, GameHandler.Instance.Map.Nodes[0].position, Quaternion.identity, transform).transform;
+        a.Max_Shield = 0;
+        switch (type)
+        {
+            default:
+                a.Max_Health = 10;
+                break;
+        }
+        a.Health = a.Max_Health;
+        a.Shield = a.Max_Shield;
+        a.NodeTarget = 0;
+        Debug.Log("Spawns");
+        Enemies.Add(a);
+    }
+
+
 
     private void Update()
     {
@@ -17,24 +40,23 @@ public class EnemyHandler : MonoBehaviour
         for (int i = 0; i < Enemies.Count; i++)
         {
             //some wacky ass movement code
-            float maxd = Enemies[i].MovementSpeed * Time.deltaTime;
+            float maxd = Enemies[i].GetMovementSpeed() * Time.deltaTime;
             var oldp = Enemies[i].Object.position;
             var targetp = map.Nodes[Enemies[i].NodeTarget].position;
-            Enemies[i].Object.position = Vector3.MoveTowards(oldp, targetp, maxd);
-            var diff = oldp - Enemies[i].Object.position;
-            if(diff.sqrMagnitude < (maxd * maxd))
+            var diff = (targetp - oldp);
+
+            if(diff.magnitude < maxd)
             {
                 Enemies[i].NodeTarget++;
                 if(Enemies[i].NodeTarget >= map.Nodes.Count)
                 {
-                    //enemy has reached end! /kill @a
-                }
-                else
-                {
-                    //enemy moves the remaining distance toward its next target
-                    Enemies[i].Object.position = Vector3.MoveTowards(Enemies[i].Object.position, map.Nodes[Enemies[i].NodeTarget].position, maxd - diff.magnitude);
+                    //DIE DIE DIE
                 }
             }
+
+            var weewee = diff.normalized*maxd + oldp;
+            Enemies[i].Object.position = weewee;
+            Debug.Log($"{maxd}, {oldp}, {targetp}, {weewee}");
         }
     }
 
@@ -52,9 +74,26 @@ public class Enemy
     public float MovementSpeed = 1;
     public List<EffectProfile> Effects = new List<EffectProfile>();
 
-    public void Kill()
+    public Enemy(string enemyType) {  EnemyType = enemyType; }
+
+
+    public float GetMovementSpeed()
     {
-        //kill code lol
+        //speed up / down modifiers go here lol
+        return MovementSpeed;
+    }
+
+    public void Kill(bool real_kill = true)
+    {
+        EnemyHandler.Instance.Enemies.Remove(this);
+        if (real_kill)
+        {
+            //give rewards or do extra code
+        }
+        else
+        {
+            //the enemy should just stop existing without extra fanfare
+        }
     }
 
     public void Hit(DamageProfile hit)

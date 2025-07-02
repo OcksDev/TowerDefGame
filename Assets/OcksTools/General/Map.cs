@@ -5,4 +5,6 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public List<Transform> Nodes = new List<Transform>();
+    public GameObject Prefab;
+    public GameObject SpawnedScene;
 }
