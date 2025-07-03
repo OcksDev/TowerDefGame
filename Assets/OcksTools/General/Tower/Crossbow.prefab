@@ -186,7 +186,6 @@ MonoBehaviour:
   Range: 5
   AttackRate: 2
   Damage: 5
-  Level: 0
   Parts:
   - {fileID: 2350797976167406723}
   RenderParts:
@@ -198,8 +197,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ee0f526157f3bad499dae4bcf9c0153a, type: 3}
   - {fileID: 21300000, guid: 27a9d42de955acc4eaacc02e25347cd5, type: 3}
   TargetType: 0
-  MaxLevel: 15
+  MaxLevel: 3
   RelatedNerds: []
+  MyGems: []
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
+  Level: 0

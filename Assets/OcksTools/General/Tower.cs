@@ -15,11 +15,13 @@ public class Tower : MonoBehaviour
     public Target TargetType;
     [HideInInspector]
     public Enemy EnemyTarget;
-    public int MaxLevel = 15;
+    public int MaxLevel = 3; // 0,1,2,3
     private float TimeTillAttack = 0;
     private bool CanAttackTick = false;
     [HideInInspector]
     public List<Tower> RelatedNerds = new List<Tower>();
+    [HideInInspector]
+    public List<Tower> MyGems = new List<Tower>();
 
     // some flags that can be enabled on a per-tower basis. They do nothing by themselves.
     public bool CanAttack = false;
@@ -55,6 +57,10 @@ public class Tower : MonoBehaviour
         UpdateAllTowersOfSelf(false);
         Remove();
     }
+    public void RealAttack()
+    {
+        Attack();
+    }
 
     public virtual void Place()
     {
@@ -77,7 +83,8 @@ public class Tower : MonoBehaviour
         Range = based.Range;
         AttackRate = based.AttackRate;
         MaxLevel = based.MaxLevel;
-        foreach(var a in RelatedNerds)
+        TowerSpecificStats();
+        foreach (var a in RelatedNerds)
         {
             a.StatMod(this);
         }
@@ -87,13 +94,53 @@ public class Tower : MonoBehaviour
     {
         // apply modifiers to the tower "me" while it is in range
     }
+    
+    public virtual void TowerSpecificStats()
+    {
+        switch (TowerType)
+        {
+            case "Crossbow":
+                if(Level >= 1)
+                {
+                    Damage = 10;
+                    AttackRate = 2.5f;
+                }
+                if(Level >= 2)
+                {
+                    Damage = 20;
+                    AttackRate = 3f;
+                    Range += 2;
+                }
+                if(Level >= 3)
+                {
+                    Damage = 50;
+                    AttackRate = 3.5f;
+                    Range += 3;
+                }
+                break;
+        }
+    }
+    public virtual int GetCostToUpgrade(int level)
+    {
+        switch (TowerType)
+        {
+            case "Crossbow":
+                switch (Level)
+                {
+                    default: return 50;
+                    case 1: return 150;
+                    case 2: return 500;
+                }
+        }
+        return -1;
+    }
 
     public virtual void AttackTick()
     {
         TimeTillAttack = Mathf.Clamp(TimeTillAttack - Time.deltaTime, 0, 10000);
         if(TimeTillAttack == 0 && EnemyTarget != null && EnemyTarget.Health >= 0)
         {
-            Attack();
+            RealAttack();
             TimeTillAttack = 1 / AttackRate;
         }
     }
@@ -195,27 +242,8 @@ public class Tower : MonoBehaviour
     }
     public virtual void UpdateRender()
     {
-        if (Level < 5)
-        {
-            RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[0];
-            RenderParts[1].sprite = TowerIMGS[0];
-        }
-        else if (Level < 10)
-        {
-
-            RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[1];
-            RenderParts[1].sprite = TowerIMGS[1];
-        }
-        else if (Level < 15)
-        {
-            RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[2];
-            RenderParts[1].sprite = TowerIMGS[2];
-        }
-        else
-        {
-            RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[3];
-            RenderParts[1].sprite = TowerIMGS[3];
-        }
+        RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[Level];
+        RenderParts[1].sprite = TowerIMGS[Level];
     }
     public enum Target
     {
@@ -235,6 +263,7 @@ public class Tower : MonoBehaviour
             foreach (var a in e)
             {
                 if (!a.RelatedNerds.Contains(this)) a.RelatedNerds.Add(this);
+                if((a.transform.position-transform.position).sqrMagnitude <= a.Range * a.Range) RelatedNerds.Add(a);
             }
         }
         else
@@ -243,6 +272,7 @@ public class Tower : MonoBehaviour
             {
                 if (a.RelatedNerds.Contains(this)) a.RelatedNerds.Remove(this);
             }
+            //dont need to clear own relatednerds since tower is getting destroyed
         }
     }
     public List<Tower> GetAllTowersInRange()
@@ -250,7 +280,7 @@ public class Tower : MonoBehaviour
         List<Tower> bana = new List<Tower>();
         foreach(var a in GameHandler.Instance.AllActiveTowers)
         {
-            if((a.transform.position-transform.position).sqrMagnitude <= Range*Range) bana.Add(a);
+            if((a.transform.position-transform.position).sqrMagnitude <= Range*Range && a != this) bana.Add(a);
         }
         return bana;
     }
