@@ -559,6 +559,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
+      propertyPath: Level
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_Name
       value: Crossbow (3)
@@ -759,12 +763,14 @@ MonoBehaviour:
   Map: {fileID: 0}
   AllMaps:
   - {fileID: 8935992847444848031, guid: 9b44564658dc9474490e0fbba128f65b, type: 3}
-  AllTowers: []
+  AllTowers:
+  - {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
   BaseIMGS:
   - {fileID: 21300000, guid: 0cdc41c9f25638c4d9c90ffc2d3938d2, type: 3}
   - {fileID: 21300000, guid: 8c0f86528b83727409143ef20adeac8e, type: 3}
   - {fileID: 21300000, guid: 346a869be5352034fa65a7d35f7fc360, type: 3}
   - {fileID: 21300000, guid: 92d5de271b8f1fc489a8dc8f955d9932, type: 3}
+  AllActiveTowers: []
 --- !u!4 &572984709
 Transform:
   m_ObjectHideFlags: 0
@@ -1464,6 +1470,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
+      propertyPath: Level
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_Name
       value: Crossbow (2)
@@ -2431,7 +2441,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2090503949}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99981534
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2555,7 +2565,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.650024}
+  m_AnchoredPosition: {x: 0, y: -35.598587}
   m_SizeDelta: {x: 286.7443, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1732170961
@@ -3028,6 +3038,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
+      propertyPath: Level
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_Name
       value: Crossbow (1)

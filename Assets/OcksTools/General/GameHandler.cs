@@ -11,6 +11,8 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     public Dictionary<string,Tower> AllTowerDict = new Dictionary<string, Tower>();
     public List<Sprite> BaseIMGS = new List<Sprite>();
+    [HideInInspector]
+    public List<Tower> AllActiveTowers = new List<Tower>();
     void Awake()
     {
         Instance = this;
@@ -25,6 +27,11 @@ public class GameHandler : MonoBehaviour
         {
             EnemyHandler.Instance.Enemies[0].Kill(false);
         }
+        foreach(var a in AllActiveTowers)
+        {
+            Destroy(a.gameObject);
+        }
+        AllActiveTowers.Clear();
     }
     public void SetMap(int balls)
     {

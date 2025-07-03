@@ -8,29 +8,86 @@ public class Tower : MonoBehaviour
     public float Range = 5;
     public float AttackRate = 2;
     public double Damage = 5;
-    public int Level = 0;
     public List<Transform> Parts = new List<Transform>();
     public List<SpriteRenderer> RenderParts = new List<SpriteRenderer>();
     public List<Sprite> TowerIMGS = new List<Sprite>();
+    [HideInInspector]
     public Target TargetType;
+    [HideInInspector]
     public Enemy EnemyTarget;
     public int MaxLevel = 15;
     private float TimeTillAttack = 0;
     private bool CanAttackTick = false;
+    [HideInInspector]
+    public List<Tower> RelatedNerds = new List<Tower>();
+
+    // some flags that can be enabled on a per-tower basis. They do nothing by themselves.
+    public bool CanAttack = false;
+    public bool CanBuffInRange = false;
+    public bool CanGenerateMoney = false;
+    public int Level = 0;
+
+
+    private void Start()
+    {
+        RealPlace();
+    }
+
+
     public void FixedUpdate()
     {
         EnemyTarget = GetTarget();
         if (!GetCanAttackTick()) AttackTick();
         Tick();
     }
+
+    public void RealPlace()
+    {
+        GameHandler.Instance.AllActiveTowers.Add(this);
+        UpdateAllTowersOfSelf();
+        SetStats();
+        Place();
+    }
+    
+    public void RealRemove()
+    {
+        GameHandler.Instance.AllActiveTowers.Remove(this);
+        UpdateAllTowersOfSelf(false);
+        Remove();
+    }
+
     public virtual void Place()
     {
         UpdateRender();
+    }
+    public virtual void Remove()
+    {
+        Destroy(gameObject);
     }
     public virtual void Attack()
     {
         Debug.Log("Attacking!");
     }
+
+
+    public void SetStats()
+    {
+        var based = GameHandler.Instance.AllTowerDict[TowerType];
+        Damage = based.Damage;
+        Range = based.Range;
+        AttackRate = based.AttackRate;
+        MaxLevel = based.MaxLevel;
+        foreach(var a in RelatedNerds)
+        {
+            a.StatMod(this);
+        }
+    }
+
+    public virtual void StatMod(Tower me)
+    {
+        // apply modifiers to the tower "me" while it is in range
+    }
+
     public virtual void AttackTick()
     {
         TimeTillAttack = Mathf.Clamp(TimeTillAttack - Time.deltaTime, 0, 10000);
@@ -170,4 +227,31 @@ public class Tower : MonoBehaviour
         Closest,
     }
 
+    private void UpdateAllTowersOfSelf(bool existing = true)
+    {
+        var e = GetAllTowersInRange();
+        if (existing)
+        {
+            foreach (var a in e)
+            {
+                if (!a.RelatedNerds.Contains(this)) a.RelatedNerds.Add(this);
+            }
+        }
+        else
+        {
+            foreach (var a in e)
+            {
+                if (a.RelatedNerds.Contains(this)) a.RelatedNerds.Remove(this);
+            }
+        }
+    }
+    public List<Tower> GetAllTowersInRange()
+    {
+        List<Tower> bana = new List<Tower>();
+        foreach(var a in GameHandler.Instance.AllActiveTowers)
+        {
+            if((a.transform.position-transform.position).sqrMagnitude <= Range*Range) bana.Add(a);
+        }
+        return bana;
+    }
 }
