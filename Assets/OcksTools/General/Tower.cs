@@ -22,6 +22,7 @@ public class Tower : MonoBehaviour
     public List<Tower> RelatedNerds = new List<Tower>();
     [HideInInspector]
     public List<Tower> MyGems = new List<Tower>();
+    public List<Sprite> OtherImages = new List<Sprite>();
 
     // some flags that can be enabled on a per-tower basis. They do nothing by themselves.
     public bool CanAttack = false;
@@ -59,6 +60,7 @@ public class Tower : MonoBehaviour
     }
     public void RealAttack()
     {
+        if (AttackAnim != null) StopCoroutine(AttackAnim);
         Attack();
     }
 
@@ -76,6 +78,7 @@ public class Tower : MonoBehaviour
     }
 
 
+    public Coroutine AttackAnim;
     public void SetStats()
     {
         var based = GameHandler.Instance.AllTowerDict[TowerType];
@@ -283,5 +286,16 @@ public class Tower : MonoBehaviour
             if((a.transform.position-transform.position).sqrMagnitude <= Range*Range && a != this) bana.Add(a);
         }
         return bana;
+    }
+
+    public DamageProfile GetDamProfile()
+    {
+        var a = new DamageProfile(this, DamageProfile.DamageType.Unknown, DamageProfile.DamageType.Unknown, Damage);
+        ModDamProfile(a);
+        return a;
+    }
+    public virtual void ModDamProfile(DamageProfile a)
+    {
+        
     }
 }

@@ -227,13 +227,13 @@ public class Enemy
 
 public class DamageProfile
 {
-    public UnityEngine.Object SourceObject;
+    public Tower SourceObject;
     public DamageType HowDamageWasDealt = DamageType.Unknown;
     public DamageType WhatWasTheDamage = DamageType.Unknown;
     public double Damage;
     public List<EffectProfile> Effects = new List<EffectProfile>();
     public Dictionary<string, int> Procs = new Dictionary<string, int>();
-    public DamageProfile(UnityEngine.Object OB, DamageType How, DamageType What, double damage)
+    public DamageProfile(Tower OB, DamageType How, DamageType What, double damage)
     {
         SourceObject = OB;
         HowDamageWasDealt = How;
@@ -263,7 +263,6 @@ public class DamageProfile
         Melee,
         Ranged,
         Trap,
-        Fall,
         World,
         Fire,
         Ice,

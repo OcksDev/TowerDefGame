@@ -218,9 +218,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crossbow (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -617,67 +621,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503947810}
   m_CullTransparentMesh: 1
---- !u!1001 &518877490
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: Level
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_Name
-      value: Crossbow (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.97052026
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.8584232
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,9 +1131,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crossbow (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1593,67 +1540,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &1118963144
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: Level
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_Name
-      value: Crossbow (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.460791
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.7066731
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
 --- !u!1001 &1119824989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1685,9 +1571,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crossbow (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2321,63 +2211,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359215582}
   m_CullTransparentMesh: 1
---- !u!1001 &1401533218
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_Name
-      value: Crossbow
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.0333688
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.9868286
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
 --- !u!1 &1403638267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2731,8 +2564,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2090503950}
   m_HandleRect: {fileID: 2090503949}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.9920273
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2856,7 +2689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.649994}
+  m_AnchoredPosition: {x: 0, y: -35.649963}
   m_SizeDelta: {x: 286.7443, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1732170961
@@ -3337,9 +3170,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crossbow (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2350797976548751441, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2350797976548751444, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
       propertyPath: m_LocalPosition.x
