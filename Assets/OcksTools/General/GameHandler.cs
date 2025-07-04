@@ -47,4 +47,37 @@ public class GameHandler : MonoBehaviour
         //idk yet lol
     }
 
+    public enum ObjectTypes
+    {
+        Unknown,
+        Tower,
+        Enemy,
+    }
+    public static ObjectHolder GetObjectType(Collider2D Nerd, bool DoGetComp = true)
+    {
+        var type = new ObjectHolder();
+        type.Object = Nerd.gameObject;
+        switch (Nerd.gameObject.tag)
+        {
+            default:
+                type.Type = ObjectTypes.Unknown;
+                break;
+            case "Tower":
+                type.Type = ObjectTypes.Tower;
+                if(DoGetComp)
+                type.Tower = Nerd.GetComponent<Tower>();
+                break;
+            case "Enemy":
+                type.Type = ObjectTypes.Enemy;
+                break;
+        }
+        return type;
+    }
+}
+
+public class ObjectHolder
+{
+    public GameObject Object;
+    public GameHandler.ObjectTypes Type;
+    public Tower Tower;
 }

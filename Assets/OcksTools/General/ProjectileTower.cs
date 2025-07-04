@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ProjectileTower : Tower
 {
+    public GameObject NerdToSpawn;
     public override void Attack()
     {
-        EnemyTarget.Hit(GetDamProfile());
+        var d = GetDamProfile();
+        var meme = Instantiate(NerdToSpawn, transform.position, Parts[0].rotation).GetComponent<Projectile>();
+        meme.Init(this, d);
         AttackAnim = StartCoroutine(BackPushAnim());
     }
 

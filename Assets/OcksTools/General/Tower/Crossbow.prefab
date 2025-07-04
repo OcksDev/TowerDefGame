@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2350797976167406720}
   m_Layer: 0
   m_Name: Square (1)
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: -6222476730483227905}
   m_Layer: 0
   m_Name: Crossbow
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,7 +218,8 @@ MonoBehaviour:
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
-  Level: 3
+  Level: 0
+  NerdToSpawn: {fileID: 3723795987050006145, guid: ac033c32680f44142a403a3b42320752, type: 3}
 --- !u!1 &4564309842759651311
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +232,7 @@ GameObject:
   - component: {fileID: 1762920005346570225}
   m_Layer: 0
   m_Name: Square (2)
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
