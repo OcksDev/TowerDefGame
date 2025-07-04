@@ -17,7 +17,8 @@ public class EnemyHandler : MonoBehaviour
     public void SpawnEnemy(string type)
     {
         var a = new Enemy(type);
-        a.Object = Instantiate(EnemyObj, GameHandler.Instance.Map.Nodes[0].position, Quaternion.identity, transform).transform;
+        var x = GameHandler.Instance.Map.GetSpawnIndex();
+        a.Object = Instantiate(EnemyObj, GameHandler.Instance.Map.Nodes[x].Node.position, Quaternion.identity, transform).transform;
         a.Max_Shield = 0;
         switch (type)
         {
@@ -27,7 +28,7 @@ public class EnemyHandler : MonoBehaviour
         }
         a.Health = a.Max_Health;
         a.Shield = a.Max_Shield;
-        a.NodeTarget = 0;
+        a.NodeTarget = x;
         Enemies.Add(a);
     }
 
@@ -41,13 +42,13 @@ public class EnemyHandler : MonoBehaviour
             //some wacky ass movement code
             float maxd = Enemies[i].GetMovementSpeed() * Time.deltaTime;
             var oldp = Enemies[i].Object.position;
-            var diff = (map.Nodes[Enemies[i].NodeTarget].position - oldp);
+            var diff = (map.Nodes[Enemies[i].NodeTarget].Node.position - oldp);
 
 
             if (diff.sqrMagnitude < maxd*maxd)
             {
-                Enemies[i].NodeTarget++;
-                if(Enemies[i].NodeTarget >= map.Nodes.Count)
+                Enemies[i].NodeTarget = map.GetNextIndex(Enemies[i].NodeTarget);
+                if(Enemies[i].NodeTarget == -1)
                 {
                     //DIE DIE DIE
                     Enemies[i].Kill(false);
