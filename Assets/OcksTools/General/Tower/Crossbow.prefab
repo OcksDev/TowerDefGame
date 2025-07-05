@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2350797976548751444}
   - component: {fileID: 2350797976548751447}
   - component: {fileID: -6222476730483227905}
+  - component: {fileID: 1407727520241397506}
   m_Layer: 0
   m_Name: Crossbow
   m_TagString: Tower
@@ -220,6 +221,32 @@ MonoBehaviour:
   CanGenerateMoney: 0
   Level: 0
   NerdToSpawn: {fileID: 3723795987050006145, guid: ac033c32680f44142a403a3b42320752, type: 3}
+--- !u!61 &1407727520241397506
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350797976548751441}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.4705882, y: 1.4705882}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &4564309842759651311
 GameObject:
   m_ObjectHideFlags: 0

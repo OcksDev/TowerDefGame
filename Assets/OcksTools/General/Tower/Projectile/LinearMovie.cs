@@ -25,18 +25,20 @@ public class LinearMovie : MonoBehaviour
             var t = GameHandler.GetObjectType(a.collider, false);
             if (t.Type == GameHandler.ObjectTypes.Enemy)
             {
-                if(Proj.Target != null && t.Object == Proj.Target.Object.gameObject && !PrevHits.Contains(Proj.Target))
+                if(Proj.Target != null && Proj.Target.Object != null && t.Object != null && t.Object == Proj.Target.Object.gameObject && !PrevHits.Contains(Proj.Target))
                 {
                     Proj.HitEnemy(Proj.Target);
                     if (DestroyOnTouch)
                     {
                         Destroy(gameObject);
+                        PrevHits.Add(Proj.Target);
                         return;
                     }
                     else
                     {
                         PrevHits.Add(Proj.Target);
                     }
+
                 }
                 else
                 {

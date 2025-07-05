@@ -40,10 +40,19 @@ public class Tower : MonoBehaviour
     public void FixedUpdate()
     {
         EnemyTarget = GetTarget();
-        if (!GetCanAttackTick()) AttackTick();
         Tick();
+        if (!GetCanAttackTick()) AttackTick();
     }
-
+    private void Update()
+    {
+        if (InputManager.IsKeyDown("shoot"))
+        {
+            if (Hover.IsHovering(gameObject))
+            {
+                Upgrade();
+            }
+        }
+    }
     public void RealPlace()
     {
         GameHandler.Instance.AllActiveTowers.Add(this);
@@ -165,6 +174,7 @@ public class Tower : MonoBehaviour
     {
         Level = Mathf.Clamp(Level + 1, 0, MaxLevel);
         UpdateRender();
+        SetStats();
     }
 
     public virtual Enemy GetTarget()
