@@ -8,6 +8,7 @@ public class Tower : MonoBehaviour
     public float Range = 5;
     public float AttackRate = 2;
     public double Damage = 5;
+    public int Pierce = 0;
     public List<Transform> Parts = new List<Transform>();
     public List<SpriteRenderer> RenderParts = new List<SpriteRenderer>();
     public List<Sprite> TowerIMGS = new List<Sprite>();

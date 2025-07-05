@@ -104,7 +104,7 @@ public class Enemy
         UnityEngine.Object.Destroy(Object.gameObject);
     }
 
-    public void Hit(DamageProfile hit)
+    public bool Hit(DamageProfile hit)
     {
         var dmg = hit.CalcDamage();
         foreach (var effect in hit.Effects)
@@ -118,10 +118,11 @@ public class Enemy
             if(Health <= 0)
             {
                 Kill();
-                return;
+                return true;
             }
         }
         Shield = System.Math.Clamp(Shield, 0, Max_Shield);
+        return false;
     }
 
     public void Heal(double amount)

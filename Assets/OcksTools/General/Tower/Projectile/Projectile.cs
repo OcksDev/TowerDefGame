@@ -30,9 +30,9 @@ public class Projectile : MonoBehaviour
         LifeSpan -= Time.deltaTime;
         if(LifeSpan <= 0) Destroy(gameObject);
     }
-    public virtual void HitEnemy(Enemy e)
+    public virtual bool HitEnemy(Enemy e)
     {
-        e.Hit(Profile);
+        return e.Hit(Profile);
     }
 
 }
