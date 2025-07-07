@@ -40,6 +40,7 @@ public class InputManager : MonoBehaviour
 
         //create custom key allocations
         CreateKeyAllocation("shoot", KeyCode.Mouse0);
+        CreateKeyAllocation("aim", KeyCode.Mouse1);
         CreateKeyAllocation("move_forward", KeyCode.W);
         CreateKeyAllocation("move_back", KeyCode.S);
         CreateKeyAllocation("move_left", KeyCode.A);
