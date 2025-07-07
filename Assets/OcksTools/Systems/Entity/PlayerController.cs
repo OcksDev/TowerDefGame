@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
             var e = Vector3.Dot(right,dir);
             if(Mathf.Abs(e) > 0.1)
             {
-                w += right * e * 3;
+                w += right * e * d.magnitude/2;
                 //d = Quaternion.Euler(0,0,90*e)* d;
             }
             w += d/2f;
