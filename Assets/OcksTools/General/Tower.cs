@@ -46,12 +46,9 @@ public class Tower : MonoBehaviour
     }
     private void Update()
     {
-        if (InputManager.IsKeyDown("shoot"))
+        if (InputManager.IsKeyDown("shoot") && Hover.IsHovering(gameObject))
         {
-            if (Hover.IsHovering(gameObject))
-            {
-                Upgrade();
-            }
+            Upgrade();
         }
     }
     public void RealPlace()
