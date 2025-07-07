@@ -7,12 +7,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigid;
     public float move_speed = 2;
     public float decay = 0.8f;
+    public float grapo_decay = 0.8f;
     private Vector3 move = new Vector3(0, 0, 0);
     public GameObject Grapp;
     private void Start()
     {
         rigid= GetComponent<Rigidbody2D>();
     }
+
+
+    Vector3 GrappleDir;
+
     void FixedUpdate()
     {
         move *= decay;
@@ -26,7 +31,28 @@ public class PlayerController : MonoBehaviour
             dir.Normalize();
             move += dir;
         }
-        Vector3 bgalls = move * Time.deltaTime * move_speed * 20;
+        Vector3 bgalls = Vector3.zero;
+        GrappleDir *= grapo_decay;
+        bgalls += GrappleDir;
+        if(ShouldMoveByGrap && nerdl != null)
+        {
+            var d = (nerdl.transform.position - transform.position);
+            var w = d.normalized;
+            var right = Quaternion.Euler(0, 0, 90) * w;
+            var e = Vector3.Dot(right,dir);
+            if(Mathf.Abs(e) > 0.1)
+            {
+                w += right * e * 3;
+                //d = Quaternion.Euler(0,0,90*e)* d;
+            }
+            w += d/2f;
+            GrappleDir += w/8;
+        }
+        else
+        {
+            bgalls += move * Time.deltaTime * move_speed * 20;
+        }
+
         rigid.velocity += new Vector2(bgalls.x, bgalls.y);
         if (CameraLol.Instance != null)
         {

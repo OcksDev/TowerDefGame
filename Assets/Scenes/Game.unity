@@ -583,6 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move_speed: 2
   decay: 0.4
+  grapo_decay: 0.9
   Grapp: {fileID: 6463948035969040, guid: ea534e468ae00d4459a1ddff573fc6d9, type: 3}
   ShouldMoveByGrap: 0
 --- !u!212 &492825359
@@ -2746,7 +2747,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2090503949}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.97789425
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2870,7 +2871,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.649994}
+  m_AnchoredPosition: {x: 0, y: -35.009075}
   m_SizeDelta: {x: 286.7443, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1732170961

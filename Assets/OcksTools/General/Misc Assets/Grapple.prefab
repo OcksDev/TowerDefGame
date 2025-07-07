@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spd: 50
-  falloff: 0.9
+  falloff: 0.92
+  controller: {fileID: 0}
 --- !u!1 &6291619125967660437
 GameObject:
   m_ObjectHideFlags: 0
