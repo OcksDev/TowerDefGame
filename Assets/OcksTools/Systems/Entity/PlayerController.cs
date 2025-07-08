@@ -31,26 +31,16 @@ public class PlayerController : MonoBehaviour
             dir.Normalize();
             move += dir;
         }
-        Vector3 bgalls = Vector3.zero;
+        Vector3 bgalls = move * Time.deltaTime * move_speed * 20;;
         GrappleDir *= grapo_decay;
         bgalls += GrappleDir;
         if(ShouldMoveByGrap && nerdl != null)
         {
             var d = (nerdl.transform.position - transform.position);
             var w = d.normalized;
-            var right = Quaternion.Euler(0, 0, 90) * w;
-            var e = Vector3.Dot(right,dir);
-            if(Mathf.Abs(e) > 0.1)
-            {
-                w += right * e * Mathf.Min(d.magnitude/2,10);
-                //d = Quaternion.Euler(0,0,90*e)* d;
-            }
+            w += move * Time.deltaTime * move_speed * 20 * Mathf.Min(d.magnitude / 8, 10);
             w += d/2f;
             GrappleDir += w/8;
-        }
-        else
-        {
-            bgalls += move * Time.deltaTime * move_speed * 20;
         }
 
         rigid.velocity += new Vector2(bgalls.x, bgalls.y);
