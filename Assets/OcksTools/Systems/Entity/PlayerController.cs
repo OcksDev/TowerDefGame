@@ -74,13 +74,20 @@ public class PlayerController : MonoBehaviour
                 dist = (zinkle - pp).sqrMagnitude;
             }
         }
-        if(smegma != null)
+        if (smegma != null)
         {
             ShouldMoveByGrap = false;
             nerdl = Instantiate(Grapp,transform.position, RandomFunctions.PointAtPoint2D(transform.position, smegma.transform.position, 180)).GetComponent<Grapp>();
             nerdl.controller = this;
             StartCoroutine(WaitForNoGrap());
         }
+        /*else
+        {
+            var ding = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            ding.z = transform.position.z;
+            nerdl = Instantiate(Grapp, transform.position, RandomFunctions.PointAtPoint2D(transform.position, ding, 180)).GetComponent<Grapp>();
+            nerdl.spd *= Mathf.Clamp(RandomFunctions.Dist(transform.position, ding) / 10,0.5f,1);
+        }*/
     }
     private Grapp nerdl;
     public bool ShouldMoveByGrap = false;
