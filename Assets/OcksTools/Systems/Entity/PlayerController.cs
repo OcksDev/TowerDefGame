@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
         {
             var d = (nerdl.transform.position - transform.position);
             var w = d.normalized;
-            w += move * Time.deltaTime * move_speed * 20 * Mathf.Min(d.magnitude / 6, 10);
-            w += d/2f;
+            w += move * Time.deltaTime * move_speed * 20 * Mathf.Min(d.magnitude / 6, 1);
+            w += (d.normalized /2f)*Mathf.Min(d.magnitude,5);
             GrappleDir += w/8;
         }
 
