@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float move_speed = 2;
     public float decay = 0.8f;
     public float grapo_decay = 0.8f;
+    public float grapo_decay_out = 0.8f;
+    public float grap_tower_radius = 5;
     private Vector3 move = new Vector3(0, 0, 0);
     public GameObject Grapp;
     private void Start()
@@ -31,14 +33,21 @@ public class PlayerController : MonoBehaviour
             dir.Normalize();
             move += dir;
         }
-        Vector3 bgalls = move * Time.deltaTime * move_speed * 20;;
-        GrappleDir *= grapo_decay;
+        Vector3 bgalls = move * Time.deltaTime * move_speed * 20;
+        if (ShouldMoveByGrap)
+        {
+            GrappleDir *= grapo_decay;
+        }
+        else
+        {
+            GrappleDir *= grapo_decay_out;
+        }
         bgalls += GrappleDir;
         if(ShouldMoveByGrap && nerdl != null)
         {
             var d = (nerdl.transform.position - transform.position);
             var w = d.normalized;
-            w += move * Time.deltaTime * move_speed * 20 * Mathf.Min(d.magnitude / 8, 10);
+            w += move * Time.deltaTime * move_speed * 20 * Mathf.Min(d.magnitude / 6, 10);
             w += d/2f;
             GrappleDir += w/8;
         }
@@ -63,7 +72,7 @@ public class PlayerController : MonoBehaviour
         pp.z = 0;
 
         Tower smegma = null;
-        float dist = 10f;
+        float dist = grap_tower_radius*grap_tower_radius;
         foreach (var a in GameHandler.Instance.AllActiveTowers)
         {
             var zinkle = a.transform.position;
