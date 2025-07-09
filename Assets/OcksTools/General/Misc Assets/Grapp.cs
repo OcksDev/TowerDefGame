@@ -11,6 +11,7 @@ public class Grapp : MonoBehaviour
     public float Wiggle = 1;
     public float Waggle = 1;
     public float Woggle = 1;
+    public float Wuggle = 1;
     // Update is called once per frame
     private void FixedUpdate()
     {
@@ -75,7 +76,7 @@ public class Grapp : MonoBehaviour
             float perc = i / (float)(m);
             Debug.Log($"ISTF {i}, {perc}");
             var offdingle = right * Mathf.Sin(Mathf.PI * (perc+ cut_wangle) * Woggle);
-            offdingle *= Mathf.Sin(Mathf.PI * perc) * Wiggle;
+            offdingle *= Mathf.Sin(Mathf.PI * perc) * Wiggle * Wuggle;
             lineRenderer.SetPosition(i, Vector3.Lerp(Vector3.zero, tg, perc) + offdingle);
         }
 
