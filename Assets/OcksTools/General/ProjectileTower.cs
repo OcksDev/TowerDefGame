@@ -5,21 +5,22 @@ using UnityEngine;
 public class ProjectileTower : Tower
 {
     public GameObject NerdToSpawn;
+    public Vector3 SpawnOffset = Vector3.zero;
     public override void Attack()
     {
         var d = GetDamProfile();
-        var meme = Instantiate(NerdToSpawn, transform.position, Parts[0].rotation).GetComponent<Projectile>();
+        var meme = Instantiate(NerdToSpawn, transform.position + Parts[0].transform.rotation * SpawnOffset, Parts[0].rotation, Tags.refs["BulletHolder"].transform).GetComponent<Projectile>();
         meme.Init(this, d);
         AttackAnim = StartCoroutine(BackPushAnim());
     }
 
     int state = 2;
-    public IEnumerator BackPushAnim()
+    public override IEnumerator BackPushAnim()
     {
         float x = 0;
         while (x < 1)
         {
-            x = Mathf.Clamp01(x + Time.deltaTime*AttackRate);
+            x = Mathf.Clamp01(x + Time.deltaTime*Mathf.Max(AttackRate,0.5f));
             state =  Mathf.FloorToInt(Mathf.Clamp(x * 4,0,2));
             Parts[0].localPosition = Parts[0].rotation * new Vector3(0.2f*(1-RandomFunctions.EaseIn(x)), 0, 0);
             UpdateRender();
@@ -43,5 +44,6 @@ public class ProjectileTower : Tower
     public override void ModDamProfile(DamageProfile a)
     {
         a.HowDamageWasDealt = DamageProfile.DamageType.Ranged;
+        a.WhatWasTheDamage = DamageProfile.DamageType.Bullet;
     }
 }

@@ -175,6 +175,19 @@ public class Tower : MonoBehaviour
         SetStats();
     }
 
+    public virtual IEnumerator BackPushAnim()
+    {
+        float x = 0;
+        while (x < 1)
+        {
+            x = Mathf.Clamp01(x + Time.deltaTime * Mathf.Max(AttackRate, 0.5f));
+            Parts[0].localPosition = Parts[0].rotation * new Vector3(0.2f * (1 - RandomFunctions.EaseIn(x)), 0, 0);
+            UpdateRender();
+            yield return null;
+        }
+        Parts[0].transform.localPosition = Vector3.zero;
+    }
+
     public virtual Enemy GetTarget()
     {
         Enemy target = null;

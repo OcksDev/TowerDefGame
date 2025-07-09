@@ -260,11 +260,13 @@ public class DamageProfile
     public enum DamageType
     {
         Unknown,
-        Magic,
         Melee,
         Ranged,
         Trap,
         World,
+        Explosion,
+        Bullet,
+        Magic,
         Fire,
         Ice,
         Water,
