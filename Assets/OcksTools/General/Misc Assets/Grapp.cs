@@ -74,7 +74,6 @@ public class Grapp : MonoBehaviour
         for (int i = 0; i< m; i++)
         {
             float perc = i / (float)(m);
-            Debug.Log($"ISTF {i}, {perc}");
             var offdingle = right * Mathf.Sin(Mathf.PI * (perc+ cut_wangle) * Woggle);
             offdingle *= Mathf.Sin(Mathf.PI * perc) * Wiggle * Wuggle;
             lineRenderer.SetPosition(i, Vector3.Lerp(Vector3.zero, tg, perc) + offdingle);

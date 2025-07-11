@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
@@ -37,10 +38,23 @@ public class Tower : MonoBehaviour
         RealPlace();
     }
 
-
+    private Enemy old_tg;
     public void FixedUpdate()
     {
-        EnemyTarget = GetTarget();
+        var w = GetTarget(type: TargetType);
+        if(w.Count > 0)
+        {
+            EnemyTarget = w.Dequeue();
+        }
+        else
+        {
+            EnemyTarget = null;
+        }
+        if (EnemyTarget != old_tg && EnemyTarget != null)
+        {
+            TargetAquired();
+            old_tg = EnemyTarget;
+        }
         Tick();
         if (!GetCanAttackTick()) AttackTick();
     }
@@ -154,6 +168,10 @@ public class Tower : MonoBehaviour
             TimeTillAttack = 1 / AttackRate;
         }
     }
+    public virtual void TargetAquired()
+    {
+
+    }
     public virtual void Tick()
     {
         if (EnemyTarget != null)
@@ -186,21 +204,29 @@ public class Tower : MonoBehaviour
             yield return null;
         }
         Parts[0].transform.localPosition = Vector3.zero;
+
     }
 
-    public virtual Enemy GetTarget()
+    public virtual Queue<Enemy> GetTarget(int amnt = 1, Target type = Target.First)
     {
-        Enemy target = null;
+        Queue<Enemy> target = new Queue<Enemy>();
         float td = float.MinValue;
         double hp = float.MinValue;
-        switch (TargetType)
+
+        System.Action<Enemy> add = (x) =>
+        {
+            if(target.Count > amnt) target.Dequeue();
+            target.Enqueue(x);
+        };
+
+        switch (type)
         {
             case Target.First:
                 foreach (var a in EnemyHandler.Instance.Enemies)
                 {
                     if (a._TotalMoved > td && (a.Object.position - transform.position).sqrMagnitude <= Range*Range)
                     {
-                        target = a;
+                        add(a);
                         td = a._TotalMoved;
                     }
                 }
@@ -211,7 +237,7 @@ public class Tower : MonoBehaviour
                 {
                     if (a._TotalMoved < td && (a.Object.position - transform.position).sqrMagnitude <= Range*Range)
                     {
-                        target = a;
+                        add(a);
                         td = a._TotalMoved;
                     }
                 }
@@ -221,7 +247,7 @@ public class Tower : MonoBehaviour
                 {
                     if (a._TotalMoved > td && a.Health > hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
                     {
-                        target = a;
+                        add(a);
                         td = a._TotalMoved;
                         hp = a.Health;
                     }
@@ -233,7 +259,7 @@ public class Tower : MonoBehaviour
                 {
                     if (a._TotalMoved > td && a.Health < hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
                     {
-                        target = a;
+                        add(a);
                         td = a._TotalMoved;
                         hp = a.Health;
                     }
@@ -244,7 +270,7 @@ public class Tower : MonoBehaviour
                 {
                     if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range && (a.Object.position - transform.position).sqrMagnitude > td)
                     {
-                        target = a;
+                        add(a);
                         td = (a.Object.position - transform.position).sqrMagnitude;
                     }
                 }
@@ -255,13 +281,36 @@ public class Tower : MonoBehaviour
                 {
                     if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range && (a.Object.position - transform.position).sqrMagnitude < td)
                     {
-                        target = a;
+                        add(a);
                         td = (a.Object.position - transform.position).sqrMagnitude;
                     }
                 }
                 break;
+            case Target.Fastest:
+                foreach (var a in EnemyHandler.Instance.Enemies)
+                {
+                    if (a._TotalMoved > td && a.MovementSpeed > hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
+                    {
+                        add(a);
+                        td = a._TotalMoved;
+                        hp = a.Health;
+                    }
+                }
+                break;
+            case Target.Slowest:
+                hp = float.MaxValue;
+                foreach (var a in EnemyHandler.Instance.Enemies)
+                {
+                    if (a._TotalMoved > td && a.MovementSpeed < hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
+                    {
+                        add(a);
+                        td = a._TotalMoved;
+                        hp = a.Health;
+                    }
+                }
+                break;
         }
-
+        if(amnt > 1) target.Reverse();
         return target;
     }
     public virtual void UpdateRender()
@@ -277,6 +326,8 @@ public class Tower : MonoBehaviour
         LowestHP,
         Farthest,
         Closest,
+        Fastest,
+        Slowest,
     }
 
     private void UpdateAllTowersOfSelf(bool existing = true)
