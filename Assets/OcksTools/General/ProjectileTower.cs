@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class ProjectileTower : Tower
@@ -20,7 +21,7 @@ public class ProjectileTower : Tower
         float x = 0;
         while (x < 1)
         {
-            x = Mathf.Clamp01(x + Time.deltaTime*Mathf.Max(AttackRate,0.5f));
+            x = Mathf.Clamp01(x + Time.deltaTime*Mathf.Max(AttackRate,1));
             state =  Mathf.FloorToInt(Mathf.Clamp(x * 4,0,2));
             Parts[0].localPosition = Parts[0].rotation * new Vector3(0.2f*(1-RandomFunctions.EaseIn(x)), 0, 0);
             UpdateRender();
@@ -39,11 +40,27 @@ public class ProjectileTower : Tower
             case "Crossbow":
                 RenderParts[2].sprite = OtherImages[(Level*3)+state];
                 break;
+            case "Rocket":
+                if(state > 1)
+                {
+                    RenderParts[1].sprite = TowerIMGS[Level];
+                }
+                else
+                {
+                    RenderParts[1].sprite = OtherImages[Level];
+                }
+                break;
         }
     }
     public override void ModDamProfile(DamageProfile a)
     {
         a.HowDamageWasDealt = DamageProfile.DamageType.Ranged;
         a.WhatWasTheDamage = DamageProfile.DamageType.Bullet;
+        switch (TowerType)
+        {
+            case "Rocket":
+                a.WhatWasTheDamage = DamageProfile.DamageType.Explosion;
+                break;
+        }
     }
 }

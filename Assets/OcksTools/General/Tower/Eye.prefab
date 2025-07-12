@@ -186,7 +186,8 @@ MonoBehaviour:
   TowerType: Eye
   Range: 6
   AttackRate: 2
-  Damage: 5
+  Damage: 1
+  ExplosionRange: 0
   Pierce: 0
   Parts:
   - {fileID: 2350797976167406723}

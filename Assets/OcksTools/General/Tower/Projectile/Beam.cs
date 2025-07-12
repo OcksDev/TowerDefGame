@@ -8,10 +8,10 @@ public class Beam : MonoBehaviour
     public LineRenderer LineRenderer;
     float Osc = 0;
 
-    private void Update()
+    private void FixedUpdate() //changed to be fixed update so its not tied to framerate
     {
         LineRenderer.widthMultiplier = Osc * WidthMult;
-        Osc++; if (Osc == 5) { Osc = 3; }
+        Osc++; if (Osc >= 5) { Osc = 3; }
     }
 }
 

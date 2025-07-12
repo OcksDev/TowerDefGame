@@ -12,7 +12,6 @@ public class LinearMovie : MonoBehaviour
     // Update is called once per frame
     private Vector3 oldpos;
     List<Enemy> PrevHits = new List<Enemy>();
-
     private void Start()
     {
         Pierce = Proj.Tower.Pierce;
@@ -82,6 +81,5 @@ public class LinearMovie : MonoBehaviour
             }
             
         }
-
     }
 }

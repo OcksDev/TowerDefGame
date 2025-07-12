@@ -1109,6 +1109,8 @@ MonoBehaviour:
   AllTowers:
   - {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
   - {fileID: 1603722951903846953, guid: 7f042fc892ae7054ea4677309b01cec6, type: 3}
+  - {fileID: -6222476730483227905, guid: 771723a8dacfef04da2e0f545dbdcaf2, type: 3}
+  - {fileID: 3295724411386635208, guid: 74ec306692f12ef40b9da7ecb0c5d83e, type: 3}
   BaseIMGS:
   - {fileID: 21300000, guid: 0cdc41c9f25638c4d9c90ffc2d3938d2, type: 3}
   - {fileID: 21300000, guid: 8c0f86528b83727409143ef20adeac8e, type: 3}

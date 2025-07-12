@@ -9,6 +9,7 @@ public class Tower : MonoBehaviour
     public float Range = 5;
     public float AttackRate = 2;
     public double Damage = 5;
+    public float ExplosionRange = 0;
     public int Pierce = 0;
     public List<Transform> Parts = new List<Transform>();
     public List<SpriteRenderer> RenderParts = new List<SpriteRenderer>();
@@ -198,7 +199,7 @@ public class Tower : MonoBehaviour
         float x = 0;
         while (x < 1)
         {
-            x = Mathf.Clamp01(x + Time.deltaTime * Mathf.Max(AttackRate, 0.5f));
+            x = Mathf.Clamp01(x + Time.deltaTime * Mathf.Max(AttackRate, 1));
             Parts[0].localPosition = Parts[0].rotation * new Vector3(0.2f * (1 - RandomFunctions.EaseIn(x)), 0, 0);
             UpdateRender();
             yield return null;
