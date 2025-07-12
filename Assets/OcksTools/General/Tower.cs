@@ -51,9 +51,17 @@ public class Tower : MonoBehaviour
         {
             EnemyTarget = null;
         }
-        if (EnemyTarget != old_tg && EnemyTarget != null)
+        if (EnemyTarget != old_tg)
         {
-            TargetAquired();
+            if (EnemyTarget != null)
+            {
+                if(old_tg != null) TargetLost();
+                TargetAquired();
+            }
+            else
+            {
+                TargetLost();
+            }
             old_tg = EnemyTarget;
         }
         Tick();
@@ -170,6 +178,10 @@ public class Tower : MonoBehaviour
         }
     }
     public virtual void TargetAquired()
+    {
+
+    }
+    public virtual void TargetLost()
     {
 
     }
