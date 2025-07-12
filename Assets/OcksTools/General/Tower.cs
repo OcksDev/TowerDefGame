@@ -107,6 +107,16 @@ public class Tower : MonoBehaviour
         Debug.Log("Attacking!");
     }
 
+    public virtual float GetAttackRate()
+    {
+        return AttackRate;
+    }
+    
+    public virtual double GetDamage()
+    {
+        return Damage;
+    }
+
 
     public Coroutine AttackAnim;
     public void SetStats()
@@ -174,7 +184,7 @@ public class Tower : MonoBehaviour
         if(TimeTillAttack == 0 && EnemyTarget != null && EnemyTarget.Health >= 0)
         {
             RealAttack();
-            TimeTillAttack = 1 / AttackRate;
+            TimeTillAttack = 1 / GetAttackRate();
         }
     }
     public virtual void TargetAquired()
@@ -211,9 +221,8 @@ public class Tower : MonoBehaviour
         float x = 0;
         while (x < 1)
         {
-            x = Mathf.Clamp01(x + Time.deltaTime * Mathf.Max(AttackRate, 1));
+            x = Mathf.Clamp01(x + Time.deltaTime * Mathf.Max(GetAttackRate(), 1));
             Parts[0].localPosition = Parts[0].rotation * new Vector3(0.2f * (1 - RandomFunctions.EaseIn(x)), 0, 0);
-            UpdateRender();
             yield return null;
         }
         Parts[0].transform.localPosition = Vector3.zero;
@@ -375,7 +384,7 @@ public class Tower : MonoBehaviour
 
     public DamageProfile GetDamProfile()
     {
-        var a = new DamageProfile(this, DamageProfile.DamageType.Unknown, DamageProfile.DamageType.Unknown, Damage);
+        var a = new DamageProfile(this, DamageProfile.DamageType.Unknown, DamageProfile.DamageType.Unknown, GetDamage());
         ModDamProfile(a);
         return a;
     }
