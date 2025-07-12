@@ -188,7 +188,7 @@ MonoBehaviour:
   Range: 5
   AttackRate: 2
   Damage: 5
-  Pierce: 0
+  Pierce: 10
   Parts:
   - {fileID: 2350797976167406723}
   RenderParts:
