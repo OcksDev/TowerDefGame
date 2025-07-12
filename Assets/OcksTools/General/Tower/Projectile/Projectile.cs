@@ -52,15 +52,7 @@ public class Projectile : MonoBehaviour
                     if (t.Type==GameHandler.ObjectTypes.Enemy)
                     {
                         Debug.Log("C");
-                        for (int i = 0; i < EnemyHandler.Instance.Enemies.Count; i++)
-                        {
-                            var z = EnemyHandler.Instance.Enemies[i];
-                            if (z.Object.gameObject == a.gameObject)
-                            {
-                                z.Hit(Profile);
-                                break;
-                            }
-                        }
+                        EnemyHandler.Instance.ObjectToEnemy[a.gameObject].Hit(Profile);
                     }
                 }
                 return true;

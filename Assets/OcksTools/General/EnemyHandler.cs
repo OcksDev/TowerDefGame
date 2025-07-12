@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHandler : MonoBehaviour
 {
     public List<Enemy> Enemies = new List<Enemy>();
+    public Dictionary<GameObject,Enemy> ObjectToEnemy = new Dictionary<GameObject, Enemy>();
     public static EnemyHandler Instance;
 
     public GameObject EnemyObj;
@@ -30,6 +31,7 @@ public class EnemyHandler : MonoBehaviour
         a.Shield = a.Max_Shield;
         a.NodeTarget = x;
         Enemies.Add(a);
+        ObjectToEnemy.Add(a.Object.gameObject, a);
     }
 
 
@@ -93,6 +95,7 @@ public class Enemy
     public void Kill(bool real_kill = true)
     {
         EnemyHandler.Instance.Enemies.Remove(this);
+        EnemyHandler.Instance.ObjectToEnemy.Remove(Object.gameObject);
         if (real_kill)
         {
             //give rewards or do extra code

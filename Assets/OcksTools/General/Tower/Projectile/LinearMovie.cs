@@ -55,26 +55,20 @@ public class LinearMovie : MonoBehaviour
         {
             while(valids.Count > 0)
             {
-                for (int i = 0; i < EnemyHandler.Instance.Enemies.Count; i++)
+                var a = EnemyHandler.Instance.ObjectToEnemy[valids[0].Object];
+                if (!PrevHits.Contains(a))
                 {
-                    var a = EnemyHandler.Instance.Enemies[i];
-                    if (a.Object.gameObject == valids[0].Object && !PrevHits.Contains(a))
+                    Proj.HitEnemy(a);
+                    if (Pierce <= 0)
                     {
-                        if (Proj.HitEnemy(a))
-                        {
-                            i--;
-                        }
-                        if (Pierce <= 0)
-                        {
-                            Destroy(gameObject);
-                            return;
-                        }
-                        else
-                        {
-                            Pierce--;
-                            PrevHits.Add(a);
-                            break;
-                        }
+                        Destroy(gameObject);
+                        return;
+                    }
+                    else
+                    {
+                        Pierce--;
+                        PrevHits.Add(a);
+                        break;
                     }
                 }
                 valids.RemoveAt(0);

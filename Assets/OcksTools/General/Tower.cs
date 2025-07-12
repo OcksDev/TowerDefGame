@@ -20,7 +20,7 @@ public class Tower : MonoBehaviour
     public Enemy EnemyTarget;
     public int MaxLevel = 3; // 0,1,2,3
     private float TimeTillAttack = 0;
-    private bool CanAttackTick = false;
+    private bool CanAttackTick = true;
     [HideInInspector]
     public List<Tower> RelatedNerds = new List<Tower>();
     [HideInInspector]
@@ -65,7 +65,7 @@ public class Tower : MonoBehaviour
             old_tg = EnemyTarget;
         }
         Tick();
-        if (!GetCanAttackTick()) AttackTick();
+        if (GetCanAttackTick()) AttackTick();
     }
     private void Update()
     {
