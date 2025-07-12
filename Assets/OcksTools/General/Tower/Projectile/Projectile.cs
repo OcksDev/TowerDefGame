@@ -28,6 +28,11 @@ public class Projectile : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if(Tower == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         LifeSpan -= Time.deltaTime;
         if(LifeSpan <= 0) Destroy(gameObject);
     }
