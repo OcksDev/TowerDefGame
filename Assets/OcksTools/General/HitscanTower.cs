@@ -20,5 +20,4 @@ public class HitscanTower : Tower
         meme.LineRenderer.SetPosition(1, EnemyTarget.Object.transform.position);
         EnemyTarget.Hit(d);
     }
-
 }

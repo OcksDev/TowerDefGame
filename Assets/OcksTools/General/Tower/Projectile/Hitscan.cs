@@ -14,9 +14,9 @@ public class Hitscan : MonoBehaviour
     }
     private void Update()
     {
-        LineRenderer.widthMultiplier = ( life/MaxLife ) * WidthMult;
-        life-=Time.deltaTime;
-        if(life <= 0)
+        LineRenderer.widthMultiplier = (life / MaxLife) * WidthMult;
+        life -= Time.deltaTime;
+        if (life <= 0)
         {
             Destroy(gameObject);
         }
