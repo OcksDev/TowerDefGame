@@ -71,8 +71,35 @@ public class Tower : MonoBehaviour
             }
             old_tg = EnemyTarget;
         }
+        //twi towers ideas
     }
 
+    private List<Enemy> mtg = new List<Enemy>();
+    private HashSet<Enemy> old_nerds = new HashSet<Enemy>();
+    public void TestMultiTarget(int nerds)
+    {
+        var w = GetTarget(nerds, TargetType);
+        mtg = w.ToList();
+        var gomnadingle = new HashSet<Enemy>(w);
+        foreach (var a in old_nerds)
+        {
+            if(!gomnadingle.Contains(a)) TargetLost(a);
+        }
+        foreach (var a in gomnadingle)
+        {
+            if(!old_nerds.Contains(a)) TargetAquired(a);
+        }
+        old_nerds = gomnadingle;
+    }
+
+    public virtual void TargetAquired(Enemy tg)
+    {
+
+    }
+    public virtual void TargetLost(Enemy tg)
+    {
+
+    }
     private void Update()
     {
         if (InputManager.IsKeyDown("shoot") && Hover.IsHovering(gameObject))
