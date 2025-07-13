@@ -228,111 +228,80 @@ public class Tower : MonoBehaviour
         Parts[0].transform.localPosition = Vector3.zero;
 
     }
-
+    private Target targetpassover;
+    private int CompareBySex(Enemy a, Enemy b)
+    {
+        switch (targetpassover)
+        {
+            case Target.First:
+                if (a._TotalMoved < b._TotalMoved) return -1;
+                else return 1;
+            case Target.Last:
+                if (a._TotalMoved > b._TotalMoved) return -1;
+                else return 1;
+            case Target.HighestHP:
+                if (a.Health > b.Health) return -1;
+                else if (a.Health < b.Health) return 1;
+                else
+                {
+                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    else return 1;
+                }
+            case Target.LowestHP:
+                if (a.Health < b.Health) return -1;
+                else if (a.Health > b.Health) return 1;
+                else
+                {
+                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    else return 1;
+                }
+            case Target.Farthest:
+                if ((a.Object.position - transform.position).sqrMagnitude > (b.Object.position - transform.position).sqrMagnitude) return -1;
+                else return 1;
+            case Target.Closest:
+                if ((a.Object.position - transform.position).sqrMagnitude > (b.Object.position - transform.position).sqrMagnitude) return -1;
+                else return 1;
+            case Target.Fastest:
+                if (a.MovementSpeed > b.MovementSpeed) return -1;
+                else if (a.MovementSpeed < b.MovementSpeed) return 1;
+                else
+                {
+                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    else return 1;
+                }
+            case Target.Slowest:
+                if (a.MovementSpeed < b.MovementSpeed) return -1;
+                else if (a.MovementSpeed > b.MovementSpeed) return 1;
+                else
+                {
+                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    else return 1;
+                }
+        }
+        return 0;
+    }
     public virtual Queue<Enemy> GetTarget(int amnt = 1, Target type = Target.First)
     {
         Queue<Enemy> target = new Queue<Enemy>();
-        float td = float.MinValue;
-        double hp = float.MinValue;
 
-        System.Action<Enemy> add = (x) =>
-        {
-            if(target.Count > amnt) target.Dequeue();
-            target.Enqueue(x);
-        };
 
-        switch (type)
+        List<Enemy> nerds = new List<Enemy>();
+        foreach (var a in EnemyHandler.Instance.Enemies)
         {
-            case Target.First:
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if (a._TotalMoved > td && (a.Object.position - transform.position).sqrMagnitude <= Range*Range)
-                    {
-                        add(a);
-                        td = a._TotalMoved;
-                    }
-                }
-                break;
-            case Target.Last:
-                td = float.MaxValue;
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if (a._TotalMoved < td && (a.Object.position - transform.position).sqrMagnitude <= Range*Range)
-                    {
-                        add(a);
-                        td = a._TotalMoved;
-                    }
-                }
-                break;
-            case Target.HighestHP:
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if (a._TotalMoved > td && a.Health > hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
-                    {
-                        add(a);
-                        td = a._TotalMoved;
-                        hp = a.Health;
-                    }
-                }
-                break;
-            case Target.LowestHP:
-                hp = double.MaxValue;
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if (a._TotalMoved > td && a.Health < hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
-                    {
-                        add(a);
-                        td = a._TotalMoved;
-                        hp = a.Health;
-                    }
-                }
-                break;
-            case Target.Farthest:
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range && (a.Object.position - transform.position).sqrMagnitude > td)
-                    {
-                        add(a);
-                        td = (a.Object.position - transform.position).sqrMagnitude;
-                    }
-                }
-                break;
-            case Target.Closest:
-                td = float.MaxValue;
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range && (a.Object.position - transform.position).sqrMagnitude < td)
-                    {
-                        add(a);
-                        td = (a.Object.position - transform.position).sqrMagnitude;
-                    }
-                }
-                break;
-            case Target.Fastest:
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if (a._TotalMoved > td && a.MovementSpeed > hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
-                    {
-                        add(a);
-                        td = a._TotalMoved;
-                        hp = a.Health;
-                    }
-                }
-                break;
-            case Target.Slowest:
-                hp = float.MaxValue;
-                foreach (var a in EnemyHandler.Instance.Enemies)
-                {
-                    if (a._TotalMoved > td && a.MovementSpeed < hp && (a.Object.position - transform.position).sqrMagnitude <= Range * Range)
-                    {
-                        add(a);
-                        td = a._TotalMoved;
-                        hp = a.Health;
-                    }
-                }
-                break;
+            if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range)
+            {
+                nerds.Add(a);
+            }
         }
-        if(amnt > 1) target.Reverse();
+
+        targetpassover = type;
+        nerds.Sort(CompareBySex);
+        nerds.Reverse();
+        for(int i = 0; i < nerds.Count && i < amnt; i++)
+        {
+            target.Enqueue(nerds[i]);
+        }
+            
         return target;
     }
     public virtual void UpdateRender()
