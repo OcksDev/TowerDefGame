@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class Alternator : HitscanTower
+{
+    public override void Tick()
+    {
+    }
+    int nerd = -1;
+    int amnt = -1;
+    public override void Attack()
+    {
+        nerd++;
+        var banas = GetTarget(amnt, TargetType).ToList();
+        nerd %= banas.Count; // shouldn't ever divide by 0, cuz if so, we have other problems
+        var d = GetDamProfile();
+        var meme = Instantiate(HitLineObject, Vector3.zero, Quaternion.identity, Tags.refs["BulletHolder"].transform).GetComponent<Hitscan>();
+        //AttackAnim = StartCoroutine(BackPushAnim());
+        meme.LineRenderer.SetPosition(0, Parts[1+nerd].position + Parts[0].transform.rotation * SpawnOffset);
+        meme.LineRenderer.SetPosition(1, banas[nerd].Object.transform.position);
+        banas[nerd].Hit(d);
+    }
+    public override void UpdateRender()
+    {
+        base.UpdateRender();
+        Parts[4].gameObject.SetActive(Level >= 1);
+        Parts[5].gameObject.SetActive(Level >= 3);
+        RenderParts[2].sprite = OtherImages[Level];
+        RenderParts[3].sprite = OtherImages[Level];
+        RenderParts[4].sprite = OtherImages[Level];
+        amnt = 3;
+        if (Level >= 1)
+        {
+            amnt++;
+            RenderParts[5].sprite = OtherImages[Level];
+        }
+        if (Level >= 3)
+        {
+            amnt++;
+            RenderParts[6].sprite = OtherImages[Level];
+        }
+        for(int i = 0; i < amnt; i++)
+        {
+            Parts[1 + i].localPosition = Quaternion.Euler(0,0,(360f/amnt)*i) * new Vector3(0, 0.55f, 0);
+        }
+    }
+}

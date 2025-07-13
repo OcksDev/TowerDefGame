@@ -264,20 +264,21 @@ public class Tower : MonoBehaviour
     private Target targetpassover;
     private int CompareBySex(Enemy a, Enemy b)
     {
+        if(a==null || b==null) return -1;
         switch (targetpassover)
         {
             case Target.First:
-                if (a._TotalMoved < b._TotalMoved) return -1;
+                if (a._TotalMoved > b._TotalMoved) return -1;
                 else return 1;
             case Target.Last:
-                if (a._TotalMoved > b._TotalMoved) return -1;
+                if (a._TotalMoved < b._TotalMoved) return -1;
                 else return 1;
             case Target.HighestHP:
                 if (a.Health > b.Health) return -1;
                 else if (a.Health < b.Health) return 1;
                 else
                 {
-                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    if (a._TotalMoved > b._TotalMoved) return -1;
                     else return 1;
                 }
             case Target.LowestHP:
@@ -285,7 +286,7 @@ public class Tower : MonoBehaviour
                 else if (a.Health > b.Health) return 1;
                 else
                 {
-                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    if (a._TotalMoved > b._TotalMoved) return -1;
                     else return 1;
                 }
             case Target.Farthest:
@@ -299,7 +300,7 @@ public class Tower : MonoBehaviour
                 else if (a.MovementSpeed < b.MovementSpeed) return 1;
                 else
                 {
-                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    if (a._TotalMoved > b._TotalMoved) return -1;
                     else return 1;
                 }
             case Target.Slowest:
@@ -307,31 +308,55 @@ public class Tower : MonoBehaviour
                 else if (a.MovementSpeed > b.MovementSpeed) return 1;
                 else
                 {
-                    if (a._TotalMoved < b._TotalMoved) return -1;
+                    if (a._TotalMoved > b._TotalMoved) return -1;
                     else return 1;
                 }
         }
         return 0;
     }
-    public virtual Queue<Enemy> GetTarget(int amnt = 1, Target type = Target.First)
+    public Queue<Enemy> GetTarget(int amnt = 1, Target type = Target.First)
     {
         Queue<Enemy> target = new Queue<Enemy>();
-        List<Enemy> nerds = new List<Enemy>();
 
-        foreach (var a in EnemyHandler.Instance.Enemies)
+        if (EnemyHandler.Instance.Enemies.Count==0)
         {
-            if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range)
-            {
-                nerds.Add(a);
-            }
+            return target;
         }
 
-        targetpassover = type;
-        nerds.Sort(CompareBySex);
-        nerds.Reverse();
-        for(int i = 0; i < nerds.Count && i < amnt; i++)
+        if (amnt > 1)
         {
-            target.Enqueue(nerds[i]);
+            //multi-get code
+            List<Enemy> nerds = new List<Enemy>();
+            foreach (var a in EnemyHandler.Instance.Enemies)
+            {
+                if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range)
+                {
+                    nerds.Add(a);
+                }
+            }
+
+            targetpassover = type;
+            nerds.Sort(CompareBySex);
+            for (int i = 0; i < nerds.Count && i < amnt; i++)
+            {
+                target.Enqueue(nerds[i]);
+            }
+        }
+        else
+        {
+            //optimized single-target code
+            Enemy curnerd = null;
+            foreach (var a in EnemyHandler.Instance.Enemies)
+            {
+                if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range && CompareBySex(a, curnerd) == -1)
+                {
+                    curnerd = a;
+                }
+            }
+            if(curnerd != null)
+            {
+                target.Enqueue(curnerd);
+            }
         }
             
         return target;
