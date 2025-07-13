@@ -42,8 +42,15 @@ public class Tower : MonoBehaviour
     private Enemy old_tg;
     public void FixedUpdate()
     {
+        TargettingCode();
+        Tick();
+        if (GetCanAttackTick()) AttackTick();
+    }
+
+    public virtual void TargettingCode()
+    {
         var w = GetTarget(type: TargetType);
-        if(w.Count > 0)
+        if (w.Count > 0)
         {
             EnemyTarget = w.Dequeue();
         }
@@ -55,7 +62,7 @@ public class Tower : MonoBehaviour
         {
             if (EnemyTarget != null)
             {
-                if(old_tg != null) TargetLost();
+                if (old_tg != null) TargetLost();
                 TargetAquired();
             }
             else
@@ -64,9 +71,8 @@ public class Tower : MonoBehaviour
             }
             old_tg = EnemyTarget;
         }
-        Tick();
-        if (GetCanAttackTick()) AttackTick();
     }
+
     private void Update()
     {
         if (InputManager.IsKeyDown("shoot") && Hover.IsHovering(gameObject))
@@ -283,9 +289,8 @@ public class Tower : MonoBehaviour
     public virtual Queue<Enemy> GetTarget(int amnt = 1, Target type = Target.First)
     {
         Queue<Enemy> target = new Queue<Enemy>();
-
-
         List<Enemy> nerds = new List<Enemy>();
+
         foreach (var a in EnemyHandler.Instance.Enemies)
         {
             if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range)
