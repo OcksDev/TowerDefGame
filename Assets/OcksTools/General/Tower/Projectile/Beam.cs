@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Beam : MonoBehaviour
 {
-    public float WidthMult = 0.1f;
+    public float WidthMult = 0.05f;
     public LineRenderer LineRenderer;
     float Osc = 0;
 

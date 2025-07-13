@@ -39,7 +39,7 @@ public class Tower : MonoBehaviour
         RealPlace();
     }
 
-    private Enemy old_tg;
+    protected Enemy old_tg;
     public void FixedUpdate()
     {
         TargettingCode();
