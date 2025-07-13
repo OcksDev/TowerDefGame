@@ -31,24 +31,27 @@ public class Alternator : HitscanTower
         RenderParts[3].sprite = OtherImages[Level];
         RenderParts[4].sprite = OtherImages[Level];
         Vector3 offnerd = new Vector3(0, -0.020f, 0);
+        float dd = 0.55f;
         amnt = 3;
         if (Level >= 1)
         {
             amnt++;
             RenderParts[5].sprite = OtherImages[Level];
             offnerd = new Vector3(0, 0, 0);
+            dd = 0.55f - 0.02f;
         }
         if (Level >= 3)
         {
             amnt++;
             RenderParts[6].sprite = OtherImages[Level];
             offnerd = new Vector3(0, -0.020f, 0);
+            dd = 0.55f;
         }
         for(int i = 0; i < amnt; i++)
         {
             var d = offnerd;
             if (Level >= 3 && (i == 2 || i == 3)) d += new Vector3(0, 0.010f, 0);
-            Parts[1 + i].localPosition = (Quaternion.Euler(0,0,(360f/amnt)*i) * new Vector3(0, 0.55f, 0)) + d;
+            Parts[1 + i].localPosition = (Quaternion.Euler(0,0,(360f/amnt)*i) * new Vector3(0, dd, 0)) + d;
         }
     }
 }
