@@ -333,7 +333,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f0d732ed59dddd14d8f5a9bb5fc54d02, type: 3}
   - {fileID: 21300000, guid: 821bcf9497494c24db01e0cb90efa97b, type: 3}
   - {fileID: 21300000, guid: 93e742f16f2173b428ba162c7a2e69d8, type: 3}
-  CanAttack: 0
+  CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
   Level: 0

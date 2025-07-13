@@ -20,7 +20,42 @@ public class Alternator : HitscanTower
         //AttackAnim = StartCoroutine(BackPushAnim());
         meme.LineRenderer.SetPosition(0, Parts[1+nerd].position + Parts[0].transform.rotation * SpawnOffset);
         meme.LineRenderer.SetPosition(1, banas[nerd].Object.transform.position);
-        banas[nerd].Hit(d);
+        bool b = false;
+        double tg = 0;
+        if(Level >= 2)
+        {
+            tg = d.Damage * 3;
+            if(Level >= 3)
+            {
+                tg *= 2;
+            }
+            Debug.Log($"Attempt die: {banas[nerd].Health}, against {tg}");
+            if(banas[nerd].Health <= tg)
+            {
+                banas[nerd].Health = 0;
+                b = true;
+            }
+        }
+
+
+        var a = banas[nerd].Hit(d);
+        if(!a && b) banas[nerd].Kill();
+        if (Level >= 1 && (a||b))
+        {
+            if (b && Level >= 3) d.Damage *= 1.5f;
+            int berd = nerd;
+            for(int i = 0; i < banas.Count-1; i++)
+            {
+                berd++;
+                berd %= banas.Count; // shouldn't ever divide by 0, cuz if so, we have other problems
+                meme = Instantiate(HitLineObject, Vector3.zero, Quaternion.identity, Tags.refs["BulletHolder"].transform).GetComponent<Hitscan>();
+                //AttackAnim = StartCoroutine(BackPushAnim());
+                meme.LineRenderer.SetPosition(0, Parts[1 + berd].position + Parts[0].transform.rotation * SpawnOffset);
+                meme.LineRenderer.SetPosition(1, banas[berd].Object.transform.position);
+                banas[berd].Hit(d);
+            }
+        }
+
     }
     public override void UpdateRender()
     {

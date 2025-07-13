@@ -272,11 +272,8 @@ public class DamageProfile
         Magic,
         Fire,
         Ice,
-        Water,
-        Earth,
+        Lightning,
         Air,
-        Dark,
-        Light,
     }
 
 }
