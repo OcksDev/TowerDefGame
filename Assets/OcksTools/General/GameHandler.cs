@@ -28,11 +28,10 @@ public class GameHandler : MonoBehaviour
         {
             EnemyHandler.Instance.Enemies[0].Kill(false);
         }
-        foreach(var a in AllActiveTowers)
+        for(int i = 0;i < AllActiveTowers.Count;)
         {
-            Destroy(a.gameObject);
+            AllActiveTowers[0].RealRemove();
         }
-        AllActiveTowers.Clear();
     }
     public void SetMap(int balls)
     {

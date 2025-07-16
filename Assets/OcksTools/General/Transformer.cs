@@ -19,7 +19,7 @@ public class Transformer : StationaryTower
         if (nerd.TowerType == "Crossbow" || nerd.TowerType == TowerType) return;
         var ppos = nerd.transform.position;
         if ((ppos - transform.position).sqrMagnitude > Range * Range) return;
-        //nerd.RealRemove();
+        nerd.RealRemove();
         var meme = GameHandler.Instance.SpawnTower("Crossbow").GetComponent<Tower>();
         meme.transform.position = ppos;
         meme.Level = Level;
