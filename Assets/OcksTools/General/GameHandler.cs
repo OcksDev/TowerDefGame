@@ -13,6 +13,7 @@ public class GameHandler : MonoBehaviour
     public List<Sprite> BaseIMGS = new List<Sprite>();
     [HideInInspector]
     public List<Tower> AllActiveTowers = new List<Tower>();
+    public System.Action<Tower> NewTowerCreated;
     void Awake()
     {
         Instance = this;
@@ -45,6 +46,10 @@ public class GameHandler : MonoBehaviour
     public void SpawnEnemyWave()
     {
         //idk yet lol
+    }
+    public GameObject SpawnTower(string nerd)
+    {
+        return Instantiate(AllTowerDict[nerd].gameObject);
     }
 
     public enum ObjectTypes

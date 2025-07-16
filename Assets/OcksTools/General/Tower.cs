@@ -34,7 +34,7 @@ public class Tower : MonoBehaviour
     public int Level = 0;
 
 
-    private void Start()
+    private void Start() // debug code
     {
         RealPlace();
     }
@@ -112,6 +112,7 @@ public class Tower : MonoBehaviour
         GameHandler.Instance.AllActiveTowers.Add(this);
         UpdateAllTowersOfSelf();
         SetStats();
+        GameHandler.Instance.NewTowerCreated?.Invoke(this);
         Place();
     }
     
@@ -378,6 +379,15 @@ public class Tower : MonoBehaviour
         Slowest,
     }
 
+    public virtual void INowExist(Tower nerd)
+    {
+        if (!RelatedNerds.Contains(nerd)) RelatedNerds.Add(nerd);
+    } 
+    public virtual void INowDontExist(Tower nerd)
+    {
+        if (RelatedNerds.Contains(nerd)) RelatedNerds.Remove(nerd);
+    } 
+
     private void UpdateAllTowersOfSelf(bool existing = true)
     {
         var e = GetAllTowersInRange();
@@ -385,7 +395,7 @@ public class Tower : MonoBehaviour
         {
             foreach (var a in e)
             {
-                if (!a.RelatedNerds.Contains(this)) a.RelatedNerds.Add(this);
+                a.INowExist(this);
                 if((a.transform.position-transform.position).sqrMagnitude <= a.Range * a.Range) RelatedNerds.Add(a);
             }
         }
@@ -393,7 +403,7 @@ public class Tower : MonoBehaviour
         {
             foreach (var a in e)
             {
-                if (a.RelatedNerds.Contains(this)) a.RelatedNerds.Remove(this);
+                a.INowDontExist(this);
             }
             //dont need to clear own relatednerds since tower is getting destroyed
         }
@@ -403,7 +413,10 @@ public class Tower : MonoBehaviour
         List<Tower> bana = new List<Tower>();
         foreach(var a in GameHandler.Instance.AllActiveTowers)
         {
-            if((a.transform.position-transform.position).sqrMagnitude <= Range*Range && a != this) bana.Add(a);
+            if((a.transform.position-transform.position).sqrMagnitude <= (Range*Range) && a != this)
+            {
+                bana.Add(a);
+            }
         }
         return bana;
     }

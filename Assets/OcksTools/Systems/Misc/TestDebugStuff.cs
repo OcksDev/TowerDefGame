@@ -17,5 +17,12 @@ public class TestDebugStuff : MonoBehaviour
         {
             EnemyHandler.Instance.SpawnEnemy("Nerd");
         }
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            var a = GameHandler.Instance.SpawnTower("Sniper");
+            var d  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            d.z = 0;
+            a.transform.position = d;
+        }
     }
 }
