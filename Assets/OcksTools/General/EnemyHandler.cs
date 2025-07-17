@@ -66,7 +66,7 @@ public class EnemyHandler : MonoBehaviour
     }
 
 }
-
+[System.Serializable]
 public class Enemy
 {
     public string EnemyType;
