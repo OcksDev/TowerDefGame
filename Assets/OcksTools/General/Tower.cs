@@ -92,14 +92,9 @@ public class Tower : MonoBehaviour
         old_nerds = gomnadingle;
     }
 
-    public virtual void TargetAquired(Enemy tg)
-    {
+    public virtual void TargetAquired(Enemy tg) { }
+    public virtual void TargetLost(Enemy tg){ }
 
-    }
-    public virtual void TargetLost(Enemy tg)
-    {
-
-    }
     private void Update()
     {
         if (InputManager.IsKeyDown("shoot") && Hover.IsHovering(gameObject))

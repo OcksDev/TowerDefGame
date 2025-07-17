@@ -184,9 +184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerType: Eye
-  Range: 6
-  AttackRate: 2
-  Damage: 1
+  Range: 4
+  AttackRate: 4
+  Damage: 0.5
   ExplosionRange: 0
   Pierce: 0
   Parts:
