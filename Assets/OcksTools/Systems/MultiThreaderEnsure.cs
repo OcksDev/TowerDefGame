@@ -109,6 +109,7 @@ public class OXThreadPoolA : IOXThreadPool
             good = false;
             new System.Threading.Thread(() => { Awaiter(i); }).Start();
         }
+        if (good) allconfirmed = true;
         return good;
     }
 
@@ -180,6 +181,7 @@ public class OXThreadPoolB : IOXThreadPool
             good = false;
             new System.Threading.Thread(() => { Awaiter(i); }).Start();
         }
+        if (good) allconfirmed = true;
         return good;
     }
 

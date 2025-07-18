@@ -23,39 +23,12 @@ public class LinearMovie : MonoBehaviour
         transform.position += transform.right*-speed*Time.deltaTime;
         var offshingle = transform.rotation * new Vector2(Offset, 0);
         var lenshingle = transform.rotation * new Vector2(Length/2, 0);
-        var wankers = Physics2D.LinecastAll((Vector2)(oldpos + offshingle - lenshingle), (Vector2)(transform.position + offshingle + lenshingle));
-        List<ObjectHolder> valids = new List<ObjectHolder>();
-        foreach(var a in wankers)
-        {
-            var t = GameHandler.GetObjectType(a.collider, false);
-            if (t.Type == GameHandler.ObjectTypes.Enemy)
-            {
-                if(Proj.Target != null && Proj.Target.Object != null && t.Object != null && t.Object == Proj.Target.Object.gameObject && !PrevHits.Contains(Proj.Target))
-                {
-                    Proj.HitEnemy(Proj.Target);
-                    if (Pierce <= 0)
-                    {
-                        Destroy(gameObject);
-                        return;
-                    }
-                    else
-                    {
-                        Pierce--;
-                        PrevHits.Add(Proj.Target);
-                    }
-
-                }
-                else
-                {
-                    valids.Add(t);
-                }
-            }
-        }
+        var valids = OXCollision.LineCastAll(oldpos-lenshingle, oldpos-transform.position+lenshingle, 0.02f);
         if(valids.Count > 0)
         {
             while(valids.Count > 0)
             {
-                var a = EnemyHandler.Instance.ObjectToEnemy[valids[0].Object];
+                var a = valids[0];
                 if (!PrevHits.Contains(a))
                 {
                     Proj.HitEnemy(a);

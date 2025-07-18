@@ -1,25 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class EnemyHandler : MonoBehaviour
 {
     public List<Enemy> Enemies = new List<Enemy>();
+    public List<Enemy> Deads = new List<Enemy>();
     public Dictionary<GameObject,Enemy> ObjectToEnemy = new Dictionary<GameObject, Enemy>();
     public static EnemyHandler Instance;
 
     public GameObject EnemyObj;
-
+    public OXThreadPoolA EnemyThreads;
+    public static int ThreadCount = 20;
     private void Awake()
     {
         Instance = this;
+        EnemyThreads = new OXThreadPoolA(ThreadCount);
+        StartCoroutine(BananaSmeg());
+    }
+    int bongle = 0;
+    public IEnumerator BananaSmeg()
+    {
+        yield return new WaitUntil(() => { return EnemyThreads.allconfirmed; });
+        Debug.Log("I");
+        for(int i = 0; i < ThreadCount; i++)
+        {
+            Debug.Log("Z");
+            EnemyThreads.Add(EnemyThread);
+        }
     }
 
-    public void SpawnEnemy(string type)
+    public void EnemyThread()
+    {
+        int x = bongle++;
+        Debug.Log(x);
+        while (true)
+        {
+            for (int i = x; i < Enemies.Count; i+=ThreadCount) // potential optimization to save enemies[i] to a var instead of continual lookup
+            {
+                var d = Enemies[i];
+                if (d == null || d.MarkedForDeath || d.Object == null) continue;
+                float difft = g_time-d.my_time;
+                if (difft <= 0) continue;
+                d.my_time = g_time;
+                //some wacky ass movement code
+                float maxd = d.GetMovementSpeed() * difft;
+                var oldp = d.mypos;
+                var diff = (GameHandler.Instance.Map.Poses[d.NodeTarget] - oldp);
+
+
+                if (diff.sqrMagnitude < maxd * maxd)
+                {
+                    d.NodeTarget = GameHandler.Instance.Map.GetNextIndex(d.NodeTarget);
+                    if (d.NodeTarget == -1)
+                    {
+                        //DIE DIE DIE
+                        Deads.Add(d);
+                        d.MarkedForDeath = true;
+                        continue;
+                    }
+                }
+
+                var weewee = diff.normalized * maxd + oldp;
+                d._TotalMoved += maxd;
+                d.mypos = weewee;
+            }
+            Thread.Sleep(1);
+        }
+    }
+
+
+    public Enemy SpawnEnemy(string type)
     {
         var a = new Enemy(type);
         var x = GameHandler.Instance.Map.GetSpawnIndex();
-        a.Object = Instantiate(EnemyObj, GameHandler.Instance.Map.Nodes[x].Node.position, Quaternion.identity, transform).transform;
+        switch (type)
+        {
+            default:
+                a.Object = Instantiate(EnemyObj, GameHandler.Instance.Map.Nodes[x].Node.position, Quaternion.identity, transform).transform;
+                ObjectToEnemy.Add(a.Object.gameObject, a);
+                break;
+            case "Phys":break;
+        }
         a.Max_Shield = 0;
         switch (type)
         {
@@ -31,37 +94,26 @@ public class EnemyHandler : MonoBehaviour
         a.Shield = a.Max_Shield;
         a.NodeTarget = x;
         Enemies.Add(a);
-        ObjectToEnemy.Add(a.Object.gameObject, a);
+        a.mypos = GameHandler.Instance.Map.Nodes[x].Node.position;
+        a.my_time = g_time;
+        return a;
     }
 
 
-
+    public static float g_time = 0;
     private void Update()
     {
+        g_time = Time.time;
         var map = GameHandler.Instance.Map;
+        for (int i = 0; i < Deads.Count; i++) // potential optimization to save enemies[i] to a var instead of continual lookup
+        {
+            Deads[i]?.Kill(false);
+        }
+        Deads.Clear();
         for (int i = 0; i < Enemies.Count; i++) // potential optimization to save enemies[i] to a var instead of continual lookup
         {
             //some wacky ass movement code
-            float maxd = Enemies[i].GetMovementSpeed() * Time.deltaTime;
-            var oldp = Enemies[i].Object.position;
-            var diff = (map.Nodes[Enemies[i].NodeTarget].Node.position - oldp);
-
-
-            if (diff.sqrMagnitude < maxd*maxd)
-            {
-                Enemies[i].NodeTarget = map.GetNextIndex(Enemies[i].NodeTarget);
-                if(Enemies[i].NodeTarget == -1)
-                {
-                    //DIE DIE DIE
-                    Enemies[i].Kill(false);
-                    i--;
-                    continue;
-                }
-            }
-
-            var weewee = diff.normalized*maxd + oldp;
-            Enemies[i]._TotalMoved += maxd;
-            Enemies[i].Object.position = weewee;
+            Enemies[i].Object.position = Enemies[i].mypos;
         }
     }
 
@@ -72,12 +124,16 @@ public class Enemy
     public string EnemyType;
     public Transform Object;
     public int NodeTarget;
+    public float Radius = 0.3333f;
     public double Health = 100;
     public double Shield = 100;
     public double Max_Health = 100;
     public double Max_Shield = 100;
     public float MovementSpeed = 1;
     public float _TotalMoved = 0;
+    public float my_time = 0;
+    public Vector3 mypos;
+    public bool MarkedForDeath = false;
     public List<EffectProfile> Effects = new List<EffectProfile>();
 
     public Enemy(string enemyType)
@@ -94,8 +150,17 @@ public class Enemy
 
     public void Kill(bool real_kill = true)
     {
+        MarkedForDeath = true;
         EnemyHandler.Instance.Enemies.Remove(this);
-        EnemyHandler.Instance.ObjectToEnemy.Remove(Object.gameObject);
+        try
+        {
+            EnemyHandler.Instance.ObjectToEnemy.Remove(Object.gameObject);
+            UnityEngine.Object.Destroy(Object.gameObject);
+        }
+        catch
+        {
+
+        }
         if (real_kill)
         {
             //give rewards or do extra code
@@ -104,7 +169,6 @@ public class Enemy
         {
             //the enemy should just stop existing without extra fanfare
         }
-        UnityEngine.Object.Destroy(Object.gameObject);
     }
 
     public bool Hit(DamageProfile hit)

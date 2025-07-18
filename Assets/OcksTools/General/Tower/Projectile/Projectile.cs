@@ -47,15 +47,11 @@ public class Projectile : MonoBehaviour
                 dd.Size = Tower.ExplosionRange*2;
                 dd.transform.localScale = Vector3.one * dd.Size;
                 e.Hit(Profile);
-                var ding = Physics2D.OverlapCircleAll((Vector2)transform.position, Tower.ExplosionRange);
+                var ding = OXCollision.CircleCastAll(transform.position, Tower.ExplosionRange);
                 foreach(var a in ding)
                 {
-                    if (a.gameObject == e.Object.gameObject) continue;
-                    var t = GameHandler.GetObjectType(a,false);
-                    if (t.Type==GameHandler.ObjectTypes.Enemy)
-                    {
-                        EnemyHandler.Instance.ObjectToEnemy[a.gameObject].Hit(Profile);
-                    }
+                    if (a == e) continue;
+                    a.Hit(Profile);
                 }
                 return true;
             default:

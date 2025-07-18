@@ -1084,6 +1084,7 @@ GameObject:
   - component: {fileID: 572984708}
   - component: {fileID: 572984710}
   - component: {fileID: 572984711}
+  - component: {fileID: 572984712}
   m_Layer: 0
   m_Name: GameHandler
   m_TagString: Untagged
@@ -1106,6 +1107,7 @@ MonoBehaviour:
   Map: {fileID: 0}
   AllMaps:
   - {fileID: 8935992847444848031, guid: 9b44564658dc9474490e0fbba128f65b, type: 3}
+  - {fileID: 8935992847444848031, guid: 035c38d024d80ef4a923c354ae584161, type: 3}
   AllTowers:
   - {fileID: 3032764456371466597, guid: 61f7c5985da618348a7265453ef7d573, type: 3}
   - {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
@@ -1162,6 +1164,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RefedObjects: []
+--- !u!114 &572984712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572984707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c9cbb07b5da5840ade9d0e7d4232a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &599970191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3255,7 +3269,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2090503949}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999622
+  m_Size: 0.8719869
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3326,6 +3340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a99ffbb99ca664429b3a373d7c3f9a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemies: []
+  Deads: []
   EnemyObj: {fileID: 7562170534153258178, guid: e363eb4e129d4354a973580a4a4bdeec, type: 3}
 --- !u!4 &1647815626
 Transform:
@@ -3379,7 +3395,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.639503}
+  m_AnchoredPosition: {x: 0, y: -29.574835}
   m_SizeDelta: {x: 286.7443, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1732170961

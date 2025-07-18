@@ -12,14 +12,10 @@ public class LightningTower : ProjectileTower
         var dd = Instantiate(NerdToSpawn, EnemyTarget.Object.position, Quaternion.identity).GetComponent<Explodie>();
         dd.Size = ExplosionRange * 2;
         dd.transform.localScale = Vector3.one * dd.Size;
-        var ding = Physics2D.OverlapCircleAll(EnemyTarget.Object.position, ExplosionRange);
+        var ding = OXCollision.CircleCastAll(EnemyTarget.Object.position, ExplosionRange);
         foreach (var a in ding)
         {
-            var t = GameHandler.GetObjectType(a, false);
-            if (t.Type == GameHandler.ObjectTypes.Enemy)
-            {
-                EnemyHandler.Instance.ObjectToEnemy[a.gameObject].Hit(d);
-            }
+            a.Hit(d);
         }
     }
     public override void Tick()

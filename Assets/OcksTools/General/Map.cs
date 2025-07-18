@@ -6,6 +6,7 @@ public class Map : MonoBehaviour
 {
     public MapNode StartNode;
     public List<MapNode> Nodes = new List<MapNode>();
+    public List<Vector3> Poses = new List<Vector3>();
     public GameObject Prefab;
     public GameObject SpawnedScene;
     public int GetNextIndex(int curindex)
@@ -35,7 +36,14 @@ public class Map : MonoBehaviour
 
 
     }
-
+    public void Update()
+    {
+        for(int i =0; i < Nodes.Count;i++)
+        {
+            if (i <= Poses.Count) Poses.Add(Nodes[i].Node.position);
+            else Poses[i] = Nodes[i].Node.position;
+        }
+    }
 }
 [System.Serializable]
 public class MapNode

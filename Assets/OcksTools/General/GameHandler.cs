@@ -14,6 +14,8 @@ public class GameHandler : MonoBehaviour
     [HideInInspector]
     public List<Tower> AllActiveTowers = new List<Tower>();
     public System.Action<Tower> NewTowerCreated;
+
+
     void Awake()
     {
         Instance = this;
