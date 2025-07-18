@@ -33,6 +33,7 @@ public class MultiThreaderEnsure : MonoBehaviour
         while (good)
         {
             yield return new WaitForFixedUpdate();
+            Debug.Log("Checking");
             good = !pool.CheckAll();
         }
     }
@@ -78,7 +79,9 @@ public class OXThreadPoolA : IOXThreadPool
     public bool allconfirmed = false;
     private void Awaiter(int i)
     {
-        SuccessfulThreads.Add(i);
+        bool a = false;
+        try { SuccessfulThreads.Add(i); } catch { a = true; }
+        if (a) return;
         if (i > ThreadCount) return;
         if (!ActionPool.ContainsKey(i))
             ActionPool.Add(i, new Queue<System.Action>());
@@ -93,7 +96,7 @@ public class OXThreadPoolA : IOXThreadPool
                 Thread.Sleep(5);
             }
         }
-    }
+        }
 
     public void Add(System.Action gaming)
     {

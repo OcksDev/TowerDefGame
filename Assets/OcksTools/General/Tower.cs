@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class Tower : MonoBehaviour
 {
     public string TowerType = "";
+    public int DesiredTargetCount = 1;
     public float Range = 5;
     public float AttackRate = 2;
     public double Damage = 5;
@@ -26,6 +28,11 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public List<Tower> MyGems = new List<Tower>();
     public List<Sprite> OtherImages = new List<Sprite>();
+    public Vector3 MyPos = Vector3.zero;
+    [HideInInspector]
+    public Queue<Enemy> TargetHandover = new Queue<Enemy>();
+
+
 
     // some flags that can be enabled on a per-tower basis. They do nothing by themselves.
     public bool CanAttack = false;
@@ -42,6 +49,7 @@ public class Tower : MonoBehaviour
     protected Enemy old_tg;
     public void FixedUpdate()
     {
+        MyPos = transform.position;
         TargettingCode();
         Tick();
         if (GetCanAttackTick()) AttackTick();
@@ -49,7 +57,7 @@ public class Tower : MonoBehaviour
 
     public virtual void TargettingCode()
     {
-        var w = GetTarget(type: TargetType);
+        var w = ReadTarget();
         if (w.Count > 0)
         {
             EnemyTarget = w.Dequeue();
@@ -109,6 +117,7 @@ public class Tower : MonoBehaviour
         SetStats();
         GameHandler.Instance.NewTowerCreated?.Invoke(this);
         Place();
+        MyPos = transform.position;
     }
     
     public void RealRemove()
@@ -120,7 +129,20 @@ public class Tower : MonoBehaviour
     public void RealAttack()
     {
         if (AttackAnim != null) StopCoroutine(AttackAnim);
-        Attack();
+        if (EnemyTarget.MarkedForDeath)
+        {
+            TargetLost();
+            var a = GetTarget(1, TargetType);
+            if (a.Count > 0)
+            {
+                EnemyTarget = a.Dequeue();
+                if (EnemyTarget != null) Attack();
+            }
+        }
+        else
+        {
+            Attack();
+        }
     }
 
     public virtual void Place()
@@ -226,7 +248,7 @@ public class Tower : MonoBehaviour
     }
     public virtual void Tick()
     {
-        if (EnemyTarget != null)
+        if (EnemyTarget != null && EnemyTarget.Object != null)
         {
             Parts[0].rotation = RandomFunctions.PointAtPoint2D(Parts[0].position, EnemyTarget.Object.position, 0);
         }
@@ -286,10 +308,10 @@ public class Tower : MonoBehaviour
                     else return 1;
                 }
             case Target.Farthest:
-                if ((a.Object.position - transform.position).sqrMagnitude > (b.Object.position - transform.position).sqrMagnitude) return -1;
+                if ((a.mypos - MyPos).sqrMagnitude > (b.mypos - MyPos).sqrMagnitude) return -1;
                 else return 1;
             case Target.Closest:
-                if ((a.Object.position - transform.position).sqrMagnitude > (b.Object.position - transform.position).sqrMagnitude) return -1;
+                if ((a.mypos - MyPos).sqrMagnitude > (b.mypos - MyPos).sqrMagnitude) return -1;
                 else return 1;
             case Target.Fastest:
                 if (a.MovementSpeed > b.MovementSpeed) return -1;
@@ -310,6 +332,12 @@ public class Tower : MonoBehaviour
         }
         return 0;
     }
+    public Queue<Enemy> ReadTarget()
+    {
+        return TargetHandover;
+    }
+
+
     public Queue<Enemy> GetTarget(int amnt = 1, Target type = Target.First)
     {
         Queue<Enemy> target = new Queue<Enemy>();
@@ -323,9 +351,11 @@ public class Tower : MonoBehaviour
         {
             //multi-get code
             List<Enemy> nerds = new List<Enemy>();
-            foreach (var a in EnemyHandler.Instance.Enemies)
+            for (int i = 0; i < EnemyHandler.Instance.Enemies.Count; i++)
             {
-                if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range)
+                var a = EnemyHandler.Instance.Enemies[i];
+                if (a == null || a.MarkedForDeath || a.Object == null) continue;
+                if ((a.mypos - MyPos).sqrMagnitude <= Range * Range)
                 {
                     nerds.Add(a);
                 }
@@ -342,9 +372,11 @@ public class Tower : MonoBehaviour
         {
             //optimized single-target code
             Enemy curnerd = null;
-            foreach (var a in EnemyHandler.Instance.Enemies)
+            for (int i = 0; i < EnemyHandler.Instance.Enemies.Count; i++)
             {
-                if ((a.Object.position - transform.position).sqrMagnitude <= Range * Range && CompareBySex(a, curnerd) == -1)
+                var a = EnemyHandler.Instance.Enemies[i];
+                if (a == null || a.MarkedForDeath || a.Object == null) continue;
+                if ((a.mypos - MyPos).sqrMagnitude <= Range * Range && CompareBySex(a, curnerd) == -1)
                 {
                     curnerd = a;
                 }

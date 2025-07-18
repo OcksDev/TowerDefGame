@@ -23,10 +23,8 @@ public class EnemyHandler : MonoBehaviour
     public IEnumerator BananaSmeg()
     {
         yield return new WaitUntil(() => { return EnemyThreads.allconfirmed; });
-        Debug.Log("I");
         for(int i = 0; i < ThreadCount; i++)
         {
-            Debug.Log("Z");
             EnemyThreads.Add(EnemyThread);
         }
     }
@@ -34,7 +32,6 @@ public class EnemyHandler : MonoBehaviour
     public void EnemyThread()
     {
         int x = bongle++;
-        Debug.Log(x);
         while (true)
         {
             for (int i = x; i < Enemies.Count; i+=ThreadCount) // potential optimization to save enemies[i] to a var instead of continual lookup
@@ -155,7 +152,6 @@ public class Enemy
         try
         {
             EnemyHandler.Instance.ObjectToEnemy.Remove(Object.gameObject);
-            UnityEngine.Object.Destroy(Object.gameObject);
         }
         catch
         {
@@ -168,6 +164,14 @@ public class Enemy
         else
         {
             //the enemy should just stop existing without extra fanfare
+        }
+        try
+        {
+            UnityEngine.Object.Destroy(Object.gameObject);
+        }
+        catch
+        {
+
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class GameHandler : MonoBehaviour
@@ -15,13 +16,44 @@ public class GameHandler : MonoBehaviour
     public List<Tower> AllActiveTowers = new List<Tower>();
     public System.Action<Tower> NewTowerCreated;
 
-
+    public OXThreadPoolA TowerTargetThreads;
+    public static int TowerThreadCount = 20;
     void Awake()
     {
         Instance = this;
         foreach(var a in AllTowers)
         {
             AllTowerDict.Add(a.TowerType, a);
+        }
+    }
+    private void Start()
+    {
+        TowerTargetThreads = new OXThreadPoolA(TowerThreadCount);
+        StartCoroutine(BananaSmeg());
+    }
+    public IEnumerator BananaSmeg()
+    {
+        MultiThreaderEnsure.Instance.StartCoroutine(MultiThreaderEnsure.Instance.FixSlackers(TowerTargetThreads));
+        yield return new WaitUntil(() => { return TowerTargetThreads.allconfirmed; });
+        for (int i = 0; i < TowerThreadCount; i++)
+        {
+            TowerTargetThreads.Add(Towerrargettr);
+        }
+    }
+    static int bongle = 0;
+    public void Towerrargettr()
+    {
+        int x = bongle++;
+        while (true)
+        {
+            for(int i = x; i < AllActiveTowers.Count; i += TowerThreadCount)
+            {
+                var t = AllActiveTowers[i];
+                if (t == null) continue;
+
+                t.TargetHandover = t.GetTarget(t.DesiredTargetCount,t.TargetType);
+            }
+            Thread.Sleep(1);
         }
     }
     public void ClearMap()
