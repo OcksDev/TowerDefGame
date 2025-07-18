@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerType: Eye
+  DesiredTargetCount: 2
   Range: 4
   AttackRate: 4
   Damage: 0.5
@@ -200,16 +201,35 @@ MonoBehaviour:
   - {fileID: 21300000, guid: db1725ff302532446b933ccd265a5169, type: 3}
   - {fileID: 21300000, guid: b26fa6fca4a25d34d9fe41345e007000, type: 3}
   TargetType: 0
+  EnemyTarget:
+    EnemyType: 
+    Object: {fileID: 0}
+    NodeTarget: 0
+    Radius: 0
+    Health: 0
+    Shield: 0
+    Max_Health: 0
+    Max_Shield: 0
+    MovementSpeed: 0
+    _TotalMoved: 0
+    my_time: 0
+    mypos: {x: 0, y: 0, z: 0}
+    MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
   MyGems: []
   OtherImages: []
+  MyPos: {x: 0, y: 0, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
   Level: 0
   HitLineObject: {fileID: 4183998883242688557, guid: a8d7c6ecb07799f469b09e2836d6ac1a, type: 3}
   SpawnOffset: {x: 0, y: 0, z: 0}
+  BeamAttack:
+  - {fileID: 0}
+  - {fileID: 0}
+  MultiTarget: []
 --- !u!61 &1407727520241397506
 BoxCollider2D:
   m_ObjectHideFlags: 0

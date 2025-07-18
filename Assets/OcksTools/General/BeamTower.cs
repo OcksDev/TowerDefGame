@@ -49,7 +49,7 @@ public class BeamTower : Tower
     public override void TargettingCode()
     {
         //Sets up Multitarget, Multitarget comparison, and Target.
-        var w = GetTarget(2, TargetType);
+        var w = ReadTarget();
         List<Enemy> old_Multi = new List<Enemy>(MultiTarget);
         MultiTarget = new List<Enemy>(w.ToList());
         List<int> Where = new List<int>();
