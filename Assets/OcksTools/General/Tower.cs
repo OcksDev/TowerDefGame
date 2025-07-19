@@ -28,10 +28,11 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public List<Tower> MyGems = new List<Tower>();
     public List<Sprite> OtherImages = new List<Sprite>();
+    [HideInInspector]
     public Vector3 MyPos = Vector3.zero;
     [HideInInspector]
     public Queue<Enemy> TargetHandover = new Queue<Enemy>();
-
+    public Dictionary<string, Buff> Buffs = new Dictionary<string, Buff>();
 
 
     // some flags that can be enabled on a per-tower basis. They do nothing by themselves.
@@ -177,16 +178,30 @@ public class Tower : MonoBehaviour
         Range = based.Range;
         AttackRate = based.AttackRate;
         MaxLevel = based.MaxLevel;
+        Buffs.Clear();
         TowerSpecificStats();
         foreach (var a in RelatedNerds)
         {
             a.StatMod(this);
+        }
+        foreach (var a in Buffs)
+        {
+            ApplyBuff(a.Value);
         }
     }
 
     public virtual void StatMod(Tower me)
     {
         // apply modifiers to the tower "me" while it is in range
+    }
+    public void ApplyBuff(Buff b)
+    {
+        switch (b.Type)
+        {
+            case "Overload":
+                AttackRate *= 10;
+                break;
+        }
     }
     
     public virtual void TowerSpecificStats()
@@ -354,7 +369,8 @@ public class Tower : MonoBehaviour
             for (int i = 0; i < EnemyHandler.Instance.Enemies.Count; i++)
             {
                 var a = EnemyHandler.Instance.Enemies[i];
-                if (a == null || a.MarkedForDeath || a.Object == null) continue;
+                try { if (a == null || a.MarkedForDeath || a.Object == null) continue; }
+                catch { }
                 if ((a.mypos - MyPos).sqrMagnitude <= Range * Range)
                 {
                     nerds.Add(a);
@@ -375,7 +391,8 @@ public class Tower : MonoBehaviour
             for (int i = 0; i < EnemyHandler.Instance.Enemies.Count; i++)
             {
                 var a = EnemyHandler.Instance.Enemies[i];
-                if (a == null || a.MarkedForDeath || a.Object == null) continue;
+                try { if (a == null || a.MarkedForDeath || a.Object == null) continue; }
+                catch { }
                 if ((a.mypos - MyPos).sqrMagnitude <= Range * Range && CompareBySex(a, curnerd) == -1)
                 {
                     curnerd = a;
@@ -448,6 +465,27 @@ public class Tower : MonoBehaviour
         return bana;
     }
 
+    public Buff GetBuff(string buff)
+    {
+        if(Buffs.ContainsKey(buff)) return Buffs[buff];
+        return new Buff();
+    }
+    
+    public void AddBuff(Buff buff)
+    {
+        if (!Buffs.ContainsKey(buff.Type))
+        {
+            Buffs.Add(buff.Type, buff);
+        }
+        else if (Buffs[buff.Type].Level < buff.Level)
+        {
+            Buffs[buff.Type] = buff;
+        }
+
+        //if it didnt add the buff then the same buff was already applied at a higher level
+    }
+
+
     public DamageProfile GetDamProfile()
     {
         var a = new DamageProfile(this, DamageProfile.DamageType.Unknown, DamageProfile.DamageType.Unknown, GetDamage());
@@ -461,4 +499,22 @@ public class Tower : MonoBehaviour
 
 
 
+}
+
+public class Buff
+{
+    public string Type = "";
+    public int Level = 0;
+    public int Stack = 0;
+    public Tower SourceTower;
+    public Buff(string ty, Tower tower)
+    {
+        Type = ty;
+        SourceTower = tower;
+        Stack = 1;
+        Level = tower.Level;
+    }
+    public Buff()
+    {
+    }
 }

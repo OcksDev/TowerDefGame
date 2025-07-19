@@ -1112,12 +1112,13 @@ MonoBehaviour:
   - {fileID: 3032764456371466597, guid: 61f7c5985da618348a7265453ef7d573, type: 3}
   - {fileID: -6222476730483227905, guid: 151b9419c4441344188b5f72fcd5994e, type: 3}
   - {fileID: 1603722951903846953, guid: 7f042fc892ae7054ea4677309b01cec6, type: 3}
-  - {fileID: -6222476730483227905, guid: 771723a8dacfef04da2e0f545dbdcaf2, type: 3}
   - {fileID: 3295724411386635208, guid: 74ec306692f12ef40b9da7ecb0c5d83e, type: 3}
   - {fileID: -2230998779810786282, guid: cb698aa382c1bc0458d30da19f36b66b, type: 3}
   - {fileID: 4594123833619295214, guid: 24e33da3b99f5864199d55e0068ed388, type: 3}
+  - {fileID: -6222476730483227905, guid: 771723a8dacfef04da2e0f545dbdcaf2, type: 3}
   - {fileID: 910018081380605098, guid: ab086852b9f772a418d8106ea9b6f2a0, type: 3}
   - {fileID: 6682463618623223537, guid: 434edb3a74401094d9a87b1e7ac90fe5, type: 3}
+  - {fileID: 3579963746226735097, guid: 3cc51d0abe4cb4942a1afd817a321df2, type: 3}
   BaseIMGS:
   - {fileID: 21300000, guid: 0cdc41c9f25638c4d9c90ffc2d3938d2, type: 3}
   - {fileID: 21300000, guid: 8c0f86528b83727409143ef20adeac8e, type: 3}
@@ -3268,7 +3269,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2090503950}
   m_HandleRect: {fileID: 2090503949}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3395,7 +3396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.64998}
+  m_AnchoredPosition: {x: 0, y: -35.649963}
   m_SizeDelta: {x: 286.7443, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1732170961
