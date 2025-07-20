@@ -23,14 +23,14 @@ public class ProjectileTower : Tower
             x = Mathf.Clamp01(x + Time.deltaTime*Mathf.Max(GetAttackRate(),1));
             state =  Mathf.FloorToInt(Mathf.Clamp(x * 4,0,2));
             Parts[0].localPosition = Parts[0].rotation * new Vector3(0.2f*(1-RandomFunctions.EaseIn(x)), 0, 0);
-            UpdateRender();
+            RealUpdateRender();
             yield return null;
         }
         state = 2;
         Parts[0].transform.localPosition = Vector3.zero;
     }
 
-    public override void UpdateRender()
+    public override void UpdateTowerRender()
     {
         RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[Level];
         RenderParts[1].sprite = TowerIMGS[Level];

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Nothing : StationaryTower
 {
-    public override void UpdateRender()
+    public override void UpdateTowerRender()
     {
         RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[Level];
     }

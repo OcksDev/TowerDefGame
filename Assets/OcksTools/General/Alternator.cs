@@ -57,9 +57,9 @@ public class Alternator : HitscanTower
         }
 
     }
-    public override void UpdateRender()
+    public override void UpdateTowerRender()
     {
-        base.UpdateRender();
+        base.UpdateTowerRender();
         Parts[4].gameObject.SetActive(Level >= 1);
         Parts[5].gameObject.SetActive(Level >= 3);
         RenderParts[2].sprite = OtherImages[Level];

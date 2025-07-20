@@ -12,6 +12,8 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     public Dictionary<string,Tower> AllTowerDict = new Dictionary<string, Tower>();
     public List<Sprite> BaseIMGS = new List<Sprite>();
+    public List<Material> BaseMats = new List<Material>();
+    public List<Color> BaseColors = new List<Color>();
     [HideInInspector]
     public List<Tower> AllActiveTowers = new List<Tower>();
     public System.Action<Tower> NewTowerCreated;

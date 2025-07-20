@@ -6,6 +6,8 @@ using UnityEngine.Profiling;
 
 public class Tower : MonoBehaviour
 {
+    [HideInInspector]
+    public bool IsPlacing = true;
     public string TowerType = "";
     public int DesiredTargetCount = 1;
     public float Range = 5;
@@ -113,6 +115,7 @@ public class Tower : MonoBehaviour
     }
     public void RealPlace()
     {
+        IsPlacing = false;
         GameHandler.Instance.AllActiveTowers.Add(this);
         UpdateAllTowersOfSelf();
         SetStats();
@@ -148,7 +151,7 @@ public class Tower : MonoBehaviour
 
     public virtual void Place()
     {
-        UpdateRender();
+        RealUpdateRender();
     }
     public virtual void Remove()
     {
@@ -278,7 +281,7 @@ public class Tower : MonoBehaviour
     public virtual void Upgrade()
     {
         Level = Mathf.Clamp(Level + 1, 0, MaxLevel);
-        UpdateRender();
+        RealUpdateRender();
         SetStats();
     }
 
@@ -406,7 +409,27 @@ public class Tower : MonoBehaviour
             
         return target;
     }
-    public virtual void UpdateRender()
+    private bool HasSexPlaced = false;
+    public void RealUpdateRender()
+    {
+        UpdateTowerRender();
+        if(!HasSexPlaced && !IsPlacing)
+        {
+            HasSexPlaced = true;
+            foreach(var a in RenderParts)
+            {
+                a.material = GameHandler.Instance.BaseMats[0];
+            }
+        }
+        else
+        {
+            foreach (var a in RenderParts)
+            {
+                a.material = GameHandler.Instance.BaseMats[1];
+            }
+        }
+    }
+    public virtual void UpdateTowerRender()
     {
         RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[Level];
         RenderParts[1].sprite = TowerIMGS[Level];

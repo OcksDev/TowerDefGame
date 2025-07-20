@@ -20,7 +20,7 @@ public class LightningTower : ProjectileTower
     public override void Tick()
     {
     }
-    public override void UpdateRender()
+    public override void UpdateTowerRender()
     {
         RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[Level];
         RenderParts[1].sprite = TowerIMGS[Level];

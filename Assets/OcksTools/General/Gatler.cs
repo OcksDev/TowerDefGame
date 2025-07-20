@@ -33,16 +33,16 @@ public class Gatler : HitscanTower
             x = Mathf.Clamp01(x + Time.deltaTime * Mathf.Max(GetAttackRate(), 1));
             Parts[0].localPosition = Parts[0].rotation * new Vector3(0.2f * (1 - RandomFunctions.EaseIn(x)), 0, 0);
             state = Mathf.FloorToInt(Mathf.Clamp(x * 1.5f, 0, 1));
-            UpdateRender();
+            RealUpdateRender();
             yield return null;
         }
-        Parts[0].transform.localPosition = Vector3.zero;
-        UpdateRender();
+        Parts[0].transform.localPosition = Vector3.zero; 
+        RealUpdateRender();
 
     }
-    public override void UpdateRender()
+    public override void UpdateTowerRender()
     {
-        base.UpdateRender();
+        base.UpdateTowerRender();
         if (state == 0)
         {
             RenderParts[1].sprite = OtherImages[Level];
