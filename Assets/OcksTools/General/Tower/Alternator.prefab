@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 2350797976548751447}
   - component: {fileID: 1407727520241397506}
   - component: {fileID: 4594123833619295214}
+  - component: {fileID: -3815720345381776655}
   m_Layer: 0
   m_Name: Alternator
   m_TagString: Tower
@@ -298,7 +299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c9d27933030e8448ff530ee83e4fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsPlacing: 1
   TowerType: Alternator
+  DesiredTargetCount: 1
   Range: 4
   AttackRate: 4
   Damage: 2
@@ -325,6 +328,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a8bc5e99a743ebd45870234c795d25da, type: 3}
   - {fileID: 21300000, guid: 1ec951dda00e5a94f8685ff2dd728957, type: 3}
   TargetType: 0
+  EnemyTarget:
+    EnemyType: 
+    Object: {fileID: 0}
+    NodeTarget: 0
+    Radius: 0
+    Health: 0
+    Shield: 0
+    Max_Health: 0
+    Max_Shield: 0
+    MovementSpeed: 0
+    _TotalMoved: 0
+    my_time: 0
+    mypos: {x: 0, y: 0, z: 0}
+    MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
   MyGems: []
@@ -333,12 +350,34 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f0d732ed59dddd14d8f5a9bb5fc54d02, type: 3}
   - {fileID: 21300000, guid: 821bcf9497494c24db01e0cb90efa97b, type: 3}
   - {fileID: 21300000, guid: 93e742f16f2173b428ba162c7a2e69d8, type: 3}
+  MyPos: {x: 0, y: 0, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
   Level: 0
   HitLineObject: {fileID: 4183998883242688557, guid: ba2d301dafb36ad42a8180c9bcbd00bf, type: 3}
   SpawnOffset: {x: 0, y: 0, z: 0}
+--- !u!50 &-3815720345381776655
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350797976548751441}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2962097287743972066
 GameObject:
   m_ObjectHideFlags: 0

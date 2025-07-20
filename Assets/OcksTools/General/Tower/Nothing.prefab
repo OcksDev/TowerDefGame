@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2350797976548751447}
   - component: {fileID: 1407727520241397506}
   - component: {fileID: 3032764456371466597}
+  - component: {fileID: 2397734778303865237}
   m_Layer: 0
   m_Name: Nothing
   m_TagString: Tower
@@ -124,7 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd93d149ad6450499ecfd5c60eb9ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsPlacing: 1
   TowerType: Nothing
+  DesiredTargetCount: 1
   Range: 1
   AttackRate: 1
   Damage: 1
@@ -135,11 +138,47 @@ MonoBehaviour:
   - {fileID: 2350797976548751447}
   TowerIMGS: []
   TargetType: 0
+  EnemyTarget:
+    EnemyType: 
+    Object: {fileID: 0}
+    NodeTarget: 0
+    Radius: 0
+    Health: 0
+    Shield: 0
+    Max_Health: 0
+    Max_Shield: 0
+    MovementSpeed: 0
+    _TotalMoved: 0
+    my_time: 0
+    mypos: {x: 0, y: 0, z: 0}
+    MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
   MyGems: []
   OtherImages: []
+  MyPos: {x: 0, y: 0, z: 0}
   CanAttack: 0
   CanBuffInRange: 0
   CanGenerateMoney: 0
   Level: 0
+--- !u!50 &2397734778303865237
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350797976548751441}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

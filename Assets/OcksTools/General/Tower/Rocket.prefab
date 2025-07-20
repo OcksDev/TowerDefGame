@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2350797976548751447}
   - component: {fileID: -6222476730483227905}
   - component: {fileID: 1407727520241397506}
+  - component: {fileID: -8217842091864481157}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Tower
@@ -183,7 +184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1b45fd5be013f42bb716350de51ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsPlacing: 1
   TowerType: Rocket
+  DesiredTargetCount: 1
   Range: 5
   AttackRate: 0.8
   Damage: 5
@@ -200,6 +203,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7d068e00800195944a5c4ed821702bba, type: 3}
   - {fileID: 21300000, guid: 0123ef3f2afd0884a84c76704b15c968, type: 3}
   TargetType: 0
+  EnemyTarget:
+    EnemyType: 
+    Object: {fileID: 0}
+    NodeTarget: 0
+    Radius: 0
+    Health: 0
+    Shield: 0
+    Max_Health: 0
+    Max_Shield: 0
+    MovementSpeed: 0
+    _TotalMoved: 0
+    my_time: 0
+    mypos: {x: 0, y: 0, z: 0}
+    MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
   MyGems: []
@@ -208,6 +225,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a3de5b2ff521036498a0e7690023f414, type: 3}
   - {fileID: 21300000, guid: b7f120e8f9d685a488e0990c803fffe5, type: 3}
   - {fileID: 21300000, guid: 96584cc4a5400c24888e10a813ea3c43, type: 3}
+  MyPos: {x: 0, y: 0, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
@@ -240,3 +258,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &-8217842091864481157
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350797976548751441}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

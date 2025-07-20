@@ -1129,9 +1129,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: fcd9b7470475f70439032a72f1909366, type: 2}
   BaseColors:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0.5235849, g: 1, b: 0.5342276, a: 1}
-  - {r: 1, g: 0.5405059, b: 0.5254902, a: 1}
+  - {r: 0.25, g: 1, b: 0.26239663, a: 0.39215687}
+  - {r: 1, g: 0.4389911, b: 0.4198113, a: 0.39215687}
   AllActiveTowers: []
+  CurrentState: 0
+  PlacingTower: {fileID: 0}
 --- !u!4 &572984709
 Transform:
   m_ObjectHideFlags: 0
@@ -3277,7 +3279,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2090503949}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99918526
+  m_Size: 0.9815261
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3403,7 +3405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.649967}
+  m_AnchoredPosition: {x: 0, y: -34.938454}
   m_SizeDelta: {x: 286.7443, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1732170961

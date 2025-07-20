@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 2350797976548751447}
   - component: {fileID: -6222476730483227905}
   - component: {fileID: 1407727520241397506}
+  - component: {fileID: 7515007248776970829}
   m_Layer: 0
   m_Name: Crossbow
   m_TagString: Tower
@@ -184,10 +185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1b45fd5be013f42bb716350de51ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsPlacing: 1
   TowerType: Crossbow
+  DesiredTargetCount: 1
   Range: 5
   AttackRate: 2
   Damage: 5
+  ExplosionRange: 0
   Pierce: 0
   Parts:
   - {fileID: 2350797976167406723}
@@ -201,6 +205,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 56807b53a03a40e45a6fcd88eacc2a56, type: 3}
   - {fileID: 21300000, guid: b70a3492edc2af0469f3e8ae31cc8aca, type: 3}
   TargetType: 0
+  EnemyTarget:
+    EnemyType: 
+    Object: {fileID: 0}
+    NodeTarget: 0
+    Radius: 0
+    Health: 0
+    Shield: 0
+    Max_Health: 0
+    Max_Shield: 0
+    MovementSpeed: 0
+    _TotalMoved: 0
+    my_time: 0
+    mypos: {x: 0, y: 0, z: 0}
+    MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
   MyGems: []
@@ -217,6 +235,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c4bb5d80644260142b31bffd8136a534, type: 3}
   - {fileID: 21300000, guid: 4848e1772d5214b4783d0299a9a5bf6d, type: 3}
   - {fileID: 21300000, guid: 9ea3a6bc897e5e14497916ab962c3237, type: 3}
+  MyPos: {x: 0, y: 0, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
@@ -249,6 +268,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &7515007248776970829
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350797976548751441}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &4564309842759651311
 GameObject:
   m_ObjectHideFlags: 0

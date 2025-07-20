@@ -46,13 +46,14 @@ public class Tower : MonoBehaviour
 
     private void Start() // debug code
     {
-        RealPlace();
+        if(Time.time <= 0.5f)RealPlace();
     }
 
     protected Enemy old_tg;
     public void FixedUpdate()
     {
         MyPos = transform.position;
+        if (IsPlacing) return;
         TargettingCode();
         Tick();
         if (GetCanAttackTick()) AttackTick();
@@ -106,13 +107,13 @@ public class Tower : MonoBehaviour
     public virtual void TargetAquired(Enemy tg) { }
     public virtual void TargetLost(Enemy tg){ }
 
-    private void Update()
+    /*private void Update()
     {
         if (InputManager.IsKeyDown("shoot") && Hover.IsHovering(gameObject))
         {
             Upgrade();
         }
-    }
+    }*/
     public void RealPlace()
     {
         IsPlacing = false;
@@ -413,12 +414,13 @@ public class Tower : MonoBehaviour
     public void RealUpdateRender()
     {
         UpdateTowerRender();
-        if(!HasSexPlaced && !IsPlacing)
+        if(!IsPlacing)
         {
             HasSexPlaced = true;
             foreach(var a in RenderParts)
             {
                 a.material = GameHandler.Instance.BaseMats[0];
+                a.color = GameHandler.Instance.BaseColors[0];
             }
         }
         else
@@ -433,6 +435,23 @@ public class Tower : MonoBehaviour
     {
         RenderParts[0].sprite = GameHandler.Instance.BaseIMGS[Level];
         RenderParts[1].sprite = TowerIMGS[Level];
+    }
+    public void UpdatePlaceColor(bool good)
+    {
+        if (good)
+        {
+            foreach (var a in RenderParts)
+            {
+                a.color = GameHandler.Instance.BaseColors[1];
+            }
+        }
+        else
+        {
+            foreach (var a in RenderParts)
+            {
+                a.color = GameHandler.Instance.BaseColors[2];
+            }
+        }
     }
     public enum Target
     {

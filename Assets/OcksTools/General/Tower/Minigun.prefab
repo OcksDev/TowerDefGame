@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2350797976548751447}
   - component: {fileID: -2230998779810786282}
   - component: {fileID: 1407727520241397506}
+  - component: {fileID: -5475650863679322968}
   m_Layer: 0
   m_Name: Minigun
   m_TagString: Tower
@@ -183,7 +184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740e61e8c594246498b7bc8f7aef934e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsPlacing: 1
   TowerType: Minigun
+  DesiredTargetCount: 1
   Range: 4
   AttackRate: 1.5
   Damage: 3
@@ -200,6 +203,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 865e924ff3a446b4a926c169b078eda3, type: 3}
   - {fileID: 21300000, guid: 1c1a43b2886cde448b33c0ff4ec40d5c, type: 3}
   TargetType: 0
+  EnemyTarget:
+    EnemyType: 
+    Object: {fileID: 0}
+    NodeTarget: 0
+    Radius: 0
+    Health: 0
+    Shield: 0
+    Max_Health: 0
+    Max_Shield: 0
+    MovementSpeed: 0
+    _TotalMoved: 0
+    my_time: 0
+    mypos: {x: 0, y: 0, z: 0}
+    MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
   MyGems: []
@@ -208,6 +225,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c0314c49c49765d4abdbba62f06617e5, type: 3}
   - {fileID: 21300000, guid: 253439c9ff041544aae83b5c0d0db9cc, type: 3}
   - {fileID: 21300000, guid: cee06924ac243774784be23ada6a23e8, type: 3}
+  MyPos: {x: 0, y: 0, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
@@ -240,3 +258,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &-5475650863679322968
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350797976548751441}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

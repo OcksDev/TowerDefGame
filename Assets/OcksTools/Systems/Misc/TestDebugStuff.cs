@@ -27,10 +27,15 @@ public class TestDebugStuff : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            var a = GameHandler.Instance.SpawnTower("Sniper");
-            var d  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            d.z = 0;
-            a.transform.position = d;
+            string tg = "Crossbow";
+            var g = GameHandler.Instance;
+            if (g.CurrentState == GameHandler.PlayerState.PlacingTower)
+            {
+                tg = g.AllTowers[(g.AllTowers.IndexOf(g.AllTowerDict[g.PlacingTower.TowerType]) + 1) % g.AllTowers.Count].TowerType;
+                Destroy(g.PlacingTower.gameObject);
+            }
+            g.CurrentState = GameHandler.PlayerState.None;
+            g.BeginTowerPlace(tg);
         }
     }
     public IEnumerator Spawn(int x)

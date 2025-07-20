@@ -17,7 +17,7 @@ public class GameHandler : MonoBehaviour
     [HideInInspector]
     public List<Tower> AllActiveTowers = new List<Tower>();
     public System.Action<Tower> NewTowerCreated;
-
+    public PlayerState CurrentState= PlayerState.None;
     public OXThreadPoolA TowerTargetThreads;
     public static int TowerThreadCount = 20;
     void Awake()
@@ -86,6 +86,46 @@ public class GameHandler : MonoBehaviour
     {
         return Instantiate(AllTowerDict[nerd].gameObject);
     }
+    public Tower PlacingTower;
+    public void BeginTowerPlace(string nerd)
+    {
+        if (CurrentState != PlayerState.None) return;
+        PlacingTower = SpawnTower(nerd).GetComponent<Tower>();
+        var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        d.z = 0;
+        PlacingTower.transform.position = d;
+        PlacingTower.IsPlacing = true;
+        PlacingTower.RealUpdateRender();
+        CurrentState = PlayerState.PlacingTower;
+        PlacingTower.UpdatePlaceColor(PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size));
+    }
+    private void Update()
+    {
+        if (CurrentState == PlayerState.PlacingTower)
+        {
+            var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            d.z = 0;
+            PlacingTower.transform.position = d;
+            var dd = PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size);
+            PlacingTower.UpdatePlaceColor(dd);
+            if (dd && InputManager.IsKeyDown("shoot"))
+            {
+                PlacingTower.RealPlace();
+                CurrentState = PlayerState.None;
+            }
+        }
+    }
+    public bool PlaceTowerConfirm(Vector3 pos, Vector3 size)
+    {
+        var a = Physics2D.OverlapBoxAll(pos, size,0);
+        foreach(var b in a)
+        {
+            if (b.gameObject == PlacingTower.gameObject) continue;
+            var d = GetObjectType(b);
+            if (d.Type==ObjectTypes.Tower) return false;
+        }
+        return true;
+    }
 
     public enum ObjectTypes
     {
@@ -112,6 +152,14 @@ public class GameHandler : MonoBehaviour
                 break;
         }
         return type;
+    }
+
+
+    public enum PlayerState
+    {
+        None,
+        PlacingTower,
+        InspectingTower,
     }
 }
 

@@ -73,12 +73,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 25
-  m_Sprite: {fileID: 21300000, guid: 78450816893c45d48abd8520c8d25105, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 36181d482252c0143b846ff88e67ba77, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.8235294, y: 1.8235294}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2350797976548751447}
   - component: {fileID: 1407727520241397506}
   - component: {fileID: 6682463618623223537}
+  - component: {fileID: -2180143896340283352}
   m_Layer: 0
   m_Name: Transformer
   m_TagString: Tower
@@ -209,7 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416ad71a0b8229840b8224579e1a7aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsPlacing: 1
   TowerType: Transformer
+  DesiredTargetCount: 1
   Range: 5
   AttackRate: 2
   Damage: 5
@@ -221,16 +224,52 @@ MonoBehaviour:
   - {fileID: 2350797976548751447}
   - {fileID: 2350797976167406720}
   TowerIMGS:
-  - {fileID: 21300000, guid: 78450816893c45d48abd8520c8d25105, type: 3}
-  - {fileID: 21300000, guid: 66ac2a42068150243a9e6e1163b30612, type: 3}
-  - {fileID: 21300000, guid: 2f9ee7668ae0f97439a838a4af3faaa4, type: 3}
-  - {fileID: 21300000, guid: 37bb54d78ecaa2a478b28ea8376b2044, type: 3}
+  - {fileID: 21300000, guid: 36181d482252c0143b846ff88e67ba77, type: 3}
+  - {fileID: 21300000, guid: 4dadd95eea27dad488139687dfa82215, type: 3}
+  - {fileID: 21300000, guid: d73bd21c3c6536249ab117315c3bff39, type: 3}
+  - {fileID: 21300000, guid: 7f06987cc7765db4692cfbcfb47d145a, type: 3}
   TargetType: 0
+  EnemyTarget:
+    EnemyType: 
+    Object: {fileID: 0}
+    NodeTarget: 0
+    Radius: 0
+    Health: 0
+    Shield: 0
+    Max_Health: 0
+    Max_Shield: 0
+    MovementSpeed: 0
+    _TotalMoved: 0
+    my_time: 0
+    mypos: {x: 0, y: 0, z: 0}
+    MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
   MyGems: []
   OtherImages: []
+  MyPos: {x: 0, y: 0, z: 0}
   CanAttack: 0
   CanBuffInRange: 1
   CanGenerateMoney: 0
   Level: 0
+--- !u!50 &-2180143896340283352
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350797976548751441}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
