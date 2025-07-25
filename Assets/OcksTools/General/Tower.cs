@@ -136,6 +136,10 @@ public class Tower : MonoBehaviour
     public void RealAttack()
     {
         if (AttackAnim != null) StopCoroutine(AttackAnim);
+        AttackWithCheck();
+    }
+    public virtual void AttackWithCheck()
+    {
         if (EnemyTarget.MarkedForDeath)
         {
             TargetLost();
@@ -151,6 +155,7 @@ public class Tower : MonoBehaviour
             Attack();
         }
     }
+
 
     public virtual void Place()
     {
