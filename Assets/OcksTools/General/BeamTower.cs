@@ -29,23 +29,23 @@ public class BeamTower : Tower
         Debug.Log("Ran TargetLost");
         if (BeamAttack[Which] != null) { Destroy(BeamAttack[Which].gameObject); }
     }
-    
+
     public override void Tick()
     {
         Debug.Log("Ran Tick");
         for (int a = 0; a < BeamAttack.Count; a++)
-            {
+        {
             try
             {
                 BeamAttack[a].LineRenderer.SetPosition(0, transform.position + Parts[0].transform.rotation * SpawnOffset);
                 BeamAttack[a].LineRenderer.SetPosition(1, MultiTarget[a].Object.transform.position);
             }
             catch { continue; }
-            }
+        }
     }
     public override void Attack()
     {
-        Debug.Log("Ran Tick");
+        Debug.Log("Ran Attack");
         var d = GetDamProfile();
         EnemyTarget.Hit(d);
     }
@@ -58,30 +58,44 @@ public class BeamTower : Tower
         MultiTarget = new List<Enemy>(w.ToList());
         List<int> Where = new List<int>();
 
-        for (int g = 0; g < old_Multi.Count; g++) 
-        { 
+        for (int g = 0; g < MultiTarget.Count; g++)
+        {
+            if (old_Multi.Contains(MultiTarget[g])) 
+            {
+                if(g != old_Multi.IndexOf(MultiTarget[g])) 
+                {
+                    MultiTarget.Reverse();
+                }
+            }
+        }
+        bool VBeam = false;
+        int wVBeam = 1;
+        foreach(Beam a in BeamAttack)
+        {
+            if(a == null && MultiTarget.Count < 2) { VBeam = true; wVBeam = BeamAttack.IndexOf(a); }
+        }
+        if(VBeam && wVBeam == 0) {VBeam = false; BeamAttack.Reverse(); }
+
+        for (int g = 0; g < old_Multi.Count; g++)
+        {
             if (!MultiTarget.Contains(old_Multi[g])) { Where.Add(g); }
         }
-        if (Where.Count > 0)
+        foreach (int g in Where)
         {
-            foreach (int g in Where)
-            {
-                TargetLost(g);
-            }
+            Debug.Log($"call from lost: g is logged as {g}");
+            TargetLost(g);
         }
 
-        Where = new List<int>(); // Resets "Where"
+        Where = new List<int>();
 
-        for (int g = 0; g < MultiTarget.Count; g++) 
-        { 
+        for (int g = 0; g < MultiTarget.Count; g++)
+        {
             if (!old_Multi.Contains(MultiTarget[g])) { Where.Add(g); } //Checks Multitarget against its old self, Where logs location of differences.
         }
-        if (Where.Count > 0)
+        foreach (int g in Where)
         {
-            foreach (int g in Where)
-            {
-                TargetAquired(g);
-            }
+            Debug.Log($"call from gain: g is logged as {g}");
+            TargetAquired(g);
         }
     }
 }
