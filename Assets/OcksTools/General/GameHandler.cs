@@ -100,6 +100,16 @@ public class GameHandler : MonoBehaviour
         CurrentState = PlayerState.PlacingTower;
         PlacingTower.UpdatePlaceColor(PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size));
     }
+
+    public Tower SpawnDisplayOfTower(string nerd)
+    {
+        PlacingTower = SpawnTower(nerd).GetComponent<Tower>();
+        PlacingTower.IsDisplay = true;
+        PlacingTower.DisplaySandwichInit();
+        return PlacingTower;
+    }
+
+
     private void Update()
     {
         if (CurrentState == PlayerState.PlacingTower)

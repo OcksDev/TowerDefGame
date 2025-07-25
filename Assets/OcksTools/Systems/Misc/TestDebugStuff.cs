@@ -27,7 +27,8 @@ public class TestDebugStuff : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            var a = GameHandler.Instance.ConvertTowerToUI("Crossbow", Tags.refs["Canvas"].transform);
+            var a = GameHandler.Instance.SpawnDisplayOfTower("Crossbow");
+            a.transform.position = Tags.refs["Canvas_Bottom"].transform.position;
         }
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {

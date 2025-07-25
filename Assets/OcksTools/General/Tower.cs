@@ -7,9 +7,6 @@ using UnityEngine.Profiling;
 
 public class Tower : MonoBehaviour
 {
-    [HideInInspector]
-    [NonSerialized]
-    public bool IsPlacing = false;
     public string TowerType = "";
     public int DesiredTargetCount = 1;
     public float Range = 5;
@@ -45,15 +42,23 @@ public class Tower : MonoBehaviour
     public bool CanGenerateMoney = false;
     public int Level = 0;
 
+    [HideInInspector]
+    [NonSerialized]
+    public bool IsPlacing = false;
+    [HideInInspector]
+    [NonSerialized]
+    public bool IsDisplay = false;
 
     private void Start() // debug code
     {
-        if(Time.time <= 0.5f||!IsPlacing)RealPlace();
+        if (IsDisplay) return;
+        if(Time.time <= 0.5f||!IsPlacing) RealPlace();
     }
 
     protected Enemy old_tg;
     public void FixedUpdate()
     {
+        if (IsDisplay) return;
         MyPos = transform.position;
         if (IsPlacing) return;
         TargettingCode();
@@ -421,7 +426,7 @@ public class Tower : MonoBehaviour
     public void RealUpdateRender()
     {
         UpdateTowerRender();
-        if(!IsPlacing)
+        if(!IsPlacing || IsDisplay)
         {
             HasSexPlaced = true;
             foreach(var a in RenderParts)
@@ -534,7 +539,17 @@ public class Tower : MonoBehaviour
         //if it didnt add the buff then the same buff was already applied at a higher level
     }
 
-
+    public void DisplaySandwichInit()
+    {
+        Destroy(GetComponent<BoxCollider2D>());
+        Destroy(GetComponent<Rigidbody2D>());
+        foreach(var a in RenderParts)
+        {
+            a.sortingOrder += 3080;
+        }
+        transform.parent = Tags.refs["DisplayTowerHolder"].transform;
+        RealUpdateRender();
+    }
     public DamageProfile GetDamProfile()
     {
         var a = new DamageProfile(this, DamageProfile.DamageType.Unknown, DamageProfile.DamageType.Unknown, GetDamage());
