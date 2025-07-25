@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
@@ -126,6 +127,43 @@ public class GameHandler : MonoBehaviour
         }
         return true;
     }
+    public GameObject TowerUIBase;
+    public GameObject TowerUIPart;
+    public Transform ConvertTowerToUI(string gam, Transform parent)
+    {
+        var d = Instantiate(TowerUIBase, parent.transform.position, Quaternion.identity, parent).transform;
+        var gamin = Instantiate(AllTowerDict[gam].gameObject).GetComponent<Tower>();
+        gamin.IsPlacing = false;
+        gamin.RealUpdateRender();
+        List<int> orders=  new List<int>();
+        foreach (var a in gamin.RenderParts)
+        {
+            if (!a.gameObject.activeInHierarchy) continue;
+            if (!orders.Contains(a.sortingOrder))
+            {
+                orders.Add(a.sortingOrder);
+            }
+        }
+        orders.Sort();
+        foreach(var a in orders)
+        {
+            foreach (var b in gamin.RenderParts)
+            {
+                if (!b.gameObject.activeInHierarchy) continue;
+                if (a == b.sortingOrder)
+                {
+                    var dd = b.transform.localPosition;
+                    if (b == gamin.RenderParts[0]) { dd = Vector3.zero; }
+                    var c = Instantiate(TowerUIPart, d.transform.position + dd, b.transform.rotation,d);
+                    c.transform.localScale = (Vector3.one / 17 ) * b.sprite.texture.width;
+                    c.GetComponent<Image>().sprite = b.sprite;
+                }
+            }
+        }
+        Destroy(gamin.gameObject);
+        return d;
+    }
+
 
     public enum ObjectTypes
     {

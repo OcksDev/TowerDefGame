@@ -25,6 +25,10 @@ public class TestDebugStuff : MonoBehaviour
         {
             StartCoroutine(Spawn(15));
         }
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            var a = GameHandler.Instance.ConvertTowerToUI("Crossbow", Tags.refs["Canvas"].transform);
+        }
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             string tg = "Crossbow";
