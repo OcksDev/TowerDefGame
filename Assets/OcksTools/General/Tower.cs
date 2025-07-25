@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,8 @@ using UnityEngine.Profiling;
 public class Tower : MonoBehaviour
 {
     [HideInInspector]
-    public bool IsPlacing = true;
+    [NonSerialized]
+    public bool IsPlacing = false;
     public string TowerType = "";
     public int DesiredTargetCount = 1;
     public float Range = 5;
@@ -46,7 +48,7 @@ public class Tower : MonoBehaviour
 
     private void Start() // debug code
     {
-        if(Time.time <= 0.5f)RealPlace();
+        if(Time.time <= 0.5f||!IsPlacing)RealPlace();
     }
 
     protected Enemy old_tg;
