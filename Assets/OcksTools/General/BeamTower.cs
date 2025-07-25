@@ -12,13 +12,14 @@ public class BeamTower : Tower
     public List<Enemy> MultiTarget = new List<Enemy>();
     public override void ModDamProfile(DamageProfile a)
     {
-        Debug.Log("Ran ModDamProfile");
         a.HowDamageWasDealt = DamageProfile.DamageType.Ranged;
         a.WhatWasTheDamage = DamageProfile.DamageType.Magic;
     }
     public void TargetAquired(int Which)
     {
         Debug.Log("Ran TargetAquired");
+
+        //Destroys old beam if it exists, then creates and sets position of a new beam between the tower and the enemy.
         if (BeamAttack[Which] != null) { Destroy(BeamAttack[Which].gameObject); }
         BeamAttack[Which] = Instantiate(HitLineObject, Vector3.zero, Quaternion.identity, Tags.refs["BulletHolder"].transform).GetComponent<Beam>();
         BeamAttack[Which].LineRenderer.SetPosition(0, transform.position + Parts[0].transform.rotation * SpawnOffset);
@@ -32,11 +33,11 @@ public class BeamTower : Tower
 
     public override void Tick()
     {
-        Debug.Log("Ran Tick");
         for (int a = 0; a < BeamAttack.Count; a++)
         {
             try
             {
+                //attempts to set the position of every beam.
                 BeamAttack[a].LineRenderer.SetPosition(0, transform.position + Parts[0].transform.rotation * SpawnOffset);
                 BeamAttack[a].LineRenderer.SetPosition(1, MultiTarget[a].Object.transform.position);
             }
@@ -51,13 +52,13 @@ public class BeamTower : Tower
     }
     public override void TargettingCode()
     {
-        Debug.Log("Ran TargettingCode");
         //Sets up Multitarget, Multitarget comparison, and Target.
         var w = ReadTarget();
         List<Enemy> old_Multi = new List<Enemy>(MultiTarget);
         MultiTarget = new List<Enemy>(w.ToList());
         List<int> Where = new List<int>();
 
+        //Reverses Multitarget if it contains something at the wrong position
         for (int g = 0; g < MultiTarget.Count; g++)
         {
             if (old_Multi.Contains(MultiTarget[g])) 
@@ -68,6 +69,10 @@ public class BeamTower : Tower
                 }
             }
         }
+        
+        //A fall back if the extremely common situation of Multitarget not reversing occurs
+        //VBeam = VacantBeam? & wVBeam = Where VacantBeam
+        //Reverses Beam if there's only one and its in position 2.
         bool VBeam = false;
         int wVBeam = 1;
         foreach(Beam a in BeamAttack)
@@ -76,28 +81,32 @@ public class BeamTower : Tower
         }
         if(VBeam && wVBeam == 0) {VBeam = false; BeamAttack.Reverse(); }
 
+        //Checks for lost targets by comparing old_multi to MultiTarget. Calls TargetLost at position of difference
         for (int g = 0; g < old_Multi.Count; g++)
         {
             if (!MultiTarget.Contains(old_Multi[g])) { Where.Add(g); }
         }
         foreach (int g in Where)
         {
-            Debug.Log($"call from lost: g is logged as {g}");
             TargetLost(g);
         }
 
         Where = new List<int>();
 
+        //Checks for gained targets by comparing MultiTarget to old_Multi. Calls TargetAquired at position of difference
         for (int g = 0; g < MultiTarget.Count; g++)
         {
-            if (!old_Multi.Contains(MultiTarget[g])) { Where.Add(g); } //Checks Multitarget against its old self, Where logs location of differences.
+            if (!old_Multi.Contains(MultiTarget[g])) { Where.Add(g); }
         }
         foreach (int g in Where)
         {
-            Debug.Log($"call from gain: g is logged as {g}");
             TargetAquired(g);
         }
     }
+
+    public override void AttackWithCheck()
+    {
+        //Overrides normal attack pattern to instead all enemies in MultiTarget
+        foreach (Enemy h in MultiTarget) { EnemyTarget = h; Attack(); }
+    }
 }
-// Set EnemyTarget and EnemyTarget2 
-// 
