@@ -12,12 +12,13 @@ public class BeamTower : Tower
     public List<Enemy> MultiTarget = new List<Enemy>();
     public override void ModDamProfile(DamageProfile a)
     {
+        Debug.Log("Ran ModDamProfile");
         a.HowDamageWasDealt = DamageProfile.DamageType.Ranged;
         a.WhatWasTheDamage = DamageProfile.DamageType.Magic;
     }
     public void TargetAquired(int Which)
     {
-        Debug.Log("Aquired");
+        Debug.Log("Ran TargetAquired");
         if (BeamAttack[Which] != null) { Destroy(BeamAttack[Which].gameObject); }
         BeamAttack[Which] = Instantiate(HitLineObject, Vector3.zero, Quaternion.identity, Tags.refs["BulletHolder"].transform).GetComponent<Beam>();
         BeamAttack[Which].LineRenderer.SetPosition(0, transform.position + Parts[0].transform.rotation * SpawnOffset);
@@ -25,13 +26,14 @@ public class BeamTower : Tower
     }
     public void TargetLost(int Which)
     {
-        Debug.Log("Lost");
-        if (BeamAttack[0] != null) { Destroy(BeamAttack[0].gameObject); }
+        Debug.Log("Ran TargetLost");
+        if (BeamAttack[Which] != null) { Destroy(BeamAttack[Which].gameObject); }
     }
     
     public override void Tick()
     {
-            for (int a = 0; a < BeamAttack.Count; a++)
+        Debug.Log("Ran Tick");
+        for (int a = 0; a < BeamAttack.Count; a++)
             {
             try
             {
@@ -43,11 +45,13 @@ public class BeamTower : Tower
     }
     public override void Attack()
     {
+        Debug.Log("Ran Tick");
         var d = GetDamProfile();
         EnemyTarget.Hit(d);
     }
     public override void TargettingCode()
     {
+        Debug.Log("Ran TargettingCode");
         //Sets up Multitarget, Multitarget comparison, and Target.
         var w = ReadTarget();
         List<Enemy> old_Multi = new List<Enemy>(MultiTarget);
