@@ -95,6 +95,7 @@ public class BadgeHandler : MonoBehaviour
             x.LoadImage(o.Data["IMG"].DataRaw);
             if (x.width <= 128) x.filterMode = FilterMode.Point;
             n.Icon = Converter.Texture2DToSprite(x);
+            Console.Log("Badge Loaded: " + n.Name);
             Badges.Add(n.Name, n);
         }
         catch

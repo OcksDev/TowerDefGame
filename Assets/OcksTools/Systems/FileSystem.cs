@@ -20,9 +20,9 @@ public class FileSystem : MonoBehaviour
 
 
     //change these to match your game
-    public const string GameVer = "v1.1.1";
-    public const string GameFolderName = "OcksTools";
-    public const string GameTrueName = "Ocks Tools";
+    public const string GameVer = "v1.0.0";
+    public const string GameFolderName = "TowerDefGame";
+    public const string GameTrueName = "TowerDefGame";
 
 
     private static FileSystem instance;

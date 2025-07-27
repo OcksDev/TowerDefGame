@@ -55,7 +55,6 @@ public class OXThreadPoolA : IOXThreadPool
         {
             new System.Threading.Thread(() => { Awaiter(i); }).Start();
         }
-        Debug.Log("From Multithreader");
         if(MultiThreaderEnsure.Instance != null)
         {
             MultiThreaderEnsure.Instance.StartCoroutine(MultiThreaderEnsure.Instance.FixSlackers(this));

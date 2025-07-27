@@ -21,6 +21,9 @@ public class GameHandler : MonoBehaviour
     public PlayerState CurrentState= PlayerState.None;
     public OXThreadPoolA TowerTargetThreads;
     public static int TowerThreadCount = 20;
+
+    public Loadout LocalLoadout = new Loadout();
+
     void Awake()
     {
         Instance = this;
@@ -28,6 +31,8 @@ public class GameHandler : MonoBehaviour
         {
             AllTowerDict.Add(a.TowerType, a);
         }
+        SaveSystem.SaveAllData.Append(SaveLocalLoadout);
+        SaveSystem.LoadAllData.Append(SaveLocalLoadout);
     }
     private void Start()
     {
@@ -209,6 +214,18 @@ public class GameHandler : MonoBehaviour
         PlacingTower,
         InspectingTower,
     }
+
+    public void SaveLocalLoadout(string dict)
+    {
+        SaveSystem.Instance.SetString("Loadout", LocalLoadout.LoadoutToString(), dict);
+    }
+    public void LoadLocalLoadout(string dict)
+    {
+        var a = SaveSystem.Instance.GetString("Loadout", "-", dict);
+        LocalLoadout = new Loadout();
+        if(a != "-") LocalLoadout.StringToLoadout(a);
+    }
+
 }
 
 public class ObjectHolder
@@ -216,4 +233,32 @@ public class ObjectHolder
     public GameObject Object;
     public GameHandler.ObjectTypes Type;
     public Tower Tower;
+}
+
+
+public class Loadout
+{
+    public List<string> Towers;
+    public List<string> Gems;
+
+    public Loadout()
+    {
+        Towers = new List<string>(new string[6]);    
+        Gems = new List<string>(new string[9]);    
+    }
+
+
+    public string LoadoutToString()
+    {
+        Dictionary<string,string> d = new Dictionary<string,string>();
+        d.Add("T", Converter.ListToString(Towers));
+        d.Add("G", Converter.ListToString(Gems));
+        return Converter.DictionaryToString(d);
+    }
+    public void StringToLoadout(string s)
+    {
+        var d = Converter.StringToDictionary(s);
+        Towers = Converter.StringToList(d["T"]);
+        Gems = Converter.StringToList(d["G"]);
+    }
 }
