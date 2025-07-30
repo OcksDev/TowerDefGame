@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565fda2ae91bec74b80073085b33b917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPlacing: 1
   TowerType: Sniper
   DesiredTargetCount: 1
   Range: 10
@@ -222,6 +221,8 @@ MonoBehaviour:
   MyGems: []
   OtherImages: []
   MyPos: {x: 0, y: 0, z: 0}
+  UIDisplayScaleMult: 0.9
+  UIDisplayOffset: {x: 0.14, y: 0, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0

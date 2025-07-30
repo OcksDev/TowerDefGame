@@ -32,7 +32,7 @@ public class GameHandler : MonoBehaviour
             AllTowerDict.Add(a.TowerType, a);
         }
         SaveSystem.SaveAllData.Append(SaveLocalLoadout);
-        SaveSystem.LoadAllData.Append(SaveLocalLoadout);
+        SaveSystem.LoadAllData.Append(LoadLocalLoadout);
     }
     private void Start()
     {
@@ -79,15 +79,33 @@ public class GameHandler : MonoBehaviour
     {
         var mapgm = AllMaps[balls];
         ClearMap();
+        SpawnLoadoutDisplays();
         if(Map!=null) Destroy(Map.SpawnedScene);
         var winkle = Instantiate(mapgm, Vector3.zero, Quaternion.identity);
         Map = winkle.GetComponent<Map>();
     }
-
     public void SpawnEnemyWave()
     {
         //idk yet lol
     }
+
+    public void SpawnLoadoutDisplays()
+    {
+        var g = Tags.refs["LoadoutDisplayHolder"].GetComponent<LoadoutNerds>();
+        int x = 0;
+        foreach(var a in LocalLoadout.Towers)
+        {
+            if(a != "")
+            {
+                var b = SpawnDisplayOfTower(a);
+                b.transform.parent = g.gg[x].transform;
+                b.transform.position = g.gg[x].transform.position + b.UIDisplayOffset;
+                b.transform.localScale *= 0.75f * b.UIDisplayScaleMult;
+            }
+            x++;
+        }
+    }
+
     public GameObject SpawnTower(string nerd)
     {
         return Instantiate(AllTowerDict[nerd].gameObject);
@@ -95,6 +113,8 @@ public class GameHandler : MonoBehaviour
     public Tower PlacingTower;
     public void BeginTowerPlace(string nerd)
     {
+        if (CurrentState == PlayerState.PlacingTower)
+            CancelPlace();
         if (CurrentState != PlayerState.None) return;
         PlacingTower = SpawnTower(nerd).GetComponent<Tower>();
         var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -114,11 +134,20 @@ public class GameHandler : MonoBehaviour
         return PlacingTower;
     }
 
-
+    public void CancelPlace()
+    {
+        Destroy(PlacingTower.gameObject);
+        CurrentState = PlayerState.None;
+    }
     private void Update()
     {
         if (CurrentState == PlayerState.PlacingTower)
         {
+            if (InputManager.IsKeyDown("cancel_place"))
+            {
+                CancelPlace();
+                goto next;
+            }
             var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             d.z = 0;
             PlacingTower.transform.position = d;
@@ -130,6 +159,20 @@ public class GameHandler : MonoBehaviour
                 CurrentState = PlayerState.None;
             }
         }
+        if(CurrentState == PlayerState.None || CurrentState==PlayerState.PlacingTower)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                if (InputManager.IsKeyDown($"loadout{i}"))
+                {
+                    var s = LocalLoadout.Towers[i];
+                    if (s == "") continue;
+                    BeginTowerPlace(s);
+                    break;
+                }
+            }
+        }
+    next:;
     }
     public bool PlaceTowerConfirm(Vector3 pos, Vector3 size)
     {
@@ -224,6 +267,11 @@ public class GameHandler : MonoBehaviour
         var a = SaveSystem.Instance.GetString("Loadout", "-", dict);
         LocalLoadout = new Loadout();
         if(a != "-") LocalLoadout.StringToLoadout(a);
+        else
+        {
+            //default loadout setting
+            LocalLoadout.Towers = new List<string> { "Crossbow", "Sniper", "Rocket", "", "", "" };
+        }
     }
 
 }
@@ -235,7 +283,7 @@ public class ObjectHolder
     public Tower Tower;
 }
 
-
+[System.Serializable]
 public class Loadout
 {
     public List<string> Towers;

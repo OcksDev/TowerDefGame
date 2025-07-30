@@ -35,6 +35,8 @@ public class Tower : MonoBehaviour
     public Queue<Enemy> TargetHandover = new Queue<Enemy>();
     public Dictionary<string, Buff> Buffs = new Dictionary<string, Buff>();
 
+    public float UIDisplayScaleMult = 1f;
+    public Vector3 UIDisplayOffset = Vector3.zero;
 
     // some flags that can be enabled on a per-tower basis. They do nothing by themselves.
     public bool CanAttack = false;
@@ -51,6 +53,7 @@ public class Tower : MonoBehaviour
 
     private void Start() // debug code
     {
+        GetComponent<BoxCollider2D>().enabled = false;
         if (IsDisplay) return;
         if(Time.time <= 0.5f||!IsPlacing) RealPlace();
     }
@@ -124,6 +127,7 @@ public class Tower : MonoBehaviour
     public void RealPlace()
     {
         IsPlacing = false;
+        GetComponent<BoxCollider2D>().enabled = true;
         GameHandler.Instance.AllActiveTowers.Add(this);
         UpdateAllTowersOfSelf();
         SetStats();
