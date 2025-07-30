@@ -95,6 +95,7 @@ public class GameHandler : MonoBehaviour
         int x = 0;
         foreach(var a in LocalLoadout.Towers)
         {
+            g.gg[x].MyLoadoutIndex = x;
             if(a != "")
             {
                 var b = SpawnDisplayOfTower(a);
