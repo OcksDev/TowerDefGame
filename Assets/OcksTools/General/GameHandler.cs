@@ -19,6 +19,7 @@ public class GameHandler : MonoBehaviour
     public List<Tower> AllActiveTowers = new List<Tower>();
     public System.Action<Tower> NewTowerCreated;
     public PlayerState CurrentState= PlayerState.None;
+    public GameState CurrentGameState = GameState.MainMenu;
     public OXThreadPoolA TowerTargetThreads;
     public static int TowerThreadCount = 20;
 
@@ -83,24 +84,25 @@ public class GameHandler : MonoBehaviour
         if(Map!=null) Destroy(Map.SpawnedScene);
         var winkle = Instantiate(mapgm, Vector3.zero, Quaternion.identity);
         Map = winkle.GetComponent<Map>();
+        CurrentGameState = GameState.Game;
     }
     public void SpawnEnemyWave()
     {
         //idk yet lol
     }
-
+    private LoadoutNerds SmegNerd = null;
     public void SpawnLoadoutDisplays()
     {
-        var g = Tags.refs["LoadoutDisplayHolder"].GetComponent<LoadoutNerds>();
+        SmegNerd = Tags.refs["LoadoutDisplayHolder"].GetComponent<LoadoutNerds>();
         int x = 0;
         foreach(var a in LocalLoadout.Towers)
         {
-            g.gg[x].MyLoadoutIndex = x;
+            SmegNerd.gg[x].MyLoadoutIndex = x;
             if(a != "")
             {
                 var b = SpawnDisplayOfTower(a);
-                b.transform.parent = g.gg[x].transform;
-                b.transform.position = g.gg[x].transform.position + b.UIDisplayOffset;
+                b.transform.parent = SmegNerd.gg[x].transform;
+                b.transform.position = SmegNerd.gg[x].transform.position + b.UIDisplayOffset;
                 b.transform.localScale *= 0.75f * b.UIDisplayScaleMult;
             }
             x++;
@@ -142,6 +144,17 @@ public class GameHandler : MonoBehaviour
     }
     private void Update()
     {
+        bool allow_place = true;
+        if (CurrentGameState == GameState.Game)
+        {
+            foreach(var a in SmegNerd.gg)
+            {
+                if (Hover.IsHovering(a.gameObject))
+                {
+                    allow_place = false;
+                }
+            }
+        }
         if (CurrentState == PlayerState.PlacingTower)
         {
             if (InputManager.IsKeyDown("cancel_place"))
@@ -154,7 +167,7 @@ public class GameHandler : MonoBehaviour
             PlacingTower.transform.position = d;
             var dd = PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size);
             PlacingTower.UpdatePlaceColor(dd);
-            if (dd && InputManager.IsKeyDown("shoot"))
+            if (dd && allow_place && InputManager.IsKeyDown("shoot"))
             {
                 PlacingTower.RealPlace();
                 CurrentState = PlayerState.None;
@@ -257,6 +270,12 @@ public class GameHandler : MonoBehaviour
         None,
         PlacingTower,
         InspectingTower,
+    }
+    
+    public enum GameState
+    {
+        MainMenu,
+        Game,
     }
 
     public void SaveLocalLoadout(string dict)
