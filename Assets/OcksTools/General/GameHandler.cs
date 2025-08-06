@@ -28,6 +28,9 @@ public class GameHandler : MonoBehaviour
 
     void Awake()
     {
+#if !UNITY_EDITOR
+        Application.targetFrameRate = Screen.currentResolution.refreshRate;
+#endif
         Instance = this;
         foreach(var a in AllTowers)
         {
@@ -106,6 +109,16 @@ public class GameHandler : MonoBehaviour
             Instantiate(Player);
         }
     }
+    public static List<PlayerController> Players = new List<PlayerController>();
+    public static PlayerController GetPlayer(ulong i)
+    {
+        foreach(var a in Players)
+        {
+            if(a.NetworkObject.OwnerClientId==i) return a;
+        }
+        return null;
+    }
+
     public void HostGame()
     {
         if(PlayerController.Instance != null)

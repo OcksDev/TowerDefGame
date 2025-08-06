@@ -15,6 +15,7 @@ public class PlayerController : NetworkBehaviour
     public float grap_tower_radius = 5;
     private Vector3 move = new Vector3(0, 0, 0);
     public GameObject Grapp;
+    public GameObject Visual;
     public static PlayerController Instance;
 
     public bool IsRealNerd = false;
@@ -26,6 +27,11 @@ public class PlayerController : NetworkBehaviour
         {
             Instance = this;
         }
+        GameHandler.Players.Add(this);
+    }
+    private void OnDestroy()
+    {
+        GameHandler.Players.Remove(this);
     }
     private void Start()
     {
@@ -42,10 +48,7 @@ public class PlayerController : NetworkBehaviour
             IsRealNerd = NetworkObject.IsLocalPlayer;
             IsHost = NetworkObject.IsOwnedByServer;
         }
-
     }
-
-
     Vector3 GrappleDir;
 
     void FixedUpdate()
@@ -96,6 +99,8 @@ public class PlayerController : NetworkBehaviour
             Grapple();
         }
     }
+
+
     public void Grapple()
     {
         var pp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -113,12 +118,26 @@ public class PlayerController : NetworkBehaviour
                 dist = (zinkle - pp).sqrMagnitude;
             }
         }
+        Quaternion rot = Quaternion.identity;
         if (smegma != null)
         {
+            rot = RandomFunctions.PointAtPoint2D(transform.position, smegma.transform.position, 180);
             ShouldMoveByGrap = false;
-            nerdl = Instantiate(Grapp,transform.position, RandomFunctions.PointAtPoint2D(transform.position, smegma.transform.position, 180)).GetComponent<Grapp>();
+            nerdl = Instantiate(Grapp,transform.position, rot).GetComponent<Grapp>();
             nerdl.controller = this;
             StartCoroutine(WaitForNoGrap());
+            if (GameHandler.Instance.CurrentMultiplayerState == GameHandler.NetworkState.Multiplayer)
+            {
+                Console.Log("Grapple Init");
+                List<string> Data = new List<string>()
+                {
+                    "Start",
+                    NetworkObject.OwnerClientId.ToString(),
+                    rot.eulerAngles.ToString(),
+                    transform.position.ToString(),
+                };
+                ServerGamer.Instance.MessageServerRpc(ServerGamer.Instance.ClientID, "Grapple", Converter.ListToString(Data,"<->"));
+            }
         }
         /*else
         {
@@ -128,13 +147,35 @@ public class PlayerController : NetworkBehaviour
             nerdl.spd *= Mathf.Clamp(RandomFunctions.Dist(transform.position, ding) / 10,0.5f,1);
         }*/
     }
+    public void FakeGrapple(Vector3 pos,Quaternion rot)
+    {
+        Console.Log("Grapple Running");
+        ShouldMoveByGrap = false;
+        nerdl = Instantiate(Grapp, pos, rot).GetComponent<Grapp>();
+        nerdl.controller = this;
+    }
     private Grapp nerdl;
     public bool ShouldMoveByGrap = false;
     public IEnumerator WaitForNoGrap()
     {
         yield return new WaitUntil(() => { return !InputManager.IsKey("aim"); });
+
+        // stop grap
         Destroy(nerdl.gameObject);
         ShouldMoveByGrap = false;
-        // stop grap
+        if (GameHandler.Instance.CurrentMultiplayerState == GameHandler.NetworkState.Multiplayer)
+        {
+            List<string> Data = new List<string>()
+            {
+                "Stop",
+                NetworkObject.OwnerClientId.ToString(),
+            };
+            ServerGamer.Instance.MessageServerRpc(ServerGamer.Instance.ClientID, "Grapple", Converter.ListToString(Data, "<->"));
+        }
+    }
+    public void EndFakeGrapple()
+    {
+        Destroy(nerdl.gameObject);
+        ShouldMoveByGrap = false;
     }
 }

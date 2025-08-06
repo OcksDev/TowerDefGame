@@ -37,16 +37,31 @@ public class ServerGamer : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void MessageServerRpc(string id, string type, string data)
     {
+        Console.Log("Grapple Message");
         RecieveMessageClientRpc(id, type, data);
     }
-
-    //chat related method
     [ClientRpc]
     public void RecieveMessageClientRpc(string id, string type, string data)
     {
+        Console.Log("Grapple Recieved pre check");
         if (id == ClientID) return;
+
         switch (type)
         {
+            case "Grapple":
+                Console.Log("Grapple Recieved Good");
+                var l = Converter.StringToList(data,"<->");
+
+                var p = GameHandler.GetPlayer(ulong.Parse(l[1]));
+                if (l[0] == "Start")
+                {
+                    p.FakeGrapple(Converter.StringToVector3(l[3]), Quaternion.Euler(Converter.StringToVector3(l[2])));
+                }
+                else
+                {
+                    p.EndFakeGrapple();
+                }
+                break;
             default:
                 break;
         }
