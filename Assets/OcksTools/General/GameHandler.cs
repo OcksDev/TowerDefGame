@@ -20,6 +20,7 @@ public class GameHandler : MonoBehaviour
     public System.Action<Tower> NewTowerCreated;
     public PlayerState CurrentState= PlayerState.None;
     public GameState CurrentGameState = GameState.MainMenu;
+    public NetworkState CurrentMultiplayerState = NetworkState.Singleplayer;
     public OXThreadPoolA TowerTargetThreads;
     public static int TowerThreadCount = 20;
 
@@ -38,7 +39,12 @@ public class GameHandler : MonoBehaviour
     private void Start()
     {
         TowerTargetThreads = new OXThreadPoolA(TowerThreadCount);
-        StartCoroutine(BananaSmeg());
+        StartCoroutine(BananaSmeg());//dont touch
+
+
+
+        //debug start code
+        StartGame(NetworkState.Singleplayer);
     }
     public IEnumerator BananaSmeg()
     {
@@ -86,9 +92,29 @@ public class GameHandler : MonoBehaviour
         Map = winkle.GetComponent<Map>();
         CurrentGameState = GameState.Game;
     }
-    public void SpawnEnemyWave()
+    public GameObject Player;
+    public void StartGame(NetworkState state = NetworkState.Singleplayer)
     {
-        //idk yet lol
+        if(PlayerController.Instance != null)
+        {
+            Destroy(PlayerController.Instance.gameObject);
+            Console.Log("A");
+        }
+        CurrentMultiplayerState = state;
+        if(state == NetworkState.Singleplayer)
+        {
+            Instantiate(Player);
+        }
+    }
+    public void HostGame()
+    {
+        if(PlayerController.Instance != null)
+        {
+            Destroy(PlayerController.Instance.gameObject);
+            Console.Log("A");
+        }
+        StartGame(NetworkState.Multiplayer);
+        RelayMoment.Instance.GetComponent<PickThingymabob>().MakeGame();
     }
     private LoadoutNerds SmegNerd = null;
     public void SpawnLoadoutDisplays()
@@ -276,6 +302,12 @@ public class GameHandler : MonoBehaviour
     {
         MainMenu,
         Game,
+    }
+    
+    public enum NetworkState
+    {
+        Singleplayer,
+        Multiplayer,
     }
 
     public void SaveLocalLoadout(string dict)

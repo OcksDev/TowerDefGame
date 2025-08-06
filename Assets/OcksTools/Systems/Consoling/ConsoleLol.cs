@@ -445,6 +445,18 @@ public class ConsoleLol : MonoBehaviour
                     StartCoroutine(Wank2());
                     CloseConsole();
                     break;
+                case "start":
+                    GameHandler.Instance.StartGame(GameHandler.NetworkState.Singleplayer);
+                    break;
+                case "host":
+                    GameHandler.Instance.HostGame(); // multiplayer
+                    break;
+                case "join":
+                    RelayMoment.Instance.GetComponent<PickThingymabob>().GoinGameE2(command_caps[1]);
+                    break;
+                case "endhost":
+                    RelayMoment.Instance.EndConnection();
+                    break;
                 case "dialog":
                     switch (command[1])
                     {

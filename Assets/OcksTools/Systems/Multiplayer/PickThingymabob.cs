@@ -71,7 +71,7 @@ public class PickThingymabob : MonoBehaviour
         int i = await relay.CreateRelay();
         if (i == 1)
         {
-            Debug.Log(relay.Join_Code);
+            Console.Log(relay.Join_Code);
 
             NetworkManager.Singleton.StartHost();
 

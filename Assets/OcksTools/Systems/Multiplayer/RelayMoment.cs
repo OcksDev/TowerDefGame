@@ -52,7 +52,7 @@ public class RelayMoment : MonoBehaviour
         }
         catch
         {
-            Debug.Log("Failed to sign in, probably due to internet issues lol");
+            Console.Log("Failed to network, probably due to internet issues lol");
             SignInState = "Fail";
             return 0;
         }
@@ -78,7 +78,7 @@ public class RelayMoment : MonoBehaviour
         }
         catch
         {
-            Debug.Log("SHID FUKED");
+            Console.Log("Something got fucked trying to establish the relay");
         }
         return 0;
     }
@@ -93,6 +93,8 @@ public class RelayMoment : MonoBehaviour
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(rsd);
 
+            GameHandler.Instance.StartGame(GameHandler.NetworkState.Multiplayer);
+
             NetworkManager.Singleton.StartClient();
 
             Join_Code = joinC.ToUpper();
@@ -100,7 +102,7 @@ public class RelayMoment : MonoBehaviour
         }
         catch
         {
-            Debug.Log("HAH STUIPDIUD");
+            Console.Log("Something got fucked trying to establish the connection (wrong code?)");
         }
         return 0;
     }

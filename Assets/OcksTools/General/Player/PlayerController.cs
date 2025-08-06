@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     private Rigidbody2D rigid;
     public float move_speed = 2;
@@ -12,9 +15,34 @@ public class PlayerController : MonoBehaviour
     public float grap_tower_radius = 5;
     private Vector3 move = new Vector3(0, 0, 0);
     public GameObject Grapp;
+    public static PlayerController Instance;
+
+    public bool IsRealNerd = false;
+    public bool IsHost = false;
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
     private void Start()
     {
         rigid= GetComponent<Rigidbody2D>();
+        if(GameHandler.Instance.CurrentMultiplayerState == GameHandler.NetworkState.Singleplayer)
+        {
+            Destroy(GetComponent<ClientNetworkTransform>());
+            Destroy(GetComponent<NetworkObject>());
+            IsRealNerd = true;
+            IsHost = true;
+        }
+        else
+        {
+            IsRealNerd = NetworkObject.IsLocalPlayer;
+            IsHost = NetworkObject.IsOwnedByServer;
+        }
+
     }
 
 
@@ -22,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!IsRealNerd) { return; }
         move *= decay;
         Vector3 dir = new Vector3(0, 0, 0);
         if (InputManager.IsKey("move_forward")) dir += Vector3.up;
@@ -61,6 +90,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if (!IsRealNerd) { return; }
         if (InputManager.IsKeyDown("aim"))
         {
             Grapple();
