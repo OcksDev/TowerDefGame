@@ -111,4 +111,8 @@ public class RelayMoment : MonoBehaviour
     {
         NetworkManager.Singleton.Shutdown();
     }
+    public void Kick(ulong nerd)
+    {
+        NetworkManager.Singleton.DisconnectClient(nerd);
+    }
 }
