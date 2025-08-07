@@ -227,7 +227,7 @@ public class GameHandler : MonoBehaviour
                     float y_o = 0;
                     if(init.sqrMagnitude <= 4)
                     {
-                        float outer = 0.6f;
+                        float outer = 0.75f;
                         if(init.x < 0)
                         {
                             x_f *= -1;
