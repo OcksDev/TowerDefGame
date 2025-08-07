@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -53,6 +54,7 @@ public class Tower : MonoBehaviour
 
     private void Start() // debug code
     {
+        GetComponent<BoxCollider2D>().size *= 0.96f;
         GetComponent<BoxCollider2D>().enabled = false;
         if (IsDisplay) return;
         if(Time.time <= 0.5f||!IsPlacing) RealPlace();

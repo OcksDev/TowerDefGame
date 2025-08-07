@@ -165,7 +165,6 @@ public class GameHandler : MonoBehaviour
         PlacingTower.IsPlacing = true;
         PlacingTower.RealUpdateRender();
         CurrentState = PlayerState.PlacingTower;
-        PlacingTower.UpdatePlaceColor(PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size));
     }
 
     public Tower SpawnDisplayOfTower(string nerd)
@@ -181,6 +180,9 @@ public class GameHandler : MonoBehaviour
         Destroy(PlacingTower.gameObject);
         CurrentState = PlayerState.None;
     }
+
+    public static bool AllowSnapping = true;
+
     private void Update()
     {
         bool allow_place = true;
@@ -203,6 +205,64 @@ public class GameHandler : MonoBehaviour
             }
             var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             d.z = 0;
+
+            if (AllowSnapping)
+            {
+                Tower t = null;
+                float x = float.MaxValue;
+                foreach(var a in AllActiveTowers)
+                {
+                    if((a.transform.position-d).sqrMagnitude < x)
+                    {
+                        x = (a.transform.position - d).sqrMagnitude;
+                        t = a;
+                    }
+                }
+                if (t != null)
+                {
+                    var init = (t.transform.position - d);
+                    int x_f = -1;
+                    int y_f = -1;
+                    float x_o = 0;
+                    float y_o = 0;
+                    if(init.sqrMagnitude <= 4)
+                    {
+                        float outer = 0.6f;
+                        if(init.x < 0)
+                        {
+                            x_f *= -1;
+                            init.x *= -1;
+                        }
+                        if(init.y < 0)
+                        {
+                            y_f *= -1;
+                            init.y *= -1;
+                        }
+
+                        if(init.x < outer + 0.5f && init.y < outer + 0.5f)
+                        {
+                            if(init.x > 0.5f)
+                            {
+                                x_o = 1f;
+                            }
+                            else
+                            {
+                                x_o = 0;
+                            }
+                            if(init.y > 0.5f)
+                            {
+                                y_o = 1f;
+                            }
+                            else
+                            {
+                                y_o = 0;
+                            }
+                            d = new Vector3(x_o * x_f, y_o * y_f,0) + t.transform.position;
+                        }
+                    }
+                }
+            }
+
             PlacingTower.transform.position = d;
             var dd = PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size);
             PlacingTower.UpdatePlaceColor(dd);
