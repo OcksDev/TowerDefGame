@@ -28,7 +28,7 @@ public class FunnyLerpOnPlayer : MonoBehaviour
             LastPos = OldPos;
             TargetPos = transform.parent.position;
             Times.Add(tx);
-            if (Times.Count > 10) Times.RemoveAt(0);
+            if (Times.Count > 20) Times.RemoveAt(0);
             x = 0;
             tx = 0;
         }
