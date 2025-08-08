@@ -21,8 +21,12 @@ public class Gem : MonoBehaviour
     public virtual void CreateHooks()
     {
         //gems override this to have their own functionality
+        AddHook(Tower.AttackHook, "example", () => { Debug.Log("Gem saw the attack!"); });
     }
-
+    public void AddHook(OXEvent e,string name, System.Action Method)
+    {
+        e.Append($"{Name}_{name}", Method);
+    }
     public void RealUpgrade()
     {
         Upgrade();

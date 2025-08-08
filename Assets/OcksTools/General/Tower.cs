@@ -56,6 +56,7 @@ public class Tower : MonoBehaviour
     public OXEvent TickHook = new OXEvent();
     public OXEvent UpgradeHook = new OXEvent();
     public OXEvent SellHook = new OXEvent();
+    public OXEvent StatHook = new OXEvent();
 
 
     private void Start() // debug code
@@ -235,6 +236,7 @@ public class Tower : MonoBehaviour
         {
             ApplyBuff(a.Value);
         }
+        StatHook.Invoke();
     }
 
     public virtual void StatMod(Tower me)
