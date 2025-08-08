@@ -28,7 +28,7 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public List<Tower> RelatedNerds = new List<Tower>();
     [HideInInspector]
-    public List<Tower> MyGems = new List<Tower>();
+    public List<Gem> MyGems = new List<Gem>();
     public List<Sprite> OtherImages = new List<Sprite>();
     [HideInInspector]
     public Vector3 MyPos = Vector3.zero;
@@ -52,6 +52,12 @@ public class Tower : MonoBehaviour
     [NonSerialized]
     public bool IsDisplay = false;
 
+    public OXEvent AttackHook = new OXEvent();
+    public OXEvent TickHook = new OXEvent();
+    public OXEvent UpgradeHook = new OXEvent();
+    public OXEvent SellHook = new OXEvent();
+
+
     private void Start() // debug code
     {
         GetComponent<BoxCollider2D>().size *= 0.96f;
@@ -68,6 +74,7 @@ public class Tower : MonoBehaviour
         if (IsPlacing) return;
         TargettingCode();
         Tick();
+        TickHook.Invoke();
         if (GetCanAttackTick()) AttackTick();
     }
 
@@ -138,12 +145,25 @@ public class Tower : MonoBehaviour
         MyPos = transform.position;
     }
     
+    public void RealSell()
+    {
+        SellHook.Invoke();
+        RealRemove();
+    }
     public void RealRemove()
     {
         GameHandler.Instance.AllActiveTowers.Remove(this);
         UpdateAllTowersOfSelf(false);
         Remove();
     }
+
+    public void AddGem(string a)
+    {
+        var g = Instantiate(GameHandler.Instance.AllGemDict[a].gameObject, transform).GetComponent<Gem>();
+        MyGems.Add(g);
+        g.Initialize(this);
+    }
+
     public void RealAttack()
     {
         if (AttackAnim != null) StopCoroutine(AttackAnim);
@@ -158,12 +178,17 @@ public class Tower : MonoBehaviour
             if (a.Count > 0)
             {
                 EnemyTarget = a.Dequeue();
-                if (EnemyTarget != null) Attack();
+                if (EnemyTarget != null)
+                {
+                    Attack();
+                    AttackHook.Invoke();
+                }
             }
         }
         else
         {
             Attack();
+            AttackHook.Invoke();
         }
     }
 
@@ -295,6 +320,12 @@ public class Tower : MonoBehaviour
     {
         //allows for stuns or other such mechanics to be universally applied to towers
         return CanAttackTick;
+    }
+
+    public virtual void RealUpgrade()
+    {
+        Upgrade();
+        UpgradeHook.Invoke();
     }
 
     public virtual void Upgrade()

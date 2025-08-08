@@ -10,8 +10,10 @@ public class GameHandler : MonoBehaviour
     public Map Map;
     public List<GameObject> AllMaps = new List<GameObject>();
     public List<Tower> AllTowers = new List<Tower>();
+    public List<Gem> AllGems = new List<Gem>();
     // Start is called before the first frame update
     public Dictionary<string,Tower> AllTowerDict = new Dictionary<string, Tower>();
+    public Dictionary<string, Gem> AllGemDict = new Dictionary<string, Gem>();
     public List<Sprite> BaseIMGS = new List<Sprite>();
     public List<Material> BaseMats = new List<Material>();
     public List<Color> BaseColors = new List<Color>();
@@ -35,6 +37,10 @@ public class GameHandler : MonoBehaviour
         foreach(var a in AllTowers)
         {
             AllTowerDict.Add(a.TowerType, a);
+        }
+        foreach(var a in AllGems)
+        {
+            AllGemDict.Add(a.Name, a);
         }
         SaveSystem.SaveAllData.Append(SaveLocalLoadout);
         SaveSystem.LoadAllData.Append(LoadLocalLoadout);

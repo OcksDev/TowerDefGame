@@ -11,7 +11,7 @@ public class FunnyLerpOnPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Times.Add(0.5f);
+        Times.Add(0.05f);
         LastPos = transform.position;
         TargetPos = transform.position;
     }
@@ -41,7 +41,7 @@ public class FunnyLerpOnPlayer : MonoBehaviour
 
         if(tx <= avg + 0.05f) tx += Time.deltaTime;
         x += Time.deltaTime * (1/avg);
-
+        x = Mathf.Clamp(x,0,5);
         transform.position = Vector3.LerpUnclamped(LastPos,TargetPos,x);
         OldPos = transform.position;
     }

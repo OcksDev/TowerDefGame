@@ -54,7 +54,7 @@ public class PlayerController : NetworkBehaviour
 
         if (IsRealNerd)
         {
-            Destroy(Visual.GetComponent<FunnyLerpOnPlayer>());
+            //Destroy(Visual.GetComponent<FunnyLerpOnPlayer>());
         }
     }
     Vector3 GrappleDir;

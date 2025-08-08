@@ -1373,6 +1373,8 @@ MonoBehaviour:
   - {fileID: 6682463618623223537, guid: 434edb3a74401094d9a87b1e7ac90fe5, type: 3}
   - {fileID: 3579963746226735097, guid: 3cc51d0abe4cb4942a1afd817a321df2, type: 3}
   - {fileID: -6222476730483227905, guid: a5d9b295d7f5fb34797759c0f5397146, type: 3}
+  AllGems:
+  - {fileID: 6975882244584510918, guid: fef971fc5512a3d4484ec8a52319bf39, type: 3}
   BaseIMGS:
   - {fileID: 21300000, guid: 0cdc41c9f25638c4d9c90ffc2d3938d2, type: 3}
   - {fileID: 21300000, guid: 8c0f86528b83727409143ef20adeac8e, type: 3}
