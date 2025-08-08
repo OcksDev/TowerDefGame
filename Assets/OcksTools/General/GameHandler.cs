@@ -114,7 +114,7 @@ public class GameHandler : MonoBehaviour
     {
         foreach(var a in Players)
         {
-            if(a.NetworkObject.OwnerClientId==i) return a;
+            if(a.ID==i) return a;
         }
         return null;
     }

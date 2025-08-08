@@ -20,6 +20,7 @@ public class PlayerController : NetworkBehaviour
 
     public bool IsRealNerd = false;
     public bool IsHost = false;
+    public ulong ID = 6969;
 
     private void Awake()
     {
@@ -42,11 +43,18 @@ public class PlayerController : NetworkBehaviour
             Destroy(GetComponent<NetworkObject>());
             IsRealNerd = true;
             IsHost = true;
+            ID = 0;
         }
         else
         {
             IsRealNerd = NetworkObject.IsLocalPlayer;
             IsHost = NetworkObject.IsOwnedByServer;
+            ID = NetworkObject.OwnerClientId;
+        }
+
+        if (IsRealNerd)
+        {
+            Destroy(Visual.GetComponent<FunnyLerpOnPlayer>());
         }
     }
     Vector3 GrappleDir;
@@ -132,7 +140,7 @@ public class PlayerController : NetworkBehaviour
                 List<string> Data = new List<string>()
                 {
                     "Start",
-                    NetworkObject.OwnerClientId.ToString(),
+                    ID.ToString(),
                     rot.eulerAngles.ToString(),
                     transform.position.ToString(),
                 };
@@ -168,7 +176,7 @@ public class PlayerController : NetworkBehaviour
             List<string> Data = new List<string>()
             {
                 "Stop",
-                NetworkObject.OwnerClientId.ToString(),
+                ID.ToString(),
             };
             ServerGamer.Instance.MessageServerRpc(ServerGamer.Instance.ClientID, "Grapple", Converter.ListToString(Data, "<->"));
         }

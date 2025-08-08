@@ -68,7 +68,7 @@ public class Grapp : MonoBehaviour
         }
         int m = lineRenderer.positionCount;
         cut_wangle += Time.deltaTime * Waggle;
-        var based = Quaternion.Inverse(transform.rotation) * (controller.transform.position - transform.position);
+        var based = Quaternion.Inverse(transform.rotation) * (controller.Visual.transform.position - transform.position);
         var tg = based/transform.localScale.x;
         var right = Quaternion.Euler(0,0,90)*based.normalized;
         for (int i = 0; i< m; i++)
