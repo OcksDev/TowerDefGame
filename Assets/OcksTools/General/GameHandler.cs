@@ -138,20 +138,50 @@ public class GameHandler : MonoBehaviour
     private LoadoutNerds SmegNerd = null;
     public void SpawnLoadoutDisplays()
     {
+        SetLoadoutDisplays(0);
+    }
+
+    public void SetLoadoutDisplays(int state)
+    {
         SmegNerd = Tags.refs["LoadoutDisplayHolder"].GetComponent<LoadoutNerds>();
         int x = 0;
-        foreach(var a in LocalLoadout.Towers)
+
+        foreach (var a in SmegNerd.gg)
         {
-            SmegNerd.gg[x].MyLoadoutIndex = x;
-            if(a != "")
-            {
-                var b = SpawnDisplayOfTower(a);
-                b.transform.parent = SmegNerd.gg[x].transform;
-                b.transform.position = SmegNerd.gg[x].transform.position + b.UIDisplayOffset;
-                b.transform.localScale *= 0.75f * b.UIDisplayScaleMult;
-            }
-            x++;
+            a.gameObject.SetActive(false);
         }
+        if (state == 0)
+        {
+            foreach (var a in LocalLoadout.Towers)
+            {
+                SmegNerd.gg[x].MyLoadoutIndex = x;
+                if (a != "" && a != " " && a != null)
+                {
+                    SmegNerd.gg[x].gameObject.SetActive(true);
+                    var b = SpawnDisplayOfTower(a);
+                    b.transform.parent = SmegNerd.gg[x].transform;
+                    b.transform.position = SmegNerd.gg[x].transform.position + b.UIDisplayOffset;
+                    b.transform.localScale *= 0.75f * b.UIDisplayScaleMult;
+                }
+                x++;
+            }
+        }
+        if (state == 1)
+        {
+            foreach (var a in LocalLoadout.Towers)
+            {
+                SmegNerd.gg[x].MyLoadoutIndex = x;
+                if (a != "")
+                {
+                    SmegNerd.gg[x].gameObject.SetActive(true);
+                    /*var b = SpawnDisplayOfCard(a);
+                    b.transform.parent = SmegNerd.gg[x].transform;
+                    b.transform.position = SmegNerd.gg[x].transform.position + b.UIDisplayOffset;*/
+                }
+                x++;
+            }
+        }
+
     }
 
     public GameObject SpawnTower(string nerd)
