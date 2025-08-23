@@ -49,7 +49,15 @@ public class EnemyHandler : MonoBehaviour
         {
             for (int i = x; i < Enemies.Count; i+=ThreadCount) // potential optimization to save enemies[i] to a var instead of continual lookup
             {
-                var d = Enemies[i];
+                Enemy d = null;
+                try
+                {
+                    d = Enemies[i];
+                }
+                catch
+                {
+                    continue;
+                }
                 try
                 {
                     if (d == null || d.MarkedForDeath || d.Object == null) continue;

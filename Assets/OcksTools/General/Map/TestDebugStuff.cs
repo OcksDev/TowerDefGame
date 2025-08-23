@@ -25,7 +25,11 @@ public class TestDebugStuff : MonoBehaviour
         {
             StartCoroutine(Spawn(15));
         }
-        if (Input.GetKeyDown(KeyCode.Keypad4))
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            WaveSystem.Instance.StartWave(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad4))  
         {
             var a = GameHandler.Instance.SpawnDisplayOfTower("Crossbow");
             a.transform.position = Tags.refs["Canvas_Bottom"].transform.position;
