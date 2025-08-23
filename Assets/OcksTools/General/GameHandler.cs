@@ -109,6 +109,7 @@ public class GameHandler : MonoBehaviour
             Destroy(PlayerController.Instance.gameObject);
             Console.Log("A");
         }
+        WaveSystem.CurrentKing = "Blank";
         CurrentMultiplayerState = state;
         if(state == NetworkState.Singleplayer)
         {

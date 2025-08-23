@@ -8,6 +8,11 @@ public class EnemyHandler : MonoBehaviour
     public List<Enemy> Enemies = new List<Enemy>();
     public List<Enemy> Deads = new List<Enemy>();
     public Dictionary<GameObject,Enemy> ObjectToEnemy = new Dictionary<GameObject, Enemy>();
+
+    public List<King> enemyDatas = new List<King>();
+    public Dictionary<string, EnemyData> EnemyDict = new Dictionary<string, EnemyData>();
+    public Dictionary<string, King> KingDict = new Dictionary<string, King>();
+
     public static EnemyHandler Instance;
 
     public GameObject EnemyObj;
@@ -18,6 +23,14 @@ public class EnemyHandler : MonoBehaviour
         Instance = this;
         EnemyThreads = new OXThreadPoolA(ThreadCount);
         StartCoroutine(BananaSmeg());
+        foreach(var a in enemyDatas)
+        {
+            foreach (var b in a.enemyDatas)
+            {
+                EnemyDict.Add(b.Name, b);
+            }
+            KingDict.Add(a.Name, a);
+        }
     }
     int bongle = 0;
     public IEnumerator BananaSmeg()
@@ -71,10 +84,14 @@ public class EnemyHandler : MonoBehaviour
         }
     }
 
-
+    public Enemy SpawnEnemy(EnemyData d)
+    {
+        return SpawnEnemy(d.Name);
+    }
     public Enemy SpawnEnemy(string type)
     {
         var a = new Enemy(type);
+        a.DataRef = EnemyDict[type];
         var x = GameHandler.Instance.Map.GetSpawnIndex();
         switch (type)
         {
@@ -84,15 +101,15 @@ public class EnemyHandler : MonoBehaviour
                 break;
             case "Phys":break;
         }
-        a.Max_Shield = 0;
+        a.DataRef.Max_Shield = 0;
         switch (type)
         {
             default:
-                a.Max_Health = 10;
+                a.DataRef.Max_Health = 10;
                 break;
         }
-        a.Health = a.Max_Health;
-        a.Shield = a.Max_Shield;
+        a.Health = a.DataRef.Max_Health;
+        a.Shield = a.DataRef.Max_Shield;
         a.NodeTarget = x;
         Enemies.Add(a);
         a.mypos = GameHandler.Instance.Map.Nodes[x].Node.position;
@@ -120,16 +137,33 @@ public class EnemyHandler : MonoBehaviour
 
 }
 [System.Serializable]
+
+
+public class EnemyData
+{
+    public string Name;
+    public float Radius = 0.3333f;
+    public double Max_Health = 100;
+    public double Max_Shield = 0;
+
+    public double CalcCreditCost(double goal)
+    {
+        return Max_Health;
+    }
+
+
+}
+
+[System.Serializable]
+
 public class Enemy
 {
     public string EnemyType;
+    public EnemyData DataRef;
     public Transform Object;
     public int NodeTarget;
-    public float Radius = 0.3333f;
     public double Health = 100;
     public double Shield = 100;
-    public double Max_Health = 100;
-    public double Max_Shield = 100;
     public float MovementSpeed = 1;
     public float _TotalMoved = 0;
     public float my_time = 0;
@@ -189,24 +223,24 @@ public class Enemy
         Shield -= dmg;
         if (Shield < 0)
         {
-            Health = System.Math.Clamp(Health + Shield, 0, Max_Health);
+            Health = System.Math.Clamp(Health + Shield, 0, DataRef.Max_Health);
             if(Health <= 0)
             {
                 Kill();
                 return true;
             }
         }
-        Shield = System.Math.Clamp(Shield, 0, Max_Shield);
+        Shield = System.Math.Clamp(Shield, 0, DataRef.Max_Shield);
         return false;
     }
 
     public void Heal(double amount)
     {
         var oldh = Health;
-        Health = System.Math.Clamp(Health + amount, 0, Max_Health);
+        Health = System.Math.Clamp(Health + amount, 0, DataRef.Max_Health);
         var change = amount - (Health - oldh);
         var olds = Shield;
-        Shield = System.Math.Clamp(Shield + change, 0, Max_Shield);
+        Shield = System.Math.Clamp(Shield + change, 0, DataRef.Max_Shield);
         var change2 = change - (Shield - olds);
 
         // Amount Healed: RandomFunctions.Instance.NumToRead(((System.Numerics.BigInteger)System.Math.Round(amount - change2)).ToString())

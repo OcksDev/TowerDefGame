@@ -16,7 +16,7 @@ public class TestPhys : MonoBehaviour
             var b= EnemyHandler.Instance.SpawnEnemy("Phys");
             b.MovementSpeed = 0;
             b.Object = a.transform;
-            b.Radius = 0.5f;
+            b.DataRef.Radius = 0.5f;
             EnemyHandler.Instance.ObjectToEnemy.Add(a, b);
         }
     }

@@ -16,7 +16,7 @@ public class OXCollision : MonoBehaviour
     public static bool CircleCastSingle(Vector3 startpos, float radius, Enemy enem)
     {
         var dir = (startpos - enem.Object.position);
-        var x = radius + enem.Radius;
+        var x = radius + enem.DataRef.Radius;
         return dir.sqrMagnitude <= x * x;
     }
     public static List<Enemy> LineCastAll(Vector3 startpos, Vector3 line_relative, float radius)
@@ -65,7 +65,7 @@ public class OXCollision : MonoBehaviour
     private static bool CircleCastSingleSQ(Vector3 startpos, float radius, Enemy enem, Vector3 v)
     {
         var dir = (startpos - v);
-        var x = radius + enem.Radius;
+        var x = radius + enem.DataRef.Radius;
         return dir.sqrMagnitude <= x * x;
     }
     public static bool SquareCastSingle(Vector3 startpos, Vector2 box_size, Enemy enem)
