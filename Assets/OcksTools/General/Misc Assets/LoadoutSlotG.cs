@@ -5,6 +5,7 @@ using UnityEngine;
 public class LoadoutSlotG : MonoBehaviour
 {
     public int MyLoadoutIndex;
+    public GameObject DisplayOb;
     public void Click()
     {
         GameHandler.Instance.BeginTowerPlace(GameHandler.Instance.LocalLoadout.Towers[MyLoadoutIndex]);

@@ -28,7 +28,7 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public List<Tower> RelatedNerds = new List<Tower>();
     [HideInInspector]
-    public List<Gem> MyGems = new List<Gem>();
+    public List<Card> MyCards = new List<Card>();
     public List<Sprite> OtherImages = new List<Sprite>();
     [HideInInspector]
     public Vector3 MyPos = Vector3.zero;
@@ -158,10 +158,10 @@ public class Tower : MonoBehaviour
         Remove();
     }
 
-    public void AddGem(string a)
+    public void AddCard(string a)
     {
-        var g = Instantiate(GameHandler.Instance.AllGemDict[a].gameObject, transform).GetComponent<Gem>();
-        MyGems.Add(g);
+        var g = Instantiate(GameHandler.Instance.AllCardDict[a].gameObject, transform).GetComponent<Card>();
+        MyCards.Add(g);
         g.Initialize(this);
     }
 

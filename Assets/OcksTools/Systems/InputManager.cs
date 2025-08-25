@@ -68,8 +68,7 @@ public class InputManager : MonoBehaviour
         CreateKeyAllocation("loadout7", KeyCode.Alpha8);
         CreateKeyAllocation("loadout8", KeyCode.Alpha9);
         CreateKeyAllocation("cancel_place", KeyCode.Q);
-        CreateKeyAllocation("dialog_skip", new List<KeyCode>() {KeyCode.Space, KeyCode.Mouse0, KeyCode.RightArrow});
-        CreateKeyAllocation("dialog_skip_back", KeyCode.LeftArrow);
+        CreateKeyAllocation("cycle_loadout", KeyCode.Tab);
 
     }
 

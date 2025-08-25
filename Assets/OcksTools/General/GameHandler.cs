@@ -10,10 +10,10 @@ public class GameHandler : MonoBehaviour
     public Map Map;
     public List<GameObject> AllMaps = new List<GameObject>();
     public List<Tower> AllTowers = new List<Tower>();
-    public List<Gem> AllGems = new List<Gem>();
+    public List<Card> AllCards = new List<Card>();
     // Start is called before the first frame update
     public Dictionary<string,Tower> AllTowerDict = new Dictionary<string, Tower>();
-    public Dictionary<string, Gem> AllGemDict = new Dictionary<string, Gem>();
+    public Dictionary<string, Card> AllCardDict = new Dictionary<string, Card>();
     public List<Sprite> BaseIMGS = new List<Sprite>();
     public List<Material> BaseMats = new List<Material>();
     public List<Color> BaseColors = new List<Color>();
@@ -38,9 +38,9 @@ public class GameHandler : MonoBehaviour
         {
             AllTowerDict.Add(a.TowerType, a);
         }
-        foreach(var a in AllGems)
+        foreach(var a in AllCards)
         {
-            AllGemDict.Add(a.Name, a);
+            AllCardDict.Add(a.Name, a);
         }
         SaveSystem.SaveAllData.Append(SaveLocalLoadout);
         SaveSystem.LoadAllData.Append(LoadLocalLoadout);
@@ -96,6 +96,7 @@ public class GameHandler : MonoBehaviour
         var mapgm = AllMaps[balls];
         ClearMap();
         SpawnLoadoutDisplays();
+        LoadoutState = 0;
         if(Map!=null) Destroy(Map.SpawnedScene);
         var winkle = Instantiate(mapgm, Vector3.zero, Quaternion.identity);
         Map = winkle.GetComponent<Map>();
@@ -141,15 +142,16 @@ public class GameHandler : MonoBehaviour
     {
         SetLoadoutDisplays(0);
     }
-
+    public static int LoadoutState = 0;
     public void SetLoadoutDisplays(int state)
     {
         SmegNerd = Tags.refs["LoadoutDisplayHolder"].GetComponent<LoadoutNerds>();
         int x = 0;
-
+        LoadoutState = state;
         foreach (var a in SmegNerd.gg)
         {
             a.gameObject.SetActive(false);
+            if(a.DisplayOb != null) Destroy(a.DisplayOb);
         }
         if (state == 0)
         {
@@ -163,21 +165,24 @@ public class GameHandler : MonoBehaviour
                     b.transform.parent = SmegNerd.gg[x].transform;
                     b.transform.position = SmegNerd.gg[x].transform.position + b.UIDisplayOffset;
                     b.transform.localScale *= 0.75f * b.UIDisplayScaleMult;
+                    SmegNerd.gg[x].DisplayOb = b.gameObject;
                 }
                 x++;
             }
         }
-        if (state == 1)
+        else if (state == 1)
         {
-            foreach (var a in LocalLoadout.Towers)
+            foreach (var a in LocalLoadout.Cards)
             {
                 SmegNerd.gg[x].MyLoadoutIndex = x;
                 if (a != "")
                 {
                     SmegNerd.gg[x].gameObject.SetActive(true);
-                    /*var b = SpawnDisplayOfCard(a);
+                    var b = SpawnDisplayOfCard(a);
                     b.transform.parent = SmegNerd.gg[x].transform;
-                    b.transform.position = SmegNerd.gg[x].transform.position + b.UIDisplayOffset;*/
+                    b.transform.position = SmegNerd.gg[x].transform.position;
+                    b.transform.localScale = Vector3.one * 0.6f;
+                    SmegNerd.gg[x].DisplayOb = b.gameObject;
                 }
                 x++;
             }
@@ -189,11 +194,18 @@ public class GameHandler : MonoBehaviour
     {
         return Instantiate(AllTowerDict[nerd].gameObject);
     }
+    public GameObject SpawnCard(string nerd)
+    {
+        return Instantiate(AllCardDict[nerd].gameObject);
+    }
     public Tower PlacingTower;
+    public Card PlacingCard;
     public void BeginTowerPlace(string nerd)
     {
         if (CurrentState == PlayerState.PlacingTower)
             CancelPlace();
+        else if (CurrentState == PlayerState.PlacingCard)
+            CancelCard();
         if (CurrentState != PlayerState.None) return;
         PlacingTower = SpawnTower(nerd).GetComponent<Tower>();
         var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -203,6 +215,25 @@ public class GameHandler : MonoBehaviour
         PlacingTower.RealUpdateRender();
         CurrentState = PlayerState.PlacingTower;
     }
+    
+    public void BeginCardPlace(string nerd)
+    {
+        if (CurrentState == PlayerState.PlacingTower)
+            CancelPlace();
+        else if (CurrentState == PlayerState.PlacingCard)
+            CancelCard();
+        if (CurrentState != PlayerState.None) return;
+
+        PlacingCard = SpawnCard(nerd).GetComponent<Card>();
+
+        var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        d.z = 0;
+        PlacingCard.transform.position = d;
+        PlacingCard.transform.parent = Tags.refs["CardPlace"].transform;
+        PlacingCard.transform.localScale = Vector3.one * 0.5f;
+
+        CurrentState = PlayerState.PlacingCard;
+    }
 
     public Tower SpawnDisplayOfTower(string nerd)
     {
@@ -211,10 +242,21 @@ public class GameHandler : MonoBehaviour
         PlacingTower.DisplaySandwichInit();
         return PlacingTower;
     }
+    public Card SpawnDisplayOfCard(string nerd)
+    {
+        PlacingCard = SpawnCard(nerd).GetComponent<Card>();
+        return PlacingCard;
+    }
 
     public void CancelPlace()
     {
         Destroy(PlacingTower.gameObject);
+        CurrentState = PlayerState.None;
+    }
+    
+    public void CancelCard()
+    {
+        Destroy(PlacingCard.gameObject);
         CurrentState = PlayerState.None;
     }
 
@@ -309,16 +351,57 @@ public class GameHandler : MonoBehaviour
                 CurrentState = PlayerState.None;
             }
         }
-        if(CurrentState == PlayerState.None || CurrentState==PlayerState.PlacingTower)
+        else if (CurrentState == PlayerState.PlacingCard)
         {
-            for (int i = 0; i < 9; i++)
+            if (InputManager.IsKeyDown("cancel_place"))
             {
-                if (InputManager.IsKeyDown($"loadout{i}"))
+                CancelCard();
+                goto next;
+            }
+            var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            d.z = 0;
+            PlacingCard.transform.position = d;
+            var dd = false; //PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size);
+            //PlacingCard.UpdatePlaceColor(dd);
+            if (dd && allow_place && InputManager.IsKeyDown("shoot"))
+            {
+               // PlacingCard.RealPlace();
+                CurrentState = PlayerState.None;
+            }
+        }
+        if (CurrentState == PlayerState.None || CurrentState==PlayerState.PlacingTower || CurrentState==PlayerState.PlacingCard)
+        {
+            if (InputManager.IsKeyDown("cycle_loadout"))
+            {
+                SetLoadoutDisplays(1 - LoadoutState);
+            }
+            else
+            {
+                if(LoadoutState == 0)
                 {
-                    var s = LocalLoadout.Towers[i];
-                    if (s == "") continue;
-                    BeginTowerPlace(s);
-                    break;
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (InputManager.IsKeyDown($"loadout{i}"))
+                        {
+                            var s = LocalLoadout.Towers[i];
+                            if (s == "") continue;
+                            BeginTowerPlace(s);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        if (InputManager.IsKeyDown($"loadout{i}"))
+                        {
+                            var s = LocalLoadout.Cards[i];
+                            if (s == "") continue;
+                            BeginCardPlace(s);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -405,6 +488,7 @@ public class GameHandler : MonoBehaviour
     {
         None,
         PlacingTower,
+        PlacingCard,
         InspectingTower,
     }
     
@@ -449,12 +533,12 @@ public class ObjectHolder
 public class Loadout
 {
     public List<string> Towers;
-    public List<string> Gems;
+    public List<string> Cards;
 
     public Loadout()
     {
         Towers = new List<string>(new string[6]);    
-        Gems = new List<string>(new string[9]);    
+        Cards = new List<string>(new string[9]);    
     }
 
 
@@ -462,13 +546,13 @@ public class Loadout
     {
         Dictionary<string,string> d = new Dictionary<string,string>();
         d.Add("T", Converter.ListToString(Towers));
-        d.Add("G", Converter.ListToString(Gems));
+        d.Add("G", Converter.ListToString(Cards));
         return Converter.DictionaryToString(d);
     }
     public void StringToLoadout(string s)
     {
         var d = Converter.StringToDictionary(s);
         Towers = Converter.StringToList(d["T"]);
-        Gems = Converter.StringToList(d["G"]);
+        Cards = Converter.StringToList(d["G"]);
     }
 }
