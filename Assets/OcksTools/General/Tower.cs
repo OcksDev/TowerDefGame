@@ -94,12 +94,12 @@ public class Tower : MonoBehaviour
         {
             if (EnemyTarget != null)
             {
-                if (old_tg != null) TargetLost();
-                TargetAquired();
+                if (old_tg != null) TargetLost(old_tg);
+                TargetAquired(EnemyTarget);
             }
             else
             {
-                TargetLost();
+                TargetLost(EnemyTarget);
             }
             old_tg = EnemyTarget;
         }
@@ -180,7 +180,7 @@ public class Tower : MonoBehaviour
     {
         if (EnemyTarget.MarkedForDeath)
         {
-            TargetLost();
+            TargetLost(EnemyTarget);
             var a = GetTarget(1, TargetType);
             if (a.Count > 0)
             {
@@ -307,14 +307,6 @@ public class Tower : MonoBehaviour
             RealAttack();
             TimeTillAttack = 1 / GetAttackRate();
         }
-    }
-    public virtual void TargetAquired()
-    {
-
-    }
-    public virtual void TargetLost()
-    {
-
     }
     public virtual void Tick()
     {

@@ -16,11 +16,11 @@ public class Gatler : HitscanTower
         base.Tick();
         if(EnemyTarget != null)tgtime += Time.deltaTime;
     }
-    public override void TargetAquired()
+    public override void TargetAquired(Enemy t)
     {
         tgtime = 0;
     }
-    public override void TargetLost()
+    public override void TargetLost(Enemy t)
     {
         tgtime = 0;
     }
