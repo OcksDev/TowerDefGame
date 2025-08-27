@@ -25,7 +25,7 @@ public class GameHandler : MonoBehaviour
     public NetworkState CurrentMultiplayerState = NetworkState.Singleplayer;
     public OXThreadPoolA TowerTargetThreads;
     public static int TowerThreadCount = 20;
-
+    public Tower HoveringTower = null;
     public Loadout LocalLoadout = new Loadout();
 
     void Awake()
@@ -248,16 +248,25 @@ public class GameHandler : MonoBehaviour
         return PlacingCard;
     }
 
-    public void CancelPlace()
+    public void EndPlace()
     {
         Destroy(PlacingTower.gameObject);
         CurrentState = PlayerState.None;
     }
     
-    public void CancelCard()
+    public void CancelPlace()
+    {
+        EndPlace();
+    }
+    
+    public void EndCard()
     {
         Destroy(PlacingCard.gameObject);
         CurrentState = PlayerState.None;
+    }
+    public void CancelCard()
+    {
+        EndCard();
     }
 
     public static bool AllowSnapping = true;
@@ -265,18 +274,28 @@ public class GameHandler : MonoBehaviour
     private void Update()
     {
         bool allow_place = true;
-        if (CurrentGameState == GameState.Game)
+        HoveringTower = null;
+        foreach(var a in AllActiveTowers)
         {
-            foreach(var a in SmegNerd.gg)
+            if (Hover.IsHovering(a.gameObject))
             {
-                if (Hover.IsHovering(a.gameObject))
-                {
-                    allow_place = false;
-                }
+                HoveringTower = a;
+                break;
             }
         }
+
         if (CurrentState == PlayerState.PlacingTower)
         {
+            if (CurrentGameState == GameState.Game)
+            {
+                foreach (var a in SmegNerd.gg)
+                {
+                    if (Hover.IsHovering(a.gameObject))
+                    {
+                        allow_place = false;
+                    }
+                }
+            }
             if (InputManager.IsKeyDown("cancel_place"))
             {
                 CancelPlace();
@@ -361,12 +380,12 @@ public class GameHandler : MonoBehaviour
             var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             d.z = 0;
             PlacingCard.transform.position = d;
-            var dd = false; //PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size);
+            var dd = true; //PlaceTowerConfirm(d, PlacingTower.RenderParts[0].GetComponent<BoxCollider2D>().size);
             //PlacingCard.UpdatePlaceColor(dd);
-            if (dd && allow_place && InputManager.IsKeyDown("shoot"))
+            if (dd && allow_place && InputManager.IsKeyDown("shoot") && HoveringTower != null)
             {
-               // PlacingCard.RealPlace();
-                CurrentState = PlayerState.None;
+                HoveringTower.AddCard(PlacingCard);
+                EndCard();
             }
         }
         if (CurrentState == PlayerState.None || CurrentState==PlayerState.PlacingTower || CurrentState==PlayerState.PlacingCard)

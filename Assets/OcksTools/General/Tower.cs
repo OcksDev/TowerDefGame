@@ -57,6 +57,7 @@ public class Tower : MonoBehaviour
     public OXEvent UpgradeHook = new OXEvent();
     public OXEvent SellHook = new OXEvent();
     public OXEvent StatHook = new OXEvent();
+    public OXEvent NewCardHook = new OXEvent();
 
 
     private void Start() // debug code
@@ -78,7 +79,6 @@ public class Tower : MonoBehaviour
         TickHook.Invoke();
         if (GetCanAttackTick()) AttackTick();
     }
-
     public virtual void TargettingCode()
     {
         var w = ReadTarget();
@@ -163,6 +163,12 @@ public class Tower : MonoBehaviour
         var g = Instantiate(GameHandler.Instance.AllCardDict[a].gameObject, transform).GetComponent<Card>();
         MyCards.Add(g);
         g.Initialize(this);
+        NewCardHook.Invoke();
+    }
+    
+    public void AddCard(Card a)
+    {
+        AddCard(a.Name);
     }
 
     public void RealAttack()
