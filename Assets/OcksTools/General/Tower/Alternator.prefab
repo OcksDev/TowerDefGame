@@ -299,7 +299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c9d27933030e8448ff530ee83e4fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPlacing: 1
   TowerType: Alternator
   DesiredTargetCount: 1
   Range: 4
@@ -330,13 +329,15 @@ MonoBehaviour:
   TargetType: 0
   EnemyTarget:
     EnemyType: 
+    DataRef:
+      Name: 
+      Radius: 0.3333
+      Max_Health: 100
+      Max_Shield: 0
     Object: {fileID: 0}
     NodeTarget: 0
-    Radius: 0
     Health: 0
     Shield: 0
-    Max_Health: 0
-    Max_Shield: 0
     MovementSpeed: 0
     _TotalMoved: 0
     my_time: 0
@@ -344,13 +345,15 @@ MonoBehaviour:
     MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
-  MyGems: []
+  MyCards: []
   OtherImages:
   - {fileID: 21300000, guid: e96d52b03c222664ca077c3832fbee4a, type: 3}
   - {fileID: 21300000, guid: f0d732ed59dddd14d8f5a9bb5fc54d02, type: 3}
   - {fileID: 21300000, guid: 821bcf9497494c24db01e0cb90efa97b, type: 3}
   - {fileID: 21300000, guid: 93e742f16f2173b428ba162c7a2e69d8, type: 3}
   MyPos: {x: 0, y: 0, z: 0}
+  UIDisplayScaleMult: 1
+  UIDisplayOffset: {x: 0, y: -0.04, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0

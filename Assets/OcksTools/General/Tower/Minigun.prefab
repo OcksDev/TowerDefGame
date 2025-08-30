@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740e61e8c594246498b7bc8f7aef934e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPlacing: 1
   TowerType: Minigun
   DesiredTargetCount: 1
   Range: 4
@@ -205,13 +204,15 @@ MonoBehaviour:
   TargetType: 0
   EnemyTarget:
     EnemyType: 
+    DataRef:
+      Name: 
+      Radius: 0.3333
+      Max_Health: 100
+      Max_Shield: 0
     Object: {fileID: 0}
     NodeTarget: 0
-    Radius: 0
     Health: 0
     Shield: 0
-    Max_Health: 0
-    Max_Shield: 0
     MovementSpeed: 0
     _TotalMoved: 0
     my_time: 0
@@ -219,13 +220,15 @@ MonoBehaviour:
     MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
-  MyGems: []
+  MyCards: []
   OtherImages:
   - {fileID: 21300000, guid: be6cb99b118be6e4aa3a31820ca734be, type: 3}
   - {fileID: 21300000, guid: c0314c49c49765d4abdbba62f06617e5, type: 3}
   - {fileID: 21300000, guid: 253439c9ff041544aae83b5c0d0db9cc, type: 3}
   - {fileID: 21300000, guid: cee06924ac243774784be23ada6a23e8, type: 3}
   MyPos: {x: 0, y: 0, z: 0}
+  UIDisplayScaleMult: 0.95
+  UIDisplayOffset: {x: 0.125, y: 0, z: 0}
   CanAttack: 1
   CanBuffInRange: 0
   CanGenerateMoney: 0
