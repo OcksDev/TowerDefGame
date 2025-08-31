@@ -9,6 +9,7 @@ using UnityEngine.Profiling;
 public class Tower : MonoBehaviour
 {
     public string TowerType = "";
+    public string Description = "";
     public int DesiredTargetCount = 1;
     public float Range = 5;
     public float AttackRate = 2;
@@ -41,6 +42,7 @@ public class Tower : MonoBehaviour
 
     // some flags that can be enabled on a per-tower basis. They do nothing by themselves.
     public bool CanAttack = false;
+    public bool CanExplode = false;
     public bool CanBuffInRange = false;
     public bool CanGenerateMoney = false;
     public int Level = 0;
@@ -58,6 +60,7 @@ public class Tower : MonoBehaviour
     public OXEvent SellHook = new OXEvent();
     public OXEvent StatHook = new OXEvent();
     public OXEvent NewCardHook = new OXEvent();
+    public OXEvent DescriptionHook = new OXEvent();
 
 
     private void Start() // debug code
@@ -134,6 +137,40 @@ public class Tower : MonoBehaviour
             Upgrade();
         }
     }*/
+
+    public string DescCrossover;
+
+    public string GetDescription()
+    {
+        var e = Description + "<br><br>";
+        SetStats();
+        if (CanAttack)
+        {
+            e += $"Damage: {Damage}<br>";
+            e += $"Attack Rate: {AttackRate} /s<br>";
+        }
+        if (Pierce > 0)
+        {
+            e += $"Pierce: {Pierce}br>";
+        }
+        if (Range > 0)
+        {
+            e += $"Range: {Range}<br>";
+        }
+        if(ExplosionRange > 0)
+        {
+            e += $"Explosion Range: {ExplosionRange}<br>";
+        }
+        e += ExtraStatDescParse();
+        DescCrossover = "";
+        DescriptionHook.Invoke();
+        e += DescCrossover;
+        return "";
+    }
+    public virtual string ExtraStatDescParse()
+    {
+        return "";
+    }
     public void RealPlace()
     {
         IsPlacing = false;

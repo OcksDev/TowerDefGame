@@ -42,6 +42,7 @@ public class GameHandler : MonoBehaviour
         {
             AllCardDict.Add(a.Name, a);
         }
+        Tags.refs["UpgradeMenu"].SetActive(false);
         SaveSystem.SaveAllData.Append(SaveLocalLoadout);
         SaveSystem.LoadAllData.Append(LoadLocalLoadout);
     }
@@ -55,6 +56,34 @@ public class GameHandler : MonoBehaviour
         //debug start code
         StartGame(NetworkState.Singleplayer);
     }
+
+    public static Dictionary<string, bool> MenuRefs = new Dictionary<string, bool>();
+
+    public static void SetMenuState(string a, bool b)
+    {
+        if (MenuRefs.ContainsKey(a))
+        {
+            MenuRefs[a] = b;
+        }
+        else
+        {
+            MenuRefs.Add(a, b);
+        }
+        Tags.refs[a].SetActive(b);
+    } 
+    
+    public static bool GetMenuState(string a)
+    {
+        if (MenuRefs.ContainsKey(a))
+        {
+            return MenuRefs[a];
+        }
+        else
+        {
+            return false;
+        }
+    } 
+
     public IEnumerator BananaSmeg()
     {
         MultiThreaderEnsure.Instance.StartCoroutine(MultiThreaderEnsure.Instance.FixSlackers(TowerTargetThreads));
@@ -283,7 +312,21 @@ public class GameHandler : MonoBehaviour
                 break;
             }
         }
-
+        if (InputManager.IsKeyDown("close_menu"))
+        {
+            if (CurrentState == PlayerState.PlacingTower)
+            {
+                CancelPlace();
+            }
+            else  if (CurrentState == PlayerState.PlacingCard)
+            {
+                CancelCard();
+            }
+            else if (GetMenuState("UpgradeMenu"))
+            {
+                CloseInspectMenu();
+            }
+        }
         if (CurrentState == PlayerState.PlacingTower)
         {
             if (CurrentGameState == GameState.Game)
@@ -424,8 +467,30 @@ public class GameHandler : MonoBehaviour
                 }
             }
         }
+        if(CurrentState == PlayerState.None)
+        {
+            if(HoveringTower != null && InputManager.IsKeyDown("shoot"))
+            {
+                OpenInspectMenu(HoveringTower);
+            }
+        }
     next:;
     }
+
+    public void OpenInspectMenu(Tower e)
+    {
+        SetMenuState("UpgradeMenu", true);
+        var a = e.GetDescription();
+        var d = Tags.refs["UpgradeMenu"].GetComponent<banana>();
+        d.tit.text = e.TowerType;
+        d.dick.text = a;
+
+    }
+    public void CloseInspectMenu()
+    {
+        SetMenuState("UpgradeMenu", false);
+    }
+
     public bool PlaceTowerConfirm(Vector3 pos, Vector3 size)
     {
         var a = Physics2D.OverlapBoxAll(pos, size,0);
