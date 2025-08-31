@@ -185,8 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1b45fd5be013f42bb716350de51ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPlacing: 1
   TowerType: Crossbow
+  Description: A basic projectile-based attacking tower
   DesiredTargetCount: 1
   Range: 5
   AttackRate: 2
@@ -207,13 +207,15 @@ MonoBehaviour:
   TargetType: 0
   EnemyTarget:
     EnemyType: 
+    DataRef:
+      Name: 
+      Radius: 0.3333
+      Max_Health: 100
+      Max_Shield: 0
     Object: {fileID: 0}
     NodeTarget: 0
-    Radius: 0
     Health: 0
     Shield: 0
-    Max_Health: 0
-    Max_Shield: 0
     MovementSpeed: 0
     _TotalMoved: 0
     my_time: 0
@@ -221,7 +223,7 @@ MonoBehaviour:
     MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
-  MyGems: []
+  MyCards: []
   OtherImages:
   - {fileID: 21300000, guid: 92a0351b356cea841a00533304623b83, type: 3}
   - {fileID: 21300000, guid: 564c35e04696fb24cb270418b20450c6, type: 3}
@@ -236,10 +238,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4848e1772d5214b4783d0299a9a5bf6d, type: 3}
   - {fileID: 21300000, guid: 9ea3a6bc897e5e14497916ab962c3237, type: 3}
   MyPos: {x: 0, y: 0, z: 0}
+  UIDisplayScaleMult: 1
+  UIDisplayOffset: {x: 0, y: 0, z: 0}
   CanAttack: 1
+  CanExplode: 0
   CanBuffInRange: 0
   CanGenerateMoney: 0
   Level: 0
+  DescCrossover: 
   NerdToSpawn: {fileID: 3723795987050006145, guid: ac033c32680f44142a403a3b42320752, type: 3}
   SpawnOffset: {x: -0.25, y: 0, z: 0}
 --- !u!61 &1407727520241397506

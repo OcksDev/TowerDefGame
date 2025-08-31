@@ -46,6 +46,8 @@ public class Tower : MonoBehaviour
     public bool CanBuffInRange = false;
     public bool CanGenerateMoney = false;
     public int Level = 0;
+    [HideInInspector]
+    public long TotalScrapInvested = 0;
 
     [HideInInspector]
     [NonSerialized]
@@ -165,7 +167,7 @@ public class Tower : MonoBehaviour
         DescCrossover = "";
         DescriptionHook.Invoke();
         e += DescCrossover;
-        return "";
+        return e;
     }
     public virtual string ExtraStatDescParse()
     {

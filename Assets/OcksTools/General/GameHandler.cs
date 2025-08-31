@@ -28,6 +28,8 @@ public class GameHandler : MonoBehaviour
     public Tower HoveringTower = null;
     public Loadout LocalLoadout = new Loadout();
 
+    public static long Scrap = 0;
+
     void Awake()
     {
 #if !UNITY_EDITOR
@@ -476,14 +478,20 @@ public class GameHandler : MonoBehaviour
         }
     next:;
     }
-
+    public Tower SelectingTower;
     public void OpenInspectMenu(Tower e)
     {
+        SelectingTower = e;
         SetMenuState("UpgradeMenu", true);
         var a = e.GetDescription();
         var d = Tags.refs["UpgradeMenu"].GetComponent<banana>();
         d.tit.text = e.TowerType;
         d.dick.text = a;
+        var s = e.GetCostToUpgrade(e.Level);
+        d.UpG.text = $"Upgrade ({s})";
+        d.SellG.text = $"Sell ({e.TotalScrapInvested})";
+        d.tears_of_childen.text = $"Tier {Converter.NumToRead((1 + e.Level).ToString(), 3)}";
+        d.tears_of_childen.color = d.cols[e.Level];
 
     }
     public void CloseInspectMenu()
