@@ -11,7 +11,17 @@ public class banana : MonoBehaviour
     public TextMeshProUGUI UpG;
     public TextMeshProUGUI SellG;
     public List<Color> cols;
-
+    private void Update()
+    {
+        if (InputManager.IsKeyDown("upgrade"))
+        {
+            Upg();
+        }
+        if (InputManager.IsKeyDown("sell"))
+        {
+            Usell();
+        }
+    }
     public void Upg()
     {
 
@@ -25,7 +35,10 @@ public class banana : MonoBehaviour
     }
     public void Usell()
     {
-
+        var g = GameHandler.Instance;
+        GameHandler.Scrap += g.SelectingTower.TotalScrapInvested / 2;
+        g.SelectingTower.RealRemove();
+        g.CloseInspectMenu();
     }
 
 }

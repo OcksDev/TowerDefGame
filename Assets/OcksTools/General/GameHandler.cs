@@ -238,7 +238,10 @@ public class GameHandler : MonoBehaviour
         else if (CurrentState == PlayerState.PlacingCard)
             CancelCard();
         if (CurrentState != PlayerState.None) return;
+        var x = AllTowerDict[nerd].GetCostToUpgrade(-1);
+        if (Scrap < x) return;
         PlacingTower = SpawnTower(nerd).GetComponent<Tower>();
+        PlacingTower.TotalScrapInvested += x;
         var d = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         d.z = 0;
         PlacingTower.transform.position = d;
@@ -254,6 +257,9 @@ public class GameHandler : MonoBehaviour
         else if (CurrentState == PlayerState.PlacingCard)
             CancelCard();
         if (CurrentState != PlayerState.None) return;
+
+        var x = AllCardDict[nerd].GetCostToUpgrade(-1);
+        if (Scrap < x) return;
 
         PlacingCard = SpawnCard(nerd).GetComponent<Card>();
 
@@ -488,8 +494,17 @@ public class GameHandler : MonoBehaviour
         d.tit.text = e.TowerType;
         d.dick.text = a;
         var s = e.GetCostToUpgrade(e.Level);
-        d.UpG.text = $"Upgrade ({s})";
-        d.SellG.text = $"Sell ({e.TotalScrapInvested})";
+        if(s > 0)
+        {
+            d.UpG.text = $"Upgrade ({s})";
+            d.UpG.transform.parent.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            d.UpG.text = $"Upgrade (MAX)";
+            d.UpG.transform.parent.GetComponent<Button>().interactable = false;
+        }
+        d.SellG.text = $"Sell ({e.TotalScrapInvested/2})";
         d.tears_of_childen.text = $"Tier {Converter.NumToRead((1 + e.Level).ToString(), 3)}";
         d.tears_of_childen.color = d.cols[e.Level];
 

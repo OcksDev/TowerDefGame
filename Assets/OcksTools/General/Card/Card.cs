@@ -42,11 +42,13 @@ public class Card : MonoBehaviour
         switch (Name)
         {
             case "Smeg":
-                switch (Level)
+                switch (level)
                 {
-                    default: return 50;
-                    case 1: return 150;
-                    case 2: return 500;
+                    default: return -1;
+                    case -1: return 50;
+                    case 0:  return 150;
+                    case 1:  return 500;
+                    case 2:  return 1000;
                 }
         }
         return -1;

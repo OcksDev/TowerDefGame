@@ -418,6 +418,10 @@ public class ConsoleLol : MonoBehaviour
 
                     }
                     break;
+
+                case "scrap":
+                    GameHandler.Scrap = long.Parse(command[1]);
+                    break;
                 case "joe":
                     switch (command[1])
                     {
@@ -596,6 +600,7 @@ public class ConsoleLol : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         GameHandler.Instance.SetMap(0);
+        GameHandler.Scrap = 69000000;
         yield return new WaitForSeconds(0.1f);
         EnemyHandler.Instance.SpawnEnemy("Nerd");
     }

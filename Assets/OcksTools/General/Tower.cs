@@ -325,17 +325,14 @@ public class Tower : MonoBehaviour
     }
     public virtual int GetCostToUpgrade(int level)
     {
-        switch (TowerType)
+        switch (level)
         {
-            case "Crossbow":
-                switch (Level)
-                {
-                    default: return 50;
-                    case 1: return 150;
-                    case 2: return 500;
-                }
+            default: return -1;
+            case -1: return 50;
+            case 0: return 150;
+            case 1: return 500;
+            case 2: return 1000;
         }
-        return -1;
     }
 
     public virtual void AttackTick()

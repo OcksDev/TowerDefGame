@@ -49,15 +49,9 @@ public class InputManager : MonoBehaviour
         CreateKeyAllocation("reload", KeyCode.R);
         CreateKeyAllocation("close_menu", KeyCode.Escape);
         CreateKeyAllocation("tab_menu", KeyCode.Tab);
-        CreateKeyAllocation("item_select", KeyCode.Mouse0);
-        CreateKeyAllocation("item_half", KeyCode.Mouse1);
-        CreateKeyAllocation("item_pick", KeyCode.Mouse2);
-        CreateKeyAllocation("item_alt", KeyCode.LeftShift);
-        CreateKeyAllocation("item_mod", KeyCode.LeftControl);
         CreateKeyAllocation("console", KeyCode.Slash);
         CreateKeyAllocation("console_up", KeyCode.UpArrow);
         CreateKeyAllocation("console_down", KeyCode.DownArrow);
-        CreateKeyAllocation("console_autofill", KeyCode.Tab);
         CreateKeyAllocation("loadout0", KeyCode.Alpha1);
         CreateKeyAllocation("loadout1", KeyCode.Alpha2);
         CreateKeyAllocation("loadout2", KeyCode.Alpha3);
@@ -69,6 +63,10 @@ public class InputManager : MonoBehaviour
         CreateKeyAllocation("loadout8", KeyCode.Alpha9);
         CreateKeyAllocation("cancel_place", KeyCode.Q);
         CreateKeyAllocation("cycle_loadout", KeyCode.Tab);
+        CreateKeyAllocation("upgrade", KeyCode.E);
+        CreateKeyAllocation("sell", KeyCode.X);
+        CreateKeyAllocation("cycle_select_left", KeyCode.LeftArrow);
+        CreateKeyAllocation("cycle_select_right", KeyCode.RightArrow);
 
     }
 

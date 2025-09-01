@@ -153,6 +153,7 @@ public class EnemyData
     public float Radius = 0.3333f;
     public double Max_Health = 100;
     public double Max_Shield = 0;
+    public long Scrap_Reward = 1;
 
     public double CalcCreditCost(double goal)
     {
@@ -205,7 +206,7 @@ public class Enemy
         }
         if (real_kill)
         {
-            //give rewards or do extra code
+            GameHandler.Scrap += DataRef.Scrap_Reward;
         }
         else
         {
