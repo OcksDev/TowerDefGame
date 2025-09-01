@@ -13,6 +13,8 @@ public class Card : MonoBehaviour
     [HideInInspector]
     public int Level;
 
+    public OXLanguageFileIndex LangFileIndex;
+
     public void Initialize(Tower owner)
     {
         Tower = owner;

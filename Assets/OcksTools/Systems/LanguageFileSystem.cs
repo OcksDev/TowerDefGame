@@ -27,6 +27,8 @@ public class LanguageFileSystem : MonoBehaviour
         {
             FileSystem.Instance.CreateFolder(FileSystem.Instance.FileLocations["Lang"]);
             FileSystem.Instance.CreateFolder($"{FileSystem.Instance.FileLocations["Lang"]}\\{FileSystem.GameVer}");
+            FileSystem.Instance.CreateFolder($"{FileSystem.Instance.FileLocations["Lang"]}\\{FileSystem.GameVer}\\Towers");
+            FileSystem.Instance.CreateFolder($"{FileSystem.Instance.FileLocations["Lang"]}\\{FileSystem.GameVer}\\Cards");
         }
         foreach(var file in Files)
         {
@@ -52,11 +54,10 @@ public class LanguageFileSystem : MonoBehaviour
     {
         if (!AllowPublicAccess) return;
         var f = FileSystem.Instance;
-        string meme = $"{f.FileLocations["Lang"]}\\{FileSystem.GameVer}";
         foreach (var file in Files)
         {
             var des = GetDict(file.FileName);
-            string realme = $"{meme}\\{file.FileName}.txt";
+            string realme = FileIndexToFilePath(file);
             f.WriteFile(realme, Converter.DictionaryToString(des, Environment.NewLine, ": "), true);
         }
     }
@@ -70,7 +71,14 @@ public class LanguageFileSystem : MonoBehaviour
                 if(f.Value.ContainsKey(key2)) return f.Value[key2];
             }
         }
-        return Data[namespac][key2];
+        try
+        {
+            return Data[namespac][key2];
+        }
+        catch
+        {
+            return "{ERROR}";
+        }
     }
     public void SetString(string namespac, string key2, string str)
     {
@@ -98,11 +106,26 @@ public class LanguageFileSystem : MonoBehaviour
             return Data[name];
         }
     }
-    public void ReadFile(OXLanguageFileIndex file)
+
+    public string FileIndexToFilePath(OXLanguageFileIndex file)
     {
         var f = FileSystem.Instance;
         string meme = $"{f.FileLocations["Lang"]}\\{FileSystem.GameVer}";
-        string realme = $"{meme}\\{file.FileName}.txt";
+        switch (file.LanguageType)
+        {
+            default:
+                return $"{meme}\\{file.FileName}.txt";
+            case OXLanguageFileIndex.LangType.Tower:
+                return $"{meme}\\Towers\\{file.FileName}.txt";
+            case OXLanguageFileIndex.LangType.Card:
+                return $"{meme}\\Cards\\{file.FileName}.txt";
+        }
+    }
+
+    public void ReadFile(OXLanguageFileIndex file)
+    {
+        var f = FileSystem.Instance;
+        string realme = FileIndexToFilePath(file);
         var des = GetDict(file.FileName);
         des.Clear();
 
@@ -152,6 +175,7 @@ public class OXLanguageFileIndex
     public string FileName;
     public TextAsset DefaultFile;
     public string DefaultString = "";
+    public LangType LanguageType = LangType.Normal;
     public string GetDefaultData()
     {
         if(DefaultFile != null)
@@ -162,5 +186,11 @@ public class OXLanguageFileIndex
         {
             return DefaultString;
         }
+    }
+    public enum LangType
+    {
+        Normal,
+        Tower,
+        Card,
     }
 }

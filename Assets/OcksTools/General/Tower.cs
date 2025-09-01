@@ -9,7 +9,6 @@ using UnityEngine.Profiling;
 public class Tower : MonoBehaviour
 {
     public string TowerType = "";
-    public string Description = "";
     public int DesiredTargetCount = 1;
     public float Range = 5;
     public float AttackRate = 2;
@@ -64,6 +63,7 @@ public class Tower : MonoBehaviour
     public OXEvent NewCardHook = new OXEvent();
     public OXEvent DescriptionHook = new OXEvent();
 
+    public OXLanguageFileIndex LangFileIndex;
 
     private void Start() // debug code
     {
@@ -144,7 +144,7 @@ public class Tower : MonoBehaviour
 
     public string GetDescription()
     {
-        var e = Description + "<br><br>";
+        var e = LangFileIndex.GetDefaultData() + "<br><br>";
         SetStats();
         if (CanAttack)
         {
@@ -641,7 +641,6 @@ public class Tower : MonoBehaviour
     {
         
     }
-
 
 
 }

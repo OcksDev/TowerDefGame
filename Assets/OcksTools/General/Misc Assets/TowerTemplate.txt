@@ -1,0 +1,8 @@
+Name: 
+Desc: 
+Pow1: 
+Pow1_Desc: 
+Pow2: 
+Pow2_Desc: 
+Pow3: 
+Pow3_Desc: 

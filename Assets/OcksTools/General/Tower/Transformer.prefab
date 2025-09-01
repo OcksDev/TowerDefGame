@@ -210,8 +210,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416ad71a0b8229840b8224579e1a7aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPlacing: 1
   TowerType: Transformer
+  LangFileIndex:
+    FileName: 
+    DefaultFile: {fileID: 0}
+    DefaultString: 
+    LanguageType: 0
   DesiredTargetCount: 1
   Range: 5
   AttackRate: 2
@@ -231,13 +235,16 @@ MonoBehaviour:
   TargetType: 0
   EnemyTarget:
     EnemyType: 
+    DataRef:
+      Name: 
+      Radius: 0.3333
+      Max_Health: 100
+      Max_Shield: 0
+      Scrap_Reward: 1
     Object: {fileID: 0}
     NodeTarget: 0
-    Radius: 0
     Health: 0
     Shield: 0
-    Max_Health: 0
-    Max_Shield: 0
     MovementSpeed: 0
     _TotalMoved: 0
     my_time: 0
@@ -245,13 +252,19 @@ MonoBehaviour:
     MarkedForDeath: 0
   MaxLevel: 3
   RelatedNerds: []
-  MyGems: []
+  MyCards: []
   OtherImages: []
   MyPos: {x: 0, y: 0, z: 0}
+  UIDisplayScaleMult: 1
+  UIDisplayOffset: {x: 0, y: 0, z: 0}
   CanAttack: 0
+  CanExplode: 0
   CanBuffInRange: 1
   CanGenerateMoney: 0
   Level: 0
+  TotalScrapInvested: 0
+  DescCrossover: 
+  TargetState: 0000000000000000
 --- !u!50 &-2180143896340283352
 Rigidbody2D:
   serializedVersion: 4

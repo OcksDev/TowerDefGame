@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,9 @@ public class GameHandler : MonoBehaviour
     public Tower HoveringTower = null;
     public Loadout LocalLoadout = new Loadout();
 
+    public TextAsset DefaultTowerFile;
+    public TextAsset DefaultCardFile;
+
     public static long Scrap = 0;
 
     void Awake()
@@ -52,9 +56,25 @@ public class GameHandler : MonoBehaviour
     {
         TowerTargetThreads = new OXThreadPoolA(TowerThreadCount);
         StartCoroutine(BananaSmeg());//dont touch
+        var dd = Application.dataPath + "/OcksTools/General/Tower";
+        var l = LanguageFileSystem.Instance;
 
-
-
+        foreach(var a in AllTowers)
+        {
+            var x = a.LangFileIndex;
+            x.FileName = a.TowerType;
+            x.LanguageType = OXLanguageFileIndex.LangType.Tower;
+            x.DefaultString = DefaultTowerFile.text;
+            l.AddFile(x);
+        }
+        foreach(var a in AllCards)
+        {
+            var x = a.LangFileIndex;
+            x.FileName = a.Name;
+            x.LanguageType = OXLanguageFileIndex.LangType.Card;
+            x.DefaultString = DefaultCardFile.text;
+            l.AddFile(x);
+        }
         //debug start code
         StartGame(NetworkState.Singleplayer);
     }
@@ -179,6 +199,10 @@ public class GameHandler : MonoBehaviour
         SmegNerd = Tags.refs["LoadoutDisplayHolder"].GetComponent<LoadoutNerds>();
         int x = 0;
         LoadoutState = state;
+
+        if(CurrentState== PlayerState.PlacingTower)CancelPlace();
+        else if(CurrentState== PlayerState.PlacingCard)CancelCard();
+
         foreach (var a in SmegNerd.gg)
         {
             a.gameObject.SetActive(false);

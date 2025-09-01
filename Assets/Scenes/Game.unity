@@ -1973,6 +1973,8 @@ MonoBehaviour:
     - 
     - 
     - 
+  DefaultTowerFile: {fileID: 4900000, guid: f63166b905e15f04b980dba479ab4357, type: 3}
+  DefaultCardFile: {fileID: 4900000, guid: 2c82fe5900111084e84ba1c84b3ba1eb, type: 3}
   Player: {fileID: 5453850705989461653, guid: d86a83f56bc5a0348a1470bb4df6e8fe, type: 3}
   PlacingTower: {fileID: 0}
   PlacingCard: {fileID: 0}
@@ -6397,6 +6399,7 @@ MonoBehaviour:
     FileName: Console
     DefaultFile: {fileID: 4900000, guid: 25015236349d55346a8f8b131555a53e, type: 3}
     DefaultString: 
+    LanguageType: 0
   enable: 0
   BackLog: 
 --- !u!4 &1403638275
