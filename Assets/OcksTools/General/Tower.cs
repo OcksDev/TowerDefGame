@@ -451,6 +451,7 @@ public class Tower : MonoBehaviour
             return target;
         }
 
+        targetpassover = type;
         if (amnt > 1)
         {
             //multi-get code
@@ -466,7 +467,6 @@ public class Tower : MonoBehaviour
                 }
             }
 
-            targetpassover = type;
             nerds.Sort(CompareBySex);
             for (int i = 0; i < nerds.Count && i < amnt; i++)
             {
@@ -538,16 +538,24 @@ public class Tower : MonoBehaviour
             }
         }
     }
+    [HideInInspector]
+    public int[] TargetState = new int[2];
+
     public enum Target
     {
         First,
         Last,
-        HighestHP,
-        LowestHP,
         Farthest,
         Closest,
         Fastest,
         Slowest,
+        HighestHP,
+        LowestHP,
+    }
+    public void SetTargettingFromTargetState()
+    {
+        int x = TargetState[0] + (2 * TargetState[1]);
+        TargetType = (Target)x;
     }
 
     public virtual void INowExist(Tower nerd)

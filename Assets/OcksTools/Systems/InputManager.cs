@@ -65,6 +65,8 @@ public class InputManager : MonoBehaviour
         CreateKeyAllocation("cycle_loadout", KeyCode.Tab);
         CreateKeyAllocation("upgrade", KeyCode.E);
         CreateKeyAllocation("sell", KeyCode.X);
+        CreateKeyAllocation("change_priority", KeyCode.R);
+        CreateKeyAllocation("change_measurement", KeyCode.T);
         CreateKeyAllocation("cycle_select_left", KeyCode.LeftArrow);
         CreateKeyAllocation("cycle_select_right", KeyCode.RightArrow);
 

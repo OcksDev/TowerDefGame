@@ -507,8 +507,30 @@ public class GameHandler : MonoBehaviour
         d.SellG.text = $"Sell ({e.TotalScrapInvested/2})";
         d.tears_of_childen.text = $"Tier {Converter.NumToRead((1 + e.Level).ToString(), 3)}";
         d.tears_of_childen.color = d.cols[e.Level];
-
+        UpdateThinalongs();
     }
+
+    public void UpdateThinalongs()
+    {
+        var d = Tags.refs["UpgradeMenu"].GetComponent<banana>();
+        d.High.text = SelectingTower.TargetState[0] == 0 ? "Highest" : "Lowest";
+        switch (SelectingTower.TargetState[1])
+        {
+            case 0:
+                d.TG.text = "Progress";
+                break;
+            case 1:
+                d.TG.text = "Distance";
+                break;
+            case 2:
+                d.TG.text = "Movement Speed";
+                break;
+            case 3:
+                d.TG.text = "Max Health";
+                break;
+        }
+    }
+
     public void CloseInspectMenu()
     {
         SetMenuState("UpgradeMenu", false);
