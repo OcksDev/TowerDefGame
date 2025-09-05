@@ -13,6 +13,7 @@ public class banana : MonoBehaviour
     public TextMeshProUGUI SellG;
     public TextMeshProUGUI High;
     public TextMeshProUGUI TG;
+    public Image tears_of_childen2;
     public List<Color> cols;
     public List<Color> cols_sel;
     public List<Image> UpgradeTabs;
@@ -85,11 +86,12 @@ public class banana : MonoBehaviour
         {
             UpgradeTabs[i].gameObject.SetActive(true);
         }
+        /*
         var cd = GameHandler.Instance.SpawnCard("empty");
         cd.transform.parent = UpgradeTabs[0].transform;
         cd.transform.position = UpgradeTabs[0].transform.position;
         cd.transform.localScale = Vector3.one * 0.5f;
-        ViewNerds.Add(cd);
+        ViewNerds.Add(cd);*/
         for (int i = 1; i < gemslots; i++)
         {
             if(i-1 >= e.MyCards.Count)

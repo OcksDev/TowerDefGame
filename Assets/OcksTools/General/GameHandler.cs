@@ -531,6 +531,7 @@ public class GameHandler : MonoBehaviour
         d.SellG.text = $"Sell ({e.TotalScrapInvested/2})";
         d.tears_of_childen.text = $"Tier {Converter.NumToRead((1 + e.Level).ToString(), 3)}";
         d.tears_of_childen.color = d.cols[e.Level];
+        d.tears_of_childen2.sprite = BaseIMGS[e.Level];
         d.ShowSlots(e);
         d.ColorByPage(page);
         UpdateThinalongs();
