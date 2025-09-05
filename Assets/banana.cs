@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class banana : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class banana : MonoBehaviour
     public TextMeshProUGUI High;
     public TextMeshProUGUI TG;
     public List<Color> cols;
+    public List<Color> cols_sel;
+    public List<Image> UpgradeTabs;
     private void Update()
     {
         if (InputManager.IsKeyDown("upgrade"))
@@ -65,6 +68,63 @@ public class banana : MonoBehaviour
         g.UpdateThinalongs();
         g.SelectingTower.SetTargettingFromTargetState();
     }
-
-
+    List<GameObject> ViewNerds = new List<GameObject>();
+    public void ShowSlots(Tower e)
+    {
+        int gemslots = e.MaxCards +1;
+        foreach(var a in ViewNerds)
+        {
+            Destroy(a);
+        }
+        foreach(var a in UpgradeTabs)
+        {
+            a.gameObject.SetActive(false);
+        }
+        ViewNerds.Clear();
+        for(int i = 0; i < gemslots; i++)
+        {
+            UpgradeTabs[i].gameObject.SetActive(true);
+        }
+        var cd = GameHandler.Instance.SpawnCard("empty");
+        cd.transform.parent = UpgradeTabs[0].transform;
+        cd.transform.position = UpgradeTabs[0].transform.position;
+        cd.transform.localScale = Vector3.one * 0.5f;
+        ViewNerds.Add(cd);
+        for (int i = 1; i < gemslots; i++)
+        {
+            if(i-1 >= e.MyCards.Count)
+            {
+                var cd2 = GameHandler.Instance.SpawnCard("empty");
+                cd2.transform.parent = UpgradeTabs[i].transform;
+                cd2.transform.position = UpgradeTabs[i].transform.position;
+                cd2.transform.localScale = Vector3.one * 0.5f;
+                ViewNerds.Add(cd2);
+            }
+            else
+            {
+                var cd2 = GameHandler.Instance.SpawnCard(e.MyCards[i-1].Name);
+                cd2.transform.parent = UpgradeTabs[i].transform;
+                cd2.transform.position = UpgradeTabs[i].transform.position;
+                cd2.transform.localScale = Vector3.one * 0.5f;
+                ViewNerds.Add(cd2);
+            }
+        }
+    }
+    public void ColorByPage(int x)
+    {
+        for (int i = 0; i < UpgradeTabs.Count; i++)
+        {
+            UpgradeTabs[i].color = cols_sel[1];
+        }
+        UpgradeTabs[x].color = cols_sel[0];
+    }
+    public void AttemptPageClick(int z)
+    {
+        var g = GameHandler.Instance;
+        var e = g.SelectingTower;
+        Debug.Log("Run! " + e);   
+        if (z - 1 >= e.MyCards.Count) return; //denied, no card to select lol
+        Debug.Log("Passed! " + e);
+        g.OpenInspectMenu(e,z);
+    }
 }

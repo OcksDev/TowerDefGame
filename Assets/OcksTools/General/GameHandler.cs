@@ -509,7 +509,7 @@ public class GameHandler : MonoBehaviour
     next:;
     }
     public Tower SelectingTower;
-    public void OpenInspectMenu(Tower e)
+    public void OpenInspectMenu(Tower e, int page = 0)
     {
         SelectingTower = e;
         SetMenuState("UpgradeMenu", true);
@@ -531,6 +531,8 @@ public class GameHandler : MonoBehaviour
         d.SellG.text = $"Sell ({e.TotalScrapInvested/2})";
         d.tears_of_childen.text = $"Tier {Converter.NumToRead((1 + e.Level).ToString(), 3)}";
         d.tears_of_childen.color = d.cols[e.Level];
+        d.ShowSlots(e);
+        d.ColorByPage(page);
         UpdateThinalongs();
     }
 

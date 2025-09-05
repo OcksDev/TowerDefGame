@@ -23,6 +23,7 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public Enemy EnemyTarget;
     public int MaxLevel = 3; // 0,1,2,3
+    public int MaxCards = 1;
     private float TimeTillAttack = 0;
     private bool CanAttackTick = true;
     [HideInInspector]
@@ -144,7 +145,7 @@ public class Tower : MonoBehaviour
 
     public string GetDescription()
     {
-        var e = LangFileIndex.GetDefaultData() + "<br><br>";
+        var e = LanguageFileSystem.Instance.GetString(TowerType,"Desc") + "<br><br>";
         SetStats();
         if (CanAttack)
         {
@@ -271,6 +272,7 @@ public class Tower : MonoBehaviour
         Range = based.Range;
         AttackRate = based.AttackRate;
         MaxLevel = based.MaxLevel;
+        MaxCards = based.MaxCards;
         Buffs.Clear();
         TowerSpecificStats();
         foreach (var a in RelatedNerds)
@@ -281,6 +283,7 @@ public class Tower : MonoBehaviour
         {
             ApplyBuff(a.Value);
         }
+        
         StatHook.Invoke();
     }
 
