@@ -56,6 +56,11 @@ MonoBehaviour:
   MaxLevel: 0
   Tower: {fileID: 0}
   Level: 0
+  LangFileIndex:
+    FileName: atkspd
+    DefaultFile: {fileID: 4900000, guid: bbe161de861038843bc5ee31beb137e6, type: 3}
+    DefaultString: "Name: \r\nDesc: "
+    LanguageType: 2
 --- !u!222 &2904539246137171049
 CanvasRenderer:
   m_ObjectHideFlags: 0

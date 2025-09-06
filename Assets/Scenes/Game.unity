@@ -1886,7 +1886,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Alternatorgg -'
+  m_text: Alternatorgg
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6fb92f0bc6157f643a56cc1a077b2d85, type: 2}
   m_sharedMaterial: {fileID: -5551472778389622864, guid: 6fb92f0bc6157f643a56cc1a077b2d85, type: 2}
@@ -2056,6 +2056,7 @@ MonoBehaviour:
   PlacingTower: {fileID: 0}
   PlacingCard: {fileID: 0}
   SelectingTower: {fileID: 0}
+  selpage: 0
   TowerUIBase: {fileID: 4555372855722255660, guid: 0dbc9e5d23baac64fbe5645b0b67fba9, type: 3}
   TowerUIPart: {fileID: 4555372855722255660, guid: 66efe6001e7f88449aae146654733c69, type: 3}
 --- !u!4 &572984709
@@ -7701,7 +7702,7 @@ MonoBehaviour:
   SellG: {fileID: 1200205063}
   High: {fileID: 1136931907}
   TG: {fileID: 893295348}
-  tears_of_childen2: {fileID: 0}
+  tears_of_childen2: {fileID: 1227531277}
   cols:
   - {r: 0.4862745, g: 0.99215686, b: 1, a: 0.7490196}
   - {r: 0.4862745, g: 1, b: 0.4862745, a: 0.7490196}
@@ -7710,6 +7711,7 @@ MonoBehaviour:
   cols_sel:
   - {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
   - {r: 0.32156864, g: 0.32156864, b: 0.32156864, a: 1}
+  - {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.7490196}
   UpgradeTabs:
   - {fileID: 1122993902}
   - {fileID: 2036961591}
@@ -8186,7 +8188,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tier 1
+  m_text: '- Tier 1 -'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6fb92f0bc6157f643a56cc1a077b2d85, type: 2}
   m_sharedMaterial: {fileID: -5551472778389622864, guid: 6fb92f0bc6157f643a56cc1a077b2d85, type: 2}
@@ -8195,8 +8197,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3716513023
-  m_fontColor: {r: 1, g: 0.48627448, b: 0.52143484, a: 0.8666667}
+    rgba: 3217606856
+  m_fontColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0.7490196}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

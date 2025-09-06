@@ -40,12 +40,30 @@ public class banana : MonoBehaviour
     {
 
         var g = GameHandler.Instance;
-        var x = g.SelectingTower.GetCostToUpgrade(g.SelectingTower.Level);
+        Card card = null;
+        int x = -1;
+        if(g.selpage > 0)
+        {
+            card = g.SelectingTower.MyCards[g.selpage-1];
+            x = card.GetCostToUpgrade(card.Level);
+        }
+        else
+        {
+            x = g.SelectingTower.GetCostToUpgrade(g.SelectingTower.Level);
+        }
+
         if (GameHandler.Scrap < x) return; // not enough moolah
         GameHandler.Scrap -= x;
         g.SelectingTower.TotalScrapInvested += x;
-        g.SelectingTower.RealUpgrade();
-        g.OpenInspectMenu(g.SelectingTower);
+        if(g.selpage > 0)
+        {
+            card.RealUpgrade();
+        }
+        else
+        {
+            g.SelectingTower.RealUpgrade();
+        }
+        g.OpenInspectMenu(g.SelectingTower, g.selpage);
     }
     public void Usell()
     {

@@ -34,6 +34,11 @@ public class Card : MonoBehaviour
         Upgrade();
     }
     
+    public string GetDescription()
+    {
+        return LanguageFileSystem.Instance.GetString(Name, "Desc");
+    }
+
     public virtual void Upgrade()
     {
         Level = Mathf.Clamp(Level + 1, 0, MaxLevel);
@@ -41,19 +46,14 @@ public class Card : MonoBehaviour
 
     public virtual int GetCostToUpgrade(int level)
     {
-        switch (Name)
+        switch (level)
         {
-            case "Smeg":
-                switch (level)
-                {
-                    default: return -1;
-                    case -1: return 50;
-                    case 0:  return 150;
-                    case 1:  return 500;
-                    case 2:  return 1000;
-                }
+            default: return -1;
+            case -1: return 50;
+            case 0: return 150;
+            case 1: return 500;
+            case 2: return 1000;
         }
-        return -1;
     }
 }
 

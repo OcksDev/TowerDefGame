@@ -509,16 +509,38 @@ public class GameHandler : MonoBehaviour
     next:;
     }
     public Tower SelectingTower;
+    public int selpage;
     public void OpenInspectMenu(Tower e, int page = 0)
     {
         SelectingTower = e;
-        SetMenuState("UpgradeMenu", true);
-        var a = e.GetDescription();
+        selpage = page;
         var d = Tags.refs["UpgradeMenu"].GetComponent<banana>();
-        d.tit.text = e.TowerType;
-        d.dick.text = a;
-        var s = e.GetCostToUpgrade(e.Level);
-        if(s > 0)
+        SetMenuState("UpgradeMenu", true);
+        int s = -1;
+        bool atmax = false;
+        if (page == 0)
+        {
+            var a = e.GetDescription();
+            d.tit.text = LanguageFileSystem.Instance.GetString(e.TowerType, "Name");
+            d.dick.text = a;
+            s = e.GetCostToUpgrade(e.Level);
+            d.tears_of_childen.text = $"- Tier {Converter.NumToRead((1 + e.Level).ToString(), 3)} -";
+            d.tears_of_childen.color = d.cols[e.Level];
+            atmax = e.Level >= e.MaxLevel;
+        }
+        else
+        {
+            Card cd = e.MyCards[page - 1];
+            var a = cd.GetDescription();
+            d.tit.text = LanguageFileSystem.Instance.GetString(cd.Name, "Name");
+            d.dick.text = a;
+            s = cd.GetCostToUpgrade(cd.Level);
+            d.tears_of_childen.text = $"- Tier {Converter.NumToRead((1 + cd.Level).ToString(), 3)} -";
+            d.tears_of_childen.color = d.cols[cd.Level];
+            atmax = cd.Level >= cd.MaxLevel;
+        }
+
+        if(s > 0 && !atmax)
         {
             d.UpG.text = $"Upgrade ({s})";
             d.UpG.transform.parent.GetComponent<Button>().interactable = true;
@@ -529,8 +551,6 @@ public class GameHandler : MonoBehaviour
             d.UpG.transform.parent.GetComponent<Button>().interactable = false;
         }
         d.SellG.text = $"Sell ({e.TotalScrapInvested/2})";
-        d.tears_of_childen.text = $"Tier {Converter.NumToRead((1 + e.Level).ToString(), 3)}";
-        d.tears_of_childen.color = d.cols[e.Level];
         d.tears_of_childen2.sprite = BaseIMGS[e.Level];
         d.ShowSlots(e);
         d.ColorByPage(page);

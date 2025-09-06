@@ -186,7 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerType: Crossbow
-  Description: A basic projectile-based attacking tower
   DesiredTargetCount: 1
   Range: 5
   AttackRate: 2
@@ -212,6 +211,7 @@ MonoBehaviour:
       Radius: 0.3333
       Max_Health: 100
       Max_Shield: 0
+      Scrap_Reward: 1
     Object: {fileID: 0}
     NodeTarget: 0
     Health: 0
@@ -222,6 +222,7 @@ MonoBehaviour:
     mypos: {x: 0, y: 0, z: 0}
     MarkedForDeath: 0
   MaxLevel: 3
+  MaxCards: 1
   RelatedNerds: []
   MyCards: []
   OtherImages:
@@ -245,7 +246,15 @@ MonoBehaviour:
   CanBuffInRange: 0
   CanGenerateMoney: 0
   Level: 0
+  TotalScrapInvested: 0
+  LangFileIndex:
+    FileName: Crossbow
+    DefaultFile: {fileID: 4900000, guid: 2717acf1c1d4bdf428e5407df79a4cec, type: 3}
+    DefaultString: "Name: \r\nDesc: \r\nPow1: \r\nPow1_Desc: \r\nPow2: \r\nPow2_Desc:
+      \r\nPow3: \r\nPow3_Desc: "
+    LanguageType: 1
   DescCrossover: 
+  TargetState: 0000000000000000
   NerdToSpawn: {fileID: 3723795987050006145, guid: ac033c32680f44142a403a3b42320752, type: 3}
   SpawnOffset: {x: -0.25, y: 0, z: 0}
 --- !u!61 &1407727520241397506

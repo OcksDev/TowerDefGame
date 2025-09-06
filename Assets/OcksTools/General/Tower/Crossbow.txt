@@ -1,0 +1,8 @@
+Name: Crossbow
+Desc: A basic projectile-based attacking tower.
+Pow1: 
+Pow1_Desc: 
+Pow2: 
+Pow2_Desc: 
+Pow3: 
+Pow3_Desc: 
