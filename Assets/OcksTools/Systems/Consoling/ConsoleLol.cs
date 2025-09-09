@@ -256,13 +256,13 @@ public class ConsoleLol : MonoBehaviour
 
                             ConsoleLog((
 
-                                "test result: " + Tags.AllTags["Exist"]["penis"].name
+                                "test result: " + ((GameObject)Tags.AllTags["Exist"]["penis"]).name
 
                             ), "#bdbdbdff");
                             Tags.ClearAllOf("penis");
                             break;
                         case "circle":
-                            SpawnSystem.Instance.SpawnObject("Circle", gameObject, Vector3.zero, Quaternion.Euler(0, 0, 0));
+                            SpawnSystem.Spawn(new SpawnData("Circle").Parent(transform));
                             break;
                         case "chat":
                             for(int i = 0; i < 10; i++)
@@ -392,7 +392,7 @@ public class ConsoleLol : MonoBehaviour
                             break;
                         case "destroy":
                             foreach (var d in Tags.AllTags["Exist"])
-                                Destroy(d.Value);
+                                Destroy((GameObject)d.Value);
                             break;
                         case "events":
                             var weenor = new OXEvent();
