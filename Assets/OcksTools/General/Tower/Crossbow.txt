@@ -1,8 +1,8 @@
 Name: Crossbow
 Desc: A basic projectile-based attacking tower.
-Pow1: 
-Pow1_Desc: 
-Pow2: 
-Pow2_Desc: 
+Pow1: Gamer
+Pow1_Desc: Sexing All Your Mumz
+Pow2: WEEEE
+Pow2_Desc: AAAAA
 Pow3: 
 Pow3_Desc: 

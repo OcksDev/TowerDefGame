@@ -89,14 +89,14 @@ public class PT_Point
     }
 }
 
-
+[System.Serializable]
 public class OXPath
 {
     public bool AutoEndConnect = true;
     public List<Vector3> Positions = new List<Vector3>();
     private List<Vector3> Positions_re = new List<Vector3>();
     List<float> floats = new List<float>();
-    float total_dist = 0;
+    public float total_dist = 0;
 
     private void Awake()
     {

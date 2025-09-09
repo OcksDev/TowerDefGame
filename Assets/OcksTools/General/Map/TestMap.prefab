@@ -193,7 +193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3717054179942651133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.65, y: 2.55, z: 0}
+  m_LocalPosition: {x: 0.91, y: 2.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -361,7 +361,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8214032445559444079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.62, y: 0.27, z: 0}
+  m_LocalPosition: {x: 5.64, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -445,7 +445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8663493249727330114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.63, y: 4.23, z: 0}
+  m_LocalPosition: {x: -1.84, y: 5.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -610,7 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartNode:
-    Node: {fileID: 0}
+    Node: {fileID: 7112962902784997523}
     NextNodes: 0000000001000000
     index: 0
   Nodes:
@@ -627,16 +627,48 @@ MonoBehaviour:
     NextNodes: 05000000
     index: 0
   - Node: {fileID: 8566861970769828401}
-    NextNodes: 
+    NextNodes: 05000000
     index: 0
   - Node: {fileID: 4755894422860065592}
-    NextNodes: 
+    NextNodes: 06000000
     index: 0
   - Node: {fileID: 4918634221392703302}
     NextNodes: 
     index: 0
+  Poses: []
   Prefab: {fileID: 8935992847444848031}
   SpawnedScene: {fileID: 0}
+  Pathways:
+  - AutoEndConnect: 0
+    Positions:
+    - {x: -1.84, y: 0.69000006, z: 0}
+    - {x: 2.48, y: -1.6500001, z: 0}
+    - {x: 1.39, y: -4.68, z: 0}
+    - {x: 2.47, y: -7.8, z: 0}
+    total_dist: 11.434773
+  - AutoEndConnect: 0
+    Positions:
+    - {x: -1.84, y: 0.69000006, z: 0}
+    - {x: 2.48, y: -1.6500001, z: 0}
+    - {x: 5.64, y: -3.6, z: 0}
+    total_dist: 8.626277
+  - AutoEndConnect: 0
+    Positions:
+    - {x: -2.65, y: -2.45, z: 0}
+    - {x: 2.48, y: -1.6500001, z: 0}
+    - {x: 1.39, y: -4.68, z: 0}
+    - {x: 2.47, y: -7.8, z: 0}
+    total_dist: 11.713734
+  - AutoEndConnect: 0
+    Positions:
+    - {x: -2.65, y: -2.45, z: 0}
+    - {x: 2.48, y: -1.6500001, z: 0}
+    - {x: 5.64, y: -3.6, z: 0}
+    total_dist: 8.905236
+  ShortestPath:
+    AutoEndConnect: 1
+    Positions: []
+    total_dist: 0
 --- !u!114 &5980334180382937559
 MonoBehaviour:
   m_ObjectHideFlags: 0

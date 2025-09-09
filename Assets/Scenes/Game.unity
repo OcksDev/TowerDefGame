@@ -2021,7 +2021,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9e2171c44f7ca40438f7998076149efb, type: 3}
   - {fileID: 21300000, guid: 92d5de271b8f1fc489a8dc8f955d9932, type: 3}
   BaseMats:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 2100000, guid: fcd9b7470475f70439032a72f1909366, type: 2}
   BaseColors:
   - {r: 1, g: 1, b: 1, a: 1}
@@ -7716,6 +7716,9 @@ MonoBehaviour:
   - {fileID: 1737717811}
   - {fileID: 751180476}
   - {fileID: 1713900428}
+  aaaaaaa:
+  - {fileID: 673606012}
+  - {fileID: 1078324230}
 --- !u!1001 &1815332956
 PrefabInstance:
   m_ObjectHideFlags: 0

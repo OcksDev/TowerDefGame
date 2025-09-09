@@ -168,6 +168,21 @@ public class Tower : MonoBehaviour
         DescCrossover = "";
         DescriptionHook.Invoke();
         e += DescCrossover;
+
+
+        if(Level >= 1)
+        {
+            e += $"<br><b>{LanguageFileSystem.Instance.GetString(TowerType, "Pow1")}</b>: {LanguageFileSystem.Instance.GetString(TowerType, "Pow1_Desc")}";
+        }
+        if(Level >= 2)
+        {
+            e += $"<br><br><b>{LanguageFileSystem.Instance.GetString(TowerType, "Pow2")}</b>: {LanguageFileSystem.Instance.GetString(TowerType, "Pow2_Desc")}";
+        }
+        if(Level >= 3)
+        {
+            e += $"<br><br><b>{LanguageFileSystem.Instance.GetString(TowerType, "Pow3")}</b>: {LanguageFileSystem.Instance.GetString(TowerType, "Pow3_Desc")}";
+        }
+
         return e;
     }
     public virtual string ExtraStatDescParse()
@@ -393,17 +408,17 @@ public class Tower : MonoBehaviour
         switch (targetpassover)
         {
             case Target.First:
-                if (a._TotalMoved > b._TotalMoved) return -1;
+                if (a.TotalMoved > b.TotalMoved) return -1;
                 else return 1;
             case Target.Last:
-                if (a._TotalMoved < b._TotalMoved) return -1;
+                if (a.TotalMoved < b.TotalMoved) return -1;
                 else return 1;
             case Target.HighestHP:
                 if (a.Health > b.Health) return -1;
                 else if (a.Health < b.Health) return 1;
                 else
                 {
-                    if (a._TotalMoved > b._TotalMoved) return -1;
+                    if (a.TotalMoved > b.TotalMoved) return -1;
                     else return 1;
                 }
             case Target.LowestHP:
@@ -411,7 +426,7 @@ public class Tower : MonoBehaviour
                 else if (a.Health > b.Health) return 1;
                 else
                 {
-                    if (a._TotalMoved > b._TotalMoved) return -1;
+                    if (a.TotalMoved > b.TotalMoved) return -1;
                     else return 1;
                 }
             case Target.Farthest:
@@ -425,7 +440,7 @@ public class Tower : MonoBehaviour
                 else if (a.MovementSpeed < b.MovementSpeed) return 1;
                 else
                 {
-                    if (a._TotalMoved > b._TotalMoved) return -1;
+                    if (a.TotalMoved > b.TotalMoved) return -1;
                     else return 1;
                 }
             case Target.Slowest:
@@ -433,7 +448,7 @@ public class Tower : MonoBehaviour
                 else if (a.MovementSpeed > b.MovementSpeed) return 1;
                 else
                 {
-                    if (a._TotalMoved > b._TotalMoved) return -1;
+                    if (a.TotalMoved > b.TotalMoved) return -1;
                     else return 1;
                 }
         }

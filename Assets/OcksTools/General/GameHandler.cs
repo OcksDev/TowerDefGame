@@ -151,6 +151,7 @@ public class GameHandler : MonoBehaviour
         if(Map!=null) Destroy(Map.SpawnedScene);
         var winkle = Instantiate(mapgm, Vector3.zero, Quaternion.identity);
         Map = winkle.GetComponent<Map>();
+        Map.BakePaths();
         CurrentGameState = GameState.Game;
     }
     public GameObject Player;
@@ -554,6 +555,12 @@ public class GameHandler : MonoBehaviour
         d.tears_of_childen2.sprite = BaseIMGS[e.Level];
         d.ShowSlots(e);
         d.ColorByPage(page);
+
+        foreach(var ddd in d.aaaaaaa)
+        {
+            ddd.SetLayoutVertical();
+        }
+
         UpdateThinalongs();
     }
 

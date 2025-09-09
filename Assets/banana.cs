@@ -17,6 +17,7 @@ public class banana : MonoBehaviour
     public List<Color> cols;
     public List<Color> cols_sel;
     public List<Image> UpgradeTabs;
+    public List<ContentSizeFitter> aaaaaaa;
     private void Update()
     {
         if (InputManager.IsKeyDown("upgrade"))

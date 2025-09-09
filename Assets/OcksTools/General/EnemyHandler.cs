@@ -68,25 +68,18 @@ public class EnemyHandler : MonoBehaviour
                 d.my_time = g_time;
                 //some wacky ass movement code
                 float maxd = d.GetMovementSpeed() * difft;
-                var oldp = d.mypos;
-                var diff = (GameHandler.Instance.Map.Poses[d.NodeTarget] - oldp);
 
 
-                if (diff.sqrMagnitude < maxd * maxd)
-                {
-                    d.NodeTarget = GameHandler.Instance.Map.GetNextIndex(d.NodeTarget);
-                    if (d.NodeTarget == -1)
-                    {
-                        //DIE DIE DIE
-                        Deads.Add(d);
-                        d.MarkedForDeath = true;
-                        continue;
-                    }
-                }
-
-                var weewee = diff.normalized * maxd + oldp;
                 d._TotalMoved += maxd;
-                d.mypos = weewee;
+                d.TotalMoved += maxd;
+                if(d._TotalMoved >= d.MyPath.total_dist)
+                {
+                    //DIE DIE DIE
+                    Deads.Add(d);
+                    d.MarkedForDeath = true;
+                    continue;
+                }
+                d.mypos = d.MyPath.GetPos_Distance(d._TotalMoved);
             }
             Thread.Sleep(1);
         }
@@ -100,11 +93,12 @@ public class EnemyHandler : MonoBehaviour
     {
         var a = new Enemy(type);
         a.DataRef = EnemyDict[type];
-        var x = GameHandler.Instance.Map.GetSpawnIndex();
+        var x = GameHandler.Instance.Map.GetNextPath();
+        var ipos = x.GetPos_Distance(0);
         switch (type)
         {
             default:
-                a.Object = Instantiate(EnemyObj, GameHandler.Instance.Map.Nodes[x].Node.position, Quaternion.identity, transform).transform;
+                a.Object = Instantiate(EnemyObj, ipos, Quaternion.identity, transform).transform;
                 ObjectToEnemy.Add(a.Object.gameObject, a);
                 break;
             case "Phys":break;
@@ -118,10 +112,11 @@ public class EnemyHandler : MonoBehaviour
         }
         a.Health = a.DataRef.Max_Health;
         a.Shield = a.DataRef.Max_Shield;
-        a.NodeTarget = x;
+        a.MyPath = x;
         Enemies.Add(a);
-        a.mypos = GameHandler.Instance.Map.Nodes[x].Node.position;
+        a.mypos = ipos;
         a.my_time = g_time;
+        a.TotalMoved = GameHandler.Instance.Map.ShortestPath.total_dist - x.total_dist;
         return a;
     }
 
@@ -170,11 +165,12 @@ public class Enemy
     public string EnemyType;
     public EnemyData DataRef;
     public Transform Object;
-    public int NodeTarget;
+    public OXPath MyPath;
     public double Health = 100;
     public double Shield = 100;
     public float MovementSpeed = 1;
     public float _TotalMoved = 0;
+    public float TotalMoved = 0;
     public float my_time = 0;
     public Vector3 mypos;
     public bool MarkedForDeath = false;
