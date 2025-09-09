@@ -1,14 +1,22 @@
+using com.cyborgAssets.inspectorButtonPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Map : MonoBehaviour
 {
+    [ProButton]
+    public void TestButton()
+    {
+        Debug.Log("AAA");
+    }
     public MapNode StartNode;
     public List<MapNode> Nodes = new List<MapNode>();
     public List<Vector3> Poses = new List<Vector3>();
     public GameObject Prefab;
     public GameObject SpawnedScene;
+
+
     public int GetNextIndex(int curindex)
     {
         if (Nodes[curindex].NextNodes.Count == 0) curindex++;

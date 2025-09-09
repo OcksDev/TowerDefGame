@@ -2021,7 +2021,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9e2171c44f7ca40438f7998076149efb, type: 3}
   - {fileID: 21300000, guid: 92d5de271b8f1fc489a8dc8f955d9932, type: 3}
   BaseMats:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
   - {fileID: 2100000, guid: fcd9b7470475f70439032a72f1909366, type: 2}
   BaseColors:
   - {r: 1, g: 1, b: 1, a: 1}
@@ -6570,8 +6570,6 @@ MonoBehaviour:
   Spawnables:
   - Name: Circle
     Object: {fileID: 5021756888483024207, guid: d2fb6a7c474fbdc4a9627383260dbe4b, type: 3}
-    PoolSize: 0
-    UsePoolForObject: 0
 --- !u!114 &1403638269
 MonoBehaviour:
   m_ObjectHideFlags: 0
