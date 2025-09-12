@@ -324,18 +324,18 @@ public class Tower : MonoBehaviour
                 if(Level >= 1)
                 {
                     Damage = 10;
-                    AttackRate = 2.5f;
+                    AttackRate = 1.5f;
                 }
                 if(Level >= 2)
                 {
-                    Damage = 20;
-                    AttackRate = 3f;
+                    Damage = 15;
+                    AttackRate = 1.8f;
                     Range += 2;
                 }
                 if(Level >= 3)
                 {
-                    Damage = 50;
-                    AttackRate = 3.5f;
+                    Damage = 25;
+                    AttackRate = 2.1f;
                     Range += 3;
                 }
                 break;

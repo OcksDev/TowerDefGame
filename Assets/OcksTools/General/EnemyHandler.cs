@@ -104,12 +104,6 @@ public class EnemyHandler : MonoBehaviour
             case "Phys":break;
         }
         a.DataRef.Max_Shield = 0;
-        switch (type)
-        {
-            default:
-                a.DataRef.Max_Health = 10;
-                break;
-        }
         a.Health = a.DataRef.Max_Health;
         a.Shield = a.DataRef.Max_Shield;
         a.MyPath = x;

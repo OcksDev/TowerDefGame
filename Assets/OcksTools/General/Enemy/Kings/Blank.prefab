@@ -48,5 +48,6 @@ MonoBehaviour:
   enemyDatas:
   - Name: Nerd
     Radius: 0.33333
-    Max_Health: 10
+    Max_Health: 20
     Max_Shield: 0
+    Scrap_Reward: 5
