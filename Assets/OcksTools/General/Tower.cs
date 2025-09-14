@@ -23,7 +23,7 @@ public class Tower : MonoBehaviour
     [HideInInspector]
     public Enemy EnemyTarget;
     public int MaxLevel = 3; // 0,1,2,3
-    public int MaxCards = 1;
+    public int MaxCards = 1; // should stay at 1 for most towers
     private float TimeTillAttack = 0;
     private bool CanAttackTick = true;
     [HideInInspector]
@@ -154,7 +154,7 @@ public class Tower : MonoBehaviour
         }
         if (Pierce > 0)
         {
-            e += $"Pierce: {Pierce}br>";
+            e += $"Pierce: {Pierce}<br>";
         }
         if (Range > 0)
         {
@@ -288,7 +288,9 @@ public class Tower : MonoBehaviour
         AttackRate = based.AttackRate;
         MaxLevel = based.MaxLevel;
         MaxCards = based.MaxCards;
+        Pierce = based.Pierce;
         Buffs.Clear();
+        MaxCards = based.MaxCards + Level;
         TowerSpecificStats();
         foreach (var a in RelatedNerds)
         {
@@ -325,12 +327,14 @@ public class Tower : MonoBehaviour
                 {
                     Damage = 10;
                     AttackRate = 1.5f;
+                    Pierce += 1;
                 }
                 if(Level >= 2)
                 {
                     Damage = 15;
                     AttackRate = 1.8f;
                     Range += 2;
+                    Pierce += 1;
                 }
                 if(Level >= 3)
                 {

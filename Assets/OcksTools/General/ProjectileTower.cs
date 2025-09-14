@@ -9,8 +9,23 @@ public class ProjectileTower : Tower
     public override void Attack()
     {
         var d = GetDamProfile();
-        var meme = Instantiate(NerdToSpawn, transform.position + Parts[0].transform.rotation * SpawnOffset, Parts[0].rotation, Tags.refs["BulletHolder"].transform).GetComponent<Projectile>();
-        meme.Init(this, d);
+        Projectile meme;
+        if (TowerType == "Crossbow" && Level >= 3)
+        {
+            meme = Instantiate(NerdToSpawn, transform.position + Parts[0].transform.rotation * SpawnOffset, Parts[0].rotation, Tags.refs["BulletHolder"].transform).GetComponent<Projectile>();
+            meme.Init(this, d);
+            var dd = GetDamProfile();
+            dd.Damage /= 2;
+            meme = Instantiate(NerdToSpawn, transform.position + Parts[0].transform.rotation * SpawnOffset, Parts[0].rotation * Quaternion.Euler(0,0,7.5f), Tags.refs["BulletHolder"].transform).GetComponent<Projectile>();
+            meme.Init(this, dd);
+            meme = Instantiate(NerdToSpawn, transform.position + Parts[0].transform.rotation * SpawnOffset, Parts[0].rotation * Quaternion.Euler(0,0,-7.5f), Tags.refs["BulletHolder"].transform).GetComponent<Projectile>();
+            meme.Init(this, dd);
+        }
+        else
+        {
+            meme = Instantiate(NerdToSpawn, transform.position + Parts[0].transform.rotation * SpawnOffset, Parts[0].rotation, Tags.refs["BulletHolder"].transform).GetComponent<Projectile>();
+            meme.Init(this, d);
+        }
         AttackAnim = StartCoroutine(BackPushAnim());
     }
 

@@ -107,6 +107,10 @@ public class EnemyHandler : MonoBehaviour
         a.Health = a.DataRef.Max_Health;
         a.Shield = a.DataRef.Max_Shield;
         a.MyPath = x;
+
+        var d = a.Object.GetComponent<SpriteRenderer>();
+        d.sprite = a.DataRef.Sprite;
+        d.color = a.DataRef.ModColor;
         Enemies.Add(a);
         a.mypos = ipos;
         a.my_time = g_time;
@@ -143,7 +147,8 @@ public class EnemyData
     public double Max_Health = 100;
     public double Max_Shield = 0;
     public long Scrap_Reward = 1;
-
+    public Sprite Sprite;
+    public Color32 ModColor;
     public double CalcCreditCost(double goal)
     {
         return Max_Health;

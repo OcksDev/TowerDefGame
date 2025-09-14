@@ -245,6 +245,19 @@ public class GameHandler : MonoBehaviour
         }
 
     }
+    List<RangeHolderLol> rangs = new List<RangeHolderLol>();
+    public void ShowRange(Vector3 pos, float size, string id, string reason)
+    {
+        var d = new RangeHolderLol();
+    }
+    public void CloseAllRangesIn(string id)
+    {
+
+    }
+    public void CloseSpecificRange(string id, string reason)
+    {
+
+    }
 
     public GameObject SpawnTower(string nerd)
     {
@@ -738,4 +751,11 @@ public class Loadout
         Towers = Converter.StringToList(d["T"]);
         Cards = Converter.StringToList(d["G"]);
     }
+}
+
+
+public class RangeHolderLol
+{
+    public GameObject Range;
+    public string ID, Reason;
 }
