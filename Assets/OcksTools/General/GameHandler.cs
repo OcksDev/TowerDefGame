@@ -249,6 +249,7 @@ public class GameHandler : MonoBehaviour
     public void ShowRange(Vector3 pos, float size, string id, string reason)
     {
         var d = new RangeHolderLol();
+        rangs.Add(d);
     }
     public void CloseAllRangesIn(string id)
     {

@@ -24,7 +24,7 @@ public class Tower : MonoBehaviour
     public Enemy EnemyTarget;
     public int MaxLevel = 3; // 0,1,2,3
     public int MaxCards = 1; // should stay at 1 for most towers
-    private float TimeTillAttack = 0;
+    private float TimeTillAttack = 0;   
     private bool CanAttackTick = true;
     [HideInInspector]
     public List<Tower> RelatedNerds = new List<Tower>();
