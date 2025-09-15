@@ -209,16 +209,26 @@ MonoBehaviour:
       Radius: 0.3333
       Max_Health: 100
       Max_Shield: 0
+      Scrap_Reward: 1
+      MovementSpeed: 1
+      Sprite: {fileID: 0}
+      ModColor:
+        serializedVersion: 2
+        rgba: 0
     Object: {fileID: 0}
-    NodeTarget: 0
+    MyPath:
+      AutoEndConnect: 1
+      Positions: []
+      total_dist: 0
     Health: 0
     Shield: 0
-    MovementSpeed: 0
     _TotalMoved: 0
+    TotalMoved: 0
     my_time: 0
     mypos: {x: 0, y: 0, z: 0}
     MarkedForDeath: 0
   MaxLevel: 3
+  MaxCards: 1
   RelatedNerds: []
   MyCards: []
   OtherImages:
@@ -230,9 +240,19 @@ MonoBehaviour:
   UIDisplayScaleMult: 0.95
   UIDisplayOffset: {x: 0.125, y: 0, z: 0}
   CanAttack: 1
+  CanExplode: 0
   CanBuffInRange: 0
   CanGenerateMoney: 0
   Level: 0
+  TotalScrapInvested: 0
+  LangFileIndex:
+    FileName: Minigun
+    DefaultFile: {fileID: 0}
+    DefaultString: "Name: \r\nDesc: \r\nPow1: \r\nPow1_Desc: \r\nPow2: \r\nPow2_Desc:
+      \r\nPow3: \r\nPow3_Desc: "
+    LanguageType: 1
+  DescCrossover: 
+  TargetState: 0000000000000000
   HitLineObject: {fileID: 4183998883242688557, guid: ba2d301dafb36ad42a8180c9bcbd00bf, type: 3}
   SpawnOffset: {x: 0, y: 0, z: 0}
 --- !u!61 &1407727520241397506
