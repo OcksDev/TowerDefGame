@@ -2132,7 +2132,7 @@ MonoBehaviour:
   - Name: Circle
     Object: {fileID: 5021756888483024207, guid: d2fb6a7c474fbdc4a9627383260dbe4b, type: 3}
   - Name: Range
-    Object: {fileID: 5021756888483024207, guid: d2fb6a7c474fbdc4a9627383260dbe4b, type: 3}
+    Object: {fileID: 3539227152881010172, guid: c3c0e672a830ec748a853b553a14aee4, type: 3}
 --- !u!1 &599970191
 GameObject:
   m_ObjectHideFlags: 0

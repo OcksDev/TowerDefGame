@@ -56,6 +56,7 @@ public class banana : MonoBehaviour
         if (GameHandler.Scrap < x) return; // not enough moolah
         GameHandler.Scrap -= x;
         g.SelectingTower.TotalScrapInvested += x;
+        float zz = GameHandler.Instance.SelectingTower.Range;
         if(g.selpage > 0)
         {
             card.RealUpgrade();
@@ -63,6 +64,10 @@ public class banana : MonoBehaviour
         else
         {
             g.SelectingTower.RealUpgrade();
+        }
+        if (GameHandler.Instance.SelectingTower.Range != zz)
+        {
+            GameHandler.Instance.UpdateRangeSize("Range", GameHandler.Instance.SelectingTower.Range);
         }
         g.OpenInspectMenu(g.SelectingTower, g.selpage);
     }

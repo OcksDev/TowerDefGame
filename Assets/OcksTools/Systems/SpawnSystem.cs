@@ -26,7 +26,10 @@ public class SpawnSystem : MonoBehaviour
         }
         else
         {
-            return Instantiate(SpawnableDict[nerd].Object, pos, rot);
+            var dd = Instantiate(SpawnableDict[nerd].Object);
+            dd.transform.position = pos;
+            dd.transform.rotation = rot;
+            return dd;
         }
     }
     public static GameObject Spawn(SpawnData sp)

@@ -422,6 +422,21 @@ public class ConsoleLol : MonoBehaviour
                 case "scrap":
                     GameHandler.Scrap = long.Parse(command[1]);
                     break;
+                case "wave":
+                    WaveSystem.Instance.StartWave(int.Parse(command[1]));
+                    break;
+                case "wavetest":
+                    Console.Log($"1: " + WaveSystem.Instance.GetHealthCreditForWave(1).ToString());
+                    Console.Log($"2: " + WaveSystem.Instance.GetHealthCreditForWave(2).ToString());
+                    Console.Log($"3: " + WaveSystem.Instance.GetHealthCreditForWave(3).ToString());
+                    Console.Log($"4: " + WaveSystem.Instance.GetHealthCreditForWave(4).ToString());
+                    Console.Log($"5: " + WaveSystem.Instance.GetHealthCreditForWave(5).ToString());
+                    Console.Log($"6: " + WaveSystem.Instance.GetHealthCreditForWave(6).ToString());
+                    Console.Log($"7: " + WaveSystem.Instance.GetHealthCreditForWave(7).ToString());
+                    Console.Log($"8: " + WaveSystem.Instance.GetHealthCreditForWave(8).ToString());
+                    Console.Log($"9: " + WaveSystem.Instance.GetHealthCreditForWave(9).ToString());
+                    Console.Log($"10: " + WaveSystem.Instance.GetHealthCreditForWave(10).ToString());
+                    break;
                 case "joe":
                     switch (command[1])
                     {

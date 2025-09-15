@@ -5,7 +5,13 @@ Spawn 2
 End
 
 Wave 2
+Spawn 4 1.2
+Wait 2
+Spawn 4
+End
+
+Wave 3
 Spawn 3 2
 Wait 2
-Spawn 3
+Spawn 7
 End

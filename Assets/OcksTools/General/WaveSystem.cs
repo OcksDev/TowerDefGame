@@ -10,10 +10,10 @@ public class WaveSystem : MonoBehaviour
     public static WaveSystem Instance;
     public double GetHealthCreditForWave(int x)
     {
-        double y = System.Math.Pow(1.15, Mathf.Clamp(x, 0, 15));
-        y += Mathf.Clamp(x - 15, 0, 30);
+        double y = x;
+        y *= System.Math.Pow(1.15, Mathf.Clamp(x - 1, 0, 15));
 
-        return x * 100;
+        return y * 100;
     }
 
     public Dictionary<WaveNode.WaveNodeType, List<string>> bananas = new Dictionary<WaveNode.WaveNodeType, List<string>>();

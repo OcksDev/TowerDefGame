@@ -246,18 +246,32 @@ public class GameHandler : MonoBehaviour
 
     }
     List<RangeHolderLol> rangs = new List<RangeHolderLol>();
-    public void ShowRange(Vector3 pos, float size, string id, string reason)
+    public void ShowRange(Vector3 pos, float size, string reason)
     {
         var d = new RangeHolderLol();
+        d.Range = SpawnSystem.Spawn(new SpawnData("Range").Position(pos)).GetComponent<CircleSex>();
+        d.Range.Radious = size;
+        d.Reason = reason;
         rangs.Add(d);
     }
-    public void CloseAllRangesIn(string id)
+    public void CloseAllRanges()
     {
-
+        foreach(var a in rangs)
+        {
+            a.Range.SetKill();
+        }
+        rangs.Clear();
     }
-    public void CloseSpecificRange(string id, string reason)
+    public void UpdateRangeSize(string re, float sz)
     {
-
+        foreach(var a in rangs)
+        {
+            if (a.Reason == re)
+            {
+                a.Range.UpdateToNewRad(sz);
+                break;
+            }
+        }
     }
 
     public GameObject SpawnTower(string nerd)
@@ -527,6 +541,14 @@ public class GameHandler : MonoBehaviour
     public int selpage;
     public void OpenInspectMenu(Tower e, int page = 0)
     {
+        if (SelectingTower == null || SelectingTower != e)
+        {
+            CloseAllRanges();
+            ShowRange(e.transform.position, e.Range, "Range");
+        }
+
+
+
         SelectingTower = e;
         selpage = page;
         var d = Tags.refs["UpgradeMenu"].GetComponent<banana>();
@@ -602,6 +624,8 @@ public class GameHandler : MonoBehaviour
     public void CloseInspectMenu()
     {
         SetMenuState("UpgradeMenu", false);
+        SelectingTower = null;
+        CloseAllRanges();
     }
 
     public bool PlaceTowerConfirm(Vector3 pos, Vector3 size)
@@ -757,6 +781,6 @@ public class Loadout
 
 public class RangeHolderLol
 {
-    public GameObject Range;
+    public CircleSex Range;
     public string ID, Reason;
 }
