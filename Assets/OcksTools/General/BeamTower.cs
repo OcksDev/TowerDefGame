@@ -17,17 +17,23 @@ public class BeamTower : Tower
     }
     public void TargetAquired(int Which)
     {
-        Debug.Log("Ran TargetAquired");
 
         //Destroys old beam if it exists, then creates and sets position of a new beam between the tower and the enemy.
-        if (BeamAttack[Which] != null) { Destroy(BeamAttack[Which].gameObject); }
-        BeamAttack[Which] = Instantiate(HitLineObject, Vector3.zero, Quaternion.identity, Tags.refs["BulletHolder"].transform).GetComponent<Beam>();
-        BeamAttack[Which].LineRenderer.SetPosition(0, transform.position + Parts[0].transform.rotation * SpawnOffset);
-        BeamAttack[Which].LineRenderer.SetPosition(1, MultiTarget[Which].Object.transform.position);
+
+        try
+        {
+            if (BeamAttack[Which] != null) { Destroy(BeamAttack[Which].gameObject); }
+            BeamAttack[Which] = Instantiate(HitLineObject, Vector3.zero, Quaternion.identity, Tags.refs["BulletHolder"].transform).GetComponent<Beam>();
+            BeamAttack[Which].LineRenderer.SetPosition(0, transform.position + Parts[0].transform.rotation * SpawnOffset);
+            BeamAttack[Which].LineRenderer.SetPosition(1, MultiTarget[Which].Object.transform.position);
+        }
+        catch
+        {
+            Console.Log("Source's bald code threw an error lol", "\"red\"");
+        }
     }
     public void TargetLost(int Which)
     {
-        Debug.Log("Ran TargetLost");
         if (BeamAttack[Which] != null) { Destroy(BeamAttack[Which].gameObject); }
     }
 
@@ -46,7 +52,6 @@ public class BeamTower : Tower
     }
     public override void Attack()
     {
-        Debug.Log("Ran Attack");
         var d = GetDamProfile();
         EnemyTarget.Hit(d);
     }
