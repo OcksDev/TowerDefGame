@@ -29,6 +29,10 @@ public class TestDebugStuff : MonoBehaviour
         {
             WaveSystem.Instance.StartWave(1);
         }
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            WaveSystem.Instance.StartWave(2);
+        }
         if (Input.GetKeyDown(KeyCode.Keypad4))  
         {
             var a = GameHandler.Instance.SpawnDisplayOfTower("Crossbow");

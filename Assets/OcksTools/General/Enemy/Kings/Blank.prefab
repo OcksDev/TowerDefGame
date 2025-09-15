@@ -51,7 +51,18 @@ MonoBehaviour:
     Max_Health: 20
     Max_Shield: 0
     Scrap_Reward: 5
+    MovementSpeed: 1
     Sprite: {fileID: 21300000, guid: 201488c2973f0dd4ea80facc638497be, type: 3}
     ModColor:
       serializedVersion: 2
       rgba: 4283520767
+  - Name: Nerd2
+    Radius: 0.33333
+    Max_Health: 10
+    Max_Shield: 0
+    Scrap_Reward: 5
+    MovementSpeed: 3
+    Sprite: {fileID: 21300000, guid: 201488c2973f0dd4ea80facc638497be, type: 3}
+    ModColor:
+      serializedVersion: 2
+      rgba: 4283563862

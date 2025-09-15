@@ -14,7 +14,7 @@ public class TestPhys : MonoBehaviour
         foreach(var a in waaaa)
         {
             var b= EnemyHandler.Instance.SpawnEnemy("Phys");
-            b.MovementSpeed = 0;
+            b.DataRef.MovementSpeed = 0;
             b.Object = a.transform;
             b.DataRef.Radius = 0.5f;
             EnemyHandler.Instance.ObjectToEnemy.Add(a, b);

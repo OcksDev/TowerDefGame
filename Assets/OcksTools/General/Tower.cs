@@ -440,16 +440,16 @@ public class Tower : MonoBehaviour
                 if ((a.mypos - MyPos).sqrMagnitude > (b.mypos - MyPos).sqrMagnitude) return -1;
                 else return 1;
             case Target.Fastest:
-                if (a.MovementSpeed > b.MovementSpeed) return -1;
-                else if (a.MovementSpeed < b.MovementSpeed) return 1;
+                if (a.DataRef.MovementSpeed > b.DataRef.MovementSpeed) return -1;
+                else if (a.DataRef.MovementSpeed < b.DataRef.MovementSpeed) return 1;
                 else
                 {
                     if (a.TotalMoved > b.TotalMoved) return -1;
                     else return 1;
                 }
             case Target.Slowest:
-                if (a.MovementSpeed < b.MovementSpeed) return -1;
-                else if (a.MovementSpeed > b.MovementSpeed) return 1;
+                if (a.DataRef.MovementSpeed < b.DataRef.MovementSpeed) return -1;
+                else if (a.DataRef.MovementSpeed > b.DataRef.MovementSpeed) return 1;
                 else
                 {
                     if (a.TotalMoved > b.TotalMoved) return -1;

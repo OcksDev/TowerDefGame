@@ -13,7 +13,7 @@ public class WaveSystem : MonoBehaviour
         double y = System.Math.Pow(1.15, Mathf.Clamp(x, 0, 15));
         y += Mathf.Clamp(x - 15, 0, 30);
 
-        return x;
+        return x * 100;
     }
 
     public Dictionary<WaveNode.WaveNodeType, List<string>> bananas = new Dictionary<WaveNode.WaveNodeType, List<string>>();
@@ -35,6 +35,10 @@ public class WaveSystem : MonoBehaviour
         WaveNode n = null;
         foreach(var a in e)
         {
+            if (a.Length <= 2)
+            {
+                continue;
+            }
             var b = Converter.StringToList(a, " ");
             if (b.Count <= 0) continue;
 
@@ -67,6 +71,7 @@ public class WaveSystem : MonoBehaviour
                     w.Nodes.Add(n);
                     break;
                 case WaveNode.WaveNodeType.End:
+                    w.CalculateStats();
                     WaveDict.Add(w.WaveNum, w);
                     break;
             }
@@ -83,7 +88,7 @@ public class WaveSystem : MonoBehaviour
 
     public IEnumerator ParseWave(int wave)
     {
-        var Amnt = GetHealthCreditForWave(1);
+        var Amnt = GetHealthCreditForWave(wave);
         var Set = WaveDict[wave];
         var PerAmnt = Amnt / Set.AmountOfSpawnCalls;
         foreach (var a in Set.Nodes)
@@ -122,21 +127,32 @@ public class WaveSystem : MonoBehaviour
         }
     }
 
-    public EnemyData GetEnemyForValue(double allocation)
+    public EnemyData GetEnemyForValue(double allocation, string? tt = null)
     {
-        var k = EnemyHandler.Instance.KingDict[CurrentKing];
+        if (tt == null) tt = CurrentKing;
+        var k = EnemyHandler.Instance.KingDict[tt];
         EnemyData big = null;
         double h = double.MinValue;
         foreach(var a in k.enemyDatas)
         {
             var x = a.CalcCreditCost(allocation);
-            if(x > h)
+            if(x > h && x <= allocation)
             {
                 h = x;
                 big = a;
             }
         }
-        if (big == null) throw new System.Exception("No Enemy To Pull!");
+        if (big == null)
+        {
+            if(tt == "Blank")
+            {
+                throw new System.Exception("No Enemy To Pull!");
+            }
+            else
+            {
+                return GetEnemyForValue(allocation, "Blank");
+            }
+        }
         return big;
     }
 }
@@ -149,6 +165,8 @@ public class WaveSet
     public int WaveNum = -1;
     public void CalculateStats()
     {
+        AmountOfSpawnCalls = 0;
+        AmountOfEnemsToSpawn = 0;
         foreach(var a in Nodes)
         {
             switch (a.Type)

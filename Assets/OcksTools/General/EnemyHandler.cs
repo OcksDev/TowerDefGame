@@ -147,11 +147,12 @@ public class EnemyData
     public double Max_Health = 100;
     public double Max_Shield = 0;
     public long Scrap_Reward = 1;
+    public float MovementSpeed = 1;
     public Sprite Sprite;
     public Color32 ModColor;
     public double CalcCreditCost(double goal)
     {
-        return Max_Health;
+        return Max_Health*MovementSpeed;
     }
 
 
@@ -167,7 +168,6 @@ public class Enemy
     public OXPath MyPath;
     public double Health = 100;
     public double Shield = 100;
-    public float MovementSpeed = 1;
     public float _TotalMoved = 0;
     public float TotalMoved = 0;
     public float my_time = 0;
@@ -184,7 +184,7 @@ public class Enemy
     public float GetMovementSpeed()
     {
         //speed up / down modifiers go here lol
-        return MovementSpeed;
+        return DataRef.MovementSpeed;
     }
 
     public void Kill(bool real_kill = true)

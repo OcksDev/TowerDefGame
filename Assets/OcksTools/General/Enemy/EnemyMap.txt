@@ -1,8 +1,11 @@
 Wave 1
-Spawn 5
+Spawn 2 2
 Wait 2
-Spawn 5
+Spawn 2
+End
+
+Wave 2
+Spawn 3 2
 Wait 2
-DSpawn 5
-Spawn 1
+Spawn 3
 End
