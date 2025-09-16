@@ -81,6 +81,11 @@ public class WaveSystem : MonoBehaviour
     public Dictionary<int, WaveSet> WaveDict = new Dictionary<int, WaveSet>();
 
 
+    public void StartWaveHost(int wave)
+    {
+        StartCoroutine(ParseWave(wave));
+        ServerGamer.Instance.MessageServerRpc("WaveStart", wave.ToString());
+    }
     public void StartWave(int wave)
     {
         StartCoroutine(ParseWave(wave));

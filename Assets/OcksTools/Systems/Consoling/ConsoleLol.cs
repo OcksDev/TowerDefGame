@@ -425,6 +425,9 @@ public class ConsoleLol : MonoBehaviour
                 case "wave":
                     WaveSystem.Instance.StartWave(int.Parse(command[1]));
                     break;
+                case "waveh":
+                    WaveSystem.Instance.StartWaveHost(int.Parse(command[1]));
+                    break;
                 case "wavetest":
                     Console.Log($"1: " + WaveSystem.Instance.GetHealthCreditForWave(1).ToString());
                     Console.Log($"2: " + WaveSystem.Instance.GetHealthCreditForWave(2).ToString());
@@ -614,7 +617,7 @@ public class ConsoleLol : MonoBehaviour
     public IEnumerator Wank()
     {
         yield return new WaitForSeconds(0.1f);
-        GameHandler.Instance.SetMap(0);
+        GameHandler.Instance.SetMapHost(0);
         GameHandler.Scrap = 69000000;
         yield return new WaitForSeconds(0.1f);
         EnemyHandler.Instance.SpawnEnemy("Nerd");
@@ -622,7 +625,7 @@ public class ConsoleLol : MonoBehaviour
     public IEnumerator Wank2()
     {
         yield return new WaitForSeconds(0.1f);
-        GameHandler.Instance.SetMap(1);
+        GameHandler.Instance.SetMapHost(1);
     }
     public void ConsoleLog(string text = "Logged", string hex = "\"white\"")
     {

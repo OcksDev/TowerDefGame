@@ -146,7 +146,7 @@ public class EnemyData
     public float Radius = 0.3333f;
     public double Max_Health = 100;
     public double Max_Shield = 0;
-    public long Scrap_Reward = 1;
+    public long Scrap_Reward = 10;
     public float MovementSpeed = 1;
     public Sprite Sprite;
     public Color32 ModColor;

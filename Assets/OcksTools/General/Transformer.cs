@@ -16,6 +16,7 @@ public class Transformer : StationaryTower
     }
     public void Dingle(Tower nerd)
     {
+        if (Time.time <= 5f) return;
         if (nerd.TowerType == "Crossbow" || nerd.TowerType == TowerType) return;
         var ppos = nerd.transform.position;
         if ((ppos - transform.position).sqrMagnitude > Range * Range) return;

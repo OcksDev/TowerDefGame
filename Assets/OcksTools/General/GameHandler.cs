@@ -142,6 +142,11 @@ public class GameHandler : MonoBehaviour
             AllActiveTowers[0].RealRemove();
         }
     }
+    public void SetMapHost(int balls)
+    {
+        SetMap(balls);
+        if (ServerGamer.Instance != null) ServerGamer.Instance.MessageServerRpc("SetMap",balls.ToString());
+    }
     public void SetMap(int balls)
     {
         var mapgm = AllMaps[balls];

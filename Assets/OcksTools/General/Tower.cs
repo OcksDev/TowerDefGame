@@ -199,6 +199,11 @@ public class Tower : MonoBehaviour
         GameHandler.Instance.NewTowerCreated?.Invoke(this);
         Place();
         MyPos = transform.position;
+        SpawnSystem.Spawn(new SpawnData(TowerType)
+            .Data(new Dictionary<string, string>() { {"Special","Tower"} })
+            .DontSpawn(gameObject)
+            .MultiplayerShare()
+            .Position(transform.position));
     }
     
     public void RealSell()
@@ -261,7 +266,8 @@ public class Tower : MonoBehaviour
     }
     public virtual void Remove()
     {
-        Destroy(gameObject);
+        Debug.Log(gameObject);
+        SpawnSystem.Kill(gameObject);
     }
     public virtual void Attack()
     {

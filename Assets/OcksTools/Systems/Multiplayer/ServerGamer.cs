@@ -44,20 +44,22 @@ public class ServerGamer : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void MessageServerRpc(string id, string type, string data)
     {
-        Console.Log("Grapple Message");
         RecieveMessageClientRpc(id, type, data);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void MessageServerRpc(string type, string data)
+    {
+        RecieveMessageClientRpc(ClientID, type, data);
     }
     [ClientRpc]
     public void RecieveMessageClientRpc(string id, string type, string data)
     {
-        Console.Log("Grapple Recieved pre check");
         if (id == ClientID) return;
-
+        List<string> l;
         switch (type)
         {
             case "Grapple":
-                Console.Log("Grapple Recieved Good");
-                var l = Converter.StringToList(data,"<->");
+                l = Converter.StringToList(data,"<->");
 
                 var p = GameHandler.GetPlayer(ulong.Parse(l[1]));
                 if (l[0] == "Start")
@@ -68,6 +70,12 @@ public class ServerGamer : NetworkBehaviour
                 {
                     p.EndFakeGrapple();
                 }
+                break;
+            case "WaveStart":
+                WaveSystem.Instance.StartWave(int.Parse(data));
+                break;
+            case "SetMap":
+                GameHandler.Instance.SetMap(int.Parse(data));
                 break;
             default:
                 break;

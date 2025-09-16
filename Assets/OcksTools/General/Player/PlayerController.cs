@@ -157,7 +157,6 @@ public class PlayerController : NetworkBehaviour
     }
     public void FakeGrapple(Vector3 pos,Quaternion rot)
     {
-        Console.Log("Grapple Running");
         ShouldMoveByGrap = false;
         nerdl = Instantiate(Grapp, pos, rot).GetComponent<Grapp>();
         nerdl.controller = this;

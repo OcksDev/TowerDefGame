@@ -46,7 +46,7 @@ public class CircleSex : MonoBehaviour
         {
             lr.SetPosition(i, Quaternion.Euler(0, 0, inc * i) * Vector3.up * rad);
         }
-        aa.localScale = Vector3.one * ((rad*2 * 1.011f) - 0.18f);
+        aa.localScale = Vector3.one * ((rad*2 * 1.011f) - 0.2f);
     }
 
 }

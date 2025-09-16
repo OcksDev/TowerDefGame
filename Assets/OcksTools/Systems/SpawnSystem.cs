@@ -37,12 +37,30 @@ public class SpawnSystem : MonoBehaviour
         GameObject a = null;
         if (sp.dospawn)
         {
-            a = BasicSpawn(sp.nerd, sp.pos, sp.rot, sp.parent);
-            sp.GameObject = a;
+            if (sp.data.ContainsKey("Special"))
+            {
+                switch (sp.data["Special"])
+                {
+                    case "Tower":
+                        a = GameHandler.Instance.SpawnTower(sp.nerd);
+                        a.transform.position = sp.pos;
+                        a.transform.rotation = sp.rot;
+                        if(sp.parent != null) a.transform.parent = sp.parent;
+                        sp.GameObject = a;
+                        Console.Log("Spawned");
+                        break;
+                }
+            }
+            else
+            {
+                a = BasicSpawn(sp.nerd, sp.pos, sp.rot, sp.parent);
+                sp.GameObject = a;
+            }
         }
         else
         {
             a = sp.GameObject;
+            Console.Log("Tower Init");
         }
         Tags.AddObjectToTag(a, sp.IDValue, "Exist");
         Tags.AddObjectToTag(sp, sp.IDValue, "Spawns");
