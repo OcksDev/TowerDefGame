@@ -33,7 +33,7 @@ public class CircleSex : MonoBehaviour
     public IEnumerator KillTim()
     {
         if(dd != null) StopCoroutine(dd);
-        yield return StartCoroutine(OXLerp.Linear((x) => { SetFromRadiuiusss(RandomFunctions.EaseIn(1-x) * Radious * cur); }, 0.25f*cur));
+        yield return StartCoroutine(OXLerp.Linear((x) => { SetFromRadiuiusss(RandomFunctions.EaseIn(1-x) * Radious * cur); }, 0.15f*cur));
         Destroy(gameObject);
     }
 
