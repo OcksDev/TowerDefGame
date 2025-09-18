@@ -2,16 +2,20 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
 
 public class Map : MonoBehaviour
 {
     public MapNode StartNode;
     public List<MapNode> Nodes = new List<MapNode>();
     public List<Vector3> Poses = new List<Vector3>();
-    public GameObject Prefab;
     public GameObject SpawnedScene;
-
-
+    public GameObject HitBoxHolder;
+    public GameObject VisHolder;
+    public Sprite VisSpriteDefault;
+    public Sprite VisCornerSpriteDefault;
+    public GameObject HitBoxPrefab;
+    public float PathWidth = 1f;
     public int GetNextIndex(int curindex)
     {
         if (Nodes[curindex].NextNodes.Count == 0) curindex++;
@@ -59,15 +63,13 @@ public class Map : MonoBehaviour
     }
 
     public List<OXPath> Pathways = new List<OXPath>();
-    private HashSet<string> already_traversed = new HashSet<string>();
     public OXPath ShortestPath = null;
     [Button]
     public void BakePaths()
     {
         Pathways.Clear();
-        already_traversed.Clear();
-        Debug.Log("Starting Bake...");
-        Recurse("", StartNode, new List<MapNode>());
+        Debug.Log("Starting Bake Paths...");
+        Recurse(StartNode, new List<MapNode>());
         foreach(var a in Pathways)
         {
 
@@ -80,7 +82,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    private void Recurse(string hash, MapNode self, List<MapNode> my_path)
+    private void Recurse(MapNode self, List<MapNode> my_path)
     {
         //if (already_traversed.Contains(hash)) return;
         if (self.NextNodes.Count == 0)
@@ -90,7 +92,7 @@ public class Map : MonoBehaviour
             var nw = new OXPath();
             nw.AutoEndConnect = false;
             int x = 0;
-            foreach(var node in my_path)
+            foreach (var node in my_path)
             {
                 x++;
                 if (x <= 1) continue;
@@ -106,11 +108,105 @@ public class Map : MonoBehaviour
             {
                 var dd = new List<MapNode>(my_path);
                 dd.Add(self);
-                Recurse($"{hash}{a}", Nodes[a], dd);
+                Recurse(Nodes[a], dd);
             }
         }
     }
+    [Button]
+    public void ClearVis()
+    {
+        var c = VisHolder.GetComponentsInChildren<Transform>();
+        foreach (var b in c)
+        {
+            if (b != VisHolder.transform) DestroyImmediate(b.gameObject);
+        }
+    }
 
+    [Button]
+    public void BakeVis()
+    {
+        Traversed.Clear();
+
+        ClearVis();
+
+        Debug.Log("Starting Bake Vis...");
+        foreach (var a in Nodes)
+        {
+            var b = Instantiate(HitBoxPrefab, a.Node.position, Quaternion.identity, VisHolder.transform);
+            var x = b.AddComponent<SpriteRenderer>();
+            x.transform.localScale = Vector3.one* PathWidth;
+            x.sprite = VisCornerSpriteDefault;
+            x.sortingOrder = -5;
+        }
+
+        RecurseVis(StartNode, -1);
+
+    }
+    private void RecurseVis(MapNode self, int selfindex)
+    {
+        foreach(var a in self.NextNodes)
+        {
+            var vec = new Vector2Int(selfindex, a);
+            if (Traversed.Contains(vec)) continue;//collider already made
+            var next = Nodes[a];
+            if (self == StartNode) goto banana;
+            Traversed.Add(vec);
+            var b = Instantiate(HitBoxPrefab, Vector3.Lerp(self.Node.position, next.Node.position, 0.5f), RandomFunctions.PointAtPoint2D(self.Node.position, next.Node.position, 0), VisHolder.transform);
+            var x = b.AddComponent<SpriteRenderer>();
+            x.transform.localScale = new Vector2(RandomFunctions.Dist(self.Node.position, next.Node.position), PathWidth);
+            x.sprite = VisSpriteDefault;
+            x.sortingOrder = -5;
+        banana:
+            RecurseVis(next, a);
+        }
+    }
+    [Button]
+    public void ClearColliders()
+    {
+        var c = HitBoxHolder.GetComponentsInChildren<Transform>();
+        foreach (var b in c)
+        {
+            if (b != HitBoxHolder.transform) DestroyImmediate(b.gameObject);
+        }
+    }
+
+    [Button]
+    public void BakeColliders()
+    {
+        Traversed.Clear();
+
+        ClearColliders();
+
+        Debug.Log("Starting Bake Colliders...");
+        foreach (var a in Nodes)
+        {
+            var b = Instantiate(HitBoxPrefab, a.Node.position, Quaternion.identity, HitBoxHolder.transform);
+            var x = b.AddComponent<CircleCollider2D>();
+            x.radius = PathWidth / 2;
+            x.isTrigger = true;
+        }
+
+        RecurseCollider(StartNode, -1);
+
+    }
+    private HashSet<Vector2Int> Traversed = new HashSet<Vector2Int>();
+    private void RecurseCollider(MapNode self, int selfindex)
+    {
+        foreach (var a in self.NextNodes)
+        {
+            var vec = new Vector2Int(selfindex, a);
+            if (Traversed.Contains(vec)) continue;//collider already made
+            var next = Nodes[a];
+            if (self == StartNode) goto banana;
+            Traversed.Add(vec);
+            var b = Instantiate(HitBoxPrefab, Vector3.Lerp(self.Node.position, next.Node.position, 0.5f), RandomFunctions.PointAtPoint2D(self.Node.position, next.Node.position, 0), HitBoxHolder.transform);
+            var x = b.AddComponent<BoxCollider2D>();
+            x.size = new Vector2(RandomFunctions.Dist(self.Node.position, next.Node.position), PathWidth);
+            x.isTrigger = true;
+        banana:
+            RecurseCollider(next, a);
+        }
+    }
 }
 [System.Serializable]
 public class MapNode

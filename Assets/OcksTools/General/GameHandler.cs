@@ -640,7 +640,8 @@ public class GameHandler : MonoBehaviour
         {
             if (b.gameObject == PlacingTower.gameObject) continue;
             var d = GetObjectType(b);
-            if (d.Type==ObjectTypes.Tower) return false;
+            if (d.Type == ObjectTypes.Tower) return false;
+            if (d.Type == ObjectTypes.Map) return false;
         }
         return true;
     }
@@ -687,6 +688,7 @@ public class GameHandler : MonoBehaviour
         Unknown,
         Tower,
         Enemy,
+        Map,
     }
     public static ObjectHolder GetObjectType(Collider2D Nerd, bool DoGetComp = true)
     {
@@ -704,6 +706,9 @@ public class GameHandler : MonoBehaviour
                 break;
             case "Enemy":
                 type.Type = ObjectTypes.Enemy;
+                break;
+            case "Map":
+                type.Type = ObjectTypes.Map;
                 break;
         }
         return type;
